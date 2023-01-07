@@ -35,3 +35,8 @@ viewer.camera.flyTo({
     pitch : Cesium.Math.toRadians(-15.0),
   }
 });
+
+var ccs = document.getElementById("cesiumContainer").style;
+ccs.width='100%';
+ccs.height='50%';
+
