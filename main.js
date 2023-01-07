@@ -25,8 +25,6 @@ viewer.shadows = true;
 viewer.scene.globe.depthTestAgainstTerrain = true;
 viewer.scene.moon = new Cesium.Moon();
 
-viewer.camera.frustum.aspectRatio = 0.01;
-
 // Add Cesium OSM Buildings, a global 3D buildings layer.
 const buildingTileset = viewer.scene.primitives.add(Cesium.createOsmBuildings());   
 // Fly the camera to San Francisco at the given longitude, latitude, and height.
