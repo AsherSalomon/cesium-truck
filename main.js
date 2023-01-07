@@ -4,7 +4,7 @@
 Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1ZGI0ZWQ4Ny0zNjNjLTRmZDAtYWI2YS0yNTc0N2ViNjY0OTEiLCJpZCI6MTAwNDY2LCJpYXQiOjE2NzMwOTcwNjl9.7118r-iVka0QWiKRgKK2u46jqyibkOwYaewwdnFlHUU';
 
 // Initialize the Cesium Viewer in the HTML element with the `cesiumContainer` ID.
-const viewer = new Cesium.Viewer('cesiumContainer', {
+let viewer = new Cesium.Viewer('cesiumContainer', {
   terrainProvider: Cesium.createWorldTerrain({
     requestWaterMask: true,
     requestVertexNormals: true,
