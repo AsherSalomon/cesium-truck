@@ -36,7 +36,3 @@ viewer.camera.flyTo({
   }
 });
 
-var ccs = document.getElementById("cesiumContainer").style;
-ccs.width='100%';
-ccs.height='50%';
-
