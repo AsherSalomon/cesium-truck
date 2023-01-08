@@ -89,3 +89,14 @@ export function update() {
   }
 
 }
+
+let start, previousTimeStamp;
+function animate(timestamp) {
+  if (start === undefined) {start = timestamp;}
+	const delta = (timestamp - previousTimeStamp) / 1000;
+  previousTimeStamp = timestamp;
+
+  update();
+
+  window.requestAnimationFrame(animate);
+}
