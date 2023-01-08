@@ -205,7 +205,7 @@ function update() {
 let start, previousTimeStamp;
 function animate(timestamp) {
   if (start === undefined) {start = timestamp;}
-	const delta = (timestamp - previousTimeStamp) / 1000;
+  const delta = (timestamp - previousTimeStamp) / 1000;
   previousTimeStamp = timestamp;
 
   update();
@@ -213,4 +213,7 @@ function animate(timestamp) {
   window.requestAnimationFrame(animate);
 }
 
-animate();
+Ammo().then(function (AmmoLib) {
+  Ammo = AmmoLib;
+  animate();
+});
