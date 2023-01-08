@@ -37,7 +37,7 @@ viewer.camera.flyTo({
   }
 });
 
-truckEntities[0] = createModel('1984_Ford_F350.glb');
+truckEntities[0] = viewer.entities.add({model: {uri: '1984_Ford_F350.glb'}});
 for (let i = 1; i <= 4; i++) {
   truckEntities[i] = viewer.entities.add({model: {uri: '1984_Ford_F350_wheel.glb'}});
 }
