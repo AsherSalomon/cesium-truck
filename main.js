@@ -42,6 +42,7 @@ for (let i = 1; i <= 4; i++) {
   truckEntities[i] = viewer.entities.add({model: {uri: '1984_Ford_F350_wheel.glb'}});
 }
 
+// let followTruck = false;
 window.addEventListener('keydown', function(e) {
   // followTruck = true;
   if (e.keyCode == 69) {
@@ -59,3 +60,32 @@ window.addEventListener('keydown', function(e) {
     }
   }
 });
+
+export function update() {
+
+  if (viewer.trackedEntity != truckEntities[0]) {
+    // https://sandcastle.cesium.com/?src=Parallels%20and%20Meridians.html&label=All
+    const centerScreen = new Cesium.Cartesian2(
+      viewer.canvas.width / 2, viewer.canvas.height / 2);
+    const ray = viewer.camera.getPickRay(centerScreen);
+    const cartesian = viewer.scene.globe.pick(ray, viewer.scene);
+    if (Cesium.defined(cartesian)) {
+      const cartographic = Cesium.Cartographic.fromCartesian(cartesian);
+      cartographic.height += 1;
+      Cesium.Cartographic.toCartesian(
+        cartographic, viewer.camera.ellipsoid, truckEntities[0].position._value);
+      const headingPitchRoll = new Cesium.HeadingPitchRoll(
+        viewer.camera.heading + Math.PI / 2, 0, 0);
+      const fixedFrameTransform = Cesium.Transforms.localFrameToFixedFrameGenerator(
+        "north", "west");
+      Cesium.Transforms.headingPitchRollQuaternion(
+        truckEntities[0].position._value,
+        headingPitchRoll,
+        Cesium.Ellipsoid.WGS84,
+        fixedFrameTransform,
+        truckEntities[0].orientation._value
+      );
+    }
+  }
+
+}
