@@ -77,6 +77,9 @@ for (let i = 1; i <= 4; i++) {
 truckEntities.now = function() { return viewer.clock.currentTime; }
 
 let followTruck = false;
+document.addEventListener('mousemove', function(e) {
+  followTruck = false;
+});
 window.addEventListener('keydown', function(e) {
   followTruck = true;
   if (e.keyCode == 69) {
@@ -97,11 +100,9 @@ window.addEventListener('keydown', function(e) {
 
 function adjustHeightForTerrain(controller) {
   controller._adjustedHeightForTerrain = true;
-
   const scene = controller._scene;
   const mode = scene.mode;
   const globe = scene.globe;
-
   if (
     !Cesium.defined(globe) ||
     mode === Cesium.SceneMode.SCENE2D ||
@@ -109,11 +110,9 @@ function adjustHeightForTerrain(controller) {
   ) {
     return;
   }
-
   const camera = scene.camera;
   const ellipsoid = globe.ellipsoid;
   const projection = scene.mapProjection;
-
   let transform;
   let mag;
   if (!Cesium.Matrix4.equals(camera.transform, Cesium.Matrix4.IDENTITY)) {
@@ -121,14 +120,12 @@ function adjustHeightForTerrain(controller) {
     mag = Cesium.Cartesian3.magnitude(camera.position);
     camera._setTransform(Cesium.Matrix4.IDENTITY);
   }
-
   const cartographic = new Cesium.Cartographic();
   if (mode === Cesium.SceneMode.SCENE3D) {
     ellipsoid.cartesianToCartographic(camera.position, cartographic);
   } else {
     projection.unproject(camera.position, cartographic);
   }
-
   let heightUpdated = false;
   if (cartographic.height < controller._minimumCollisionTerrainHeight) {
     const globeHeight = controller._scene.globeHeight;
@@ -145,7 +142,6 @@ function adjustHeightForTerrain(controller) {
       }
     }
   }
-
   if (Cesium.defined(transform)) {
     camera._setTransform(transform);
     if (heightUpdated) {
@@ -202,7 +198,6 @@ function update() {
         truckEntities[0].orientation._value
       );
     }
-    //console.log('update');
   }
 
 }
