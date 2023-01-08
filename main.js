@@ -202,7 +202,7 @@ function update() {
         truckEntities[0].orientation._value
       );
     }
-    console.log('update');
+    //console.log('update');
   }
 
 }
@@ -217,3 +217,5 @@ function animate(timestamp) {
 
   window.requestAnimationFrame(animate);
 }
+
+animate();
