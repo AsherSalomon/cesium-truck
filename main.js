@@ -94,7 +94,7 @@ window.addEventListener('keydown', function(e) {
   }
 });
 
-export function update() {
+function update() {
 
   if (viewer.trackedEntity != truckEntities[0]) {
     // https://sandcastle.cesium.com/?src=Parallels%20and%20Meridians.html&label=All
@@ -119,6 +119,7 @@ export function update() {
         truckEntities[0].orientation._value
       );
     }
+    console.log('update');
   }
 
 }
