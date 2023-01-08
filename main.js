@@ -95,6 +95,20 @@ window.addEventListener('keydown', function(e) {
 });
 
 function update() {
+	
+  if (viewer.trackedEntity == truckEntities[0] && followTruck) {
+    const vehicleDirection = new Cesium.Cartesian3(0, 1, 0);
+    const quaternion = truckEntities[0].orientation.getValue(truckEntities.now());
+    const matrix3 = new Cesium.Matrix3();
+    Cesium.Matrix3.fromQuaternion(quaternion, matrix3);
+    Cesium.Matrix3.multiplyByVector(matrix3, vehicleDirection, vehicleDirection);
+    const crossProduct = new Cesium.Cartesian3();
+    Cesium.Cartesian3.cross(viewer.camera.directionWC, vehicleDirection, crossProduct);
+    const dotProduct = Cesium.Cartesian3.dot(viewer.camera.upWC, crossProduct);
+    viewer.camera.rotateRight(dotProduct * Math.PI / 256);
+  }
+
+  adjustHeightForTerrain(viewer.scene.screenSpaceCameraController);
 
   if (viewer.trackedEntity != truckEntities[0]) {
     // https://sandcastle.cesium.com/?src=Parallels%20and%20Meridians.html&label=All
