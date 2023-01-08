@@ -76,9 +76,9 @@ for (let i = 1; i <= 4; i++) {
 }
 truckEntities.now = function() { return viewer.clock.currentTime; }
 
-// let followTruck = false;
+let followTruck = false;
 window.addEventListener('keydown', function(e) {
-  // followTruck = true;
+  followTruck = true;
   if (e.keyCode == 69) {
     if (viewer.trackedEntity == truckEntities[0]) {
       viewer.trackedEntity = null;
@@ -94,6 +94,74 @@ window.addEventListener('keydown', function(e) {
     }
   }
 });
+
+function adjustHeightForTerrain(controller) {
+  controller._adjustedHeightForTerrain = true;
+
+  const scene = controller._scene;
+  const mode = scene.mode;
+  const globe = scene.globe;
+
+  if (
+    !Cesium.defined(globe) ||
+    mode === Cesium.SceneMode.SCENE2D ||
+    mode === Cesium.SceneMode.MORPHING
+  ) {
+    return;
+  }
+
+  const camera = scene.camera;
+  const ellipsoid = globe.ellipsoid;
+  const projection = scene.mapProjection;
+
+  let transform;
+  let mag;
+  if (!Cesium.Matrix4.equals(camera.transform, Cesium.Matrix4.IDENTITY)) {
+    transform = Cesium.Matrix4.clone(camera.transform, new Cesium.Matrix4());
+    mag = Cesium.Cartesian3.magnitude(camera.position);
+    camera._setTransform(Cesium.Matrix4.IDENTITY);
+  }
+
+  const cartographic = new Cesium.Cartographic();
+  if (mode === Cesium.SceneMode.SCENE3D) {
+    ellipsoid.cartesianToCartographic(camera.position, cartographic);
+  } else {
+    projection.unproject(camera.position, cartographic);
+  }
+
+  let heightUpdated = false;
+  if (cartographic.height < controller._minimumCollisionTerrainHeight) {
+    const globeHeight = controller._scene.globeHeight;
+    if (Cesium.defined(globeHeight)) {
+      const height = globeHeight + controller.minimumZoomDistance;
+      if (cartographic.height < height) {
+        cartographic.height = height;
+        if (mode === Cesium.SceneMode.SCENE3D) {
+          ellipsoid.cartographicToCartesian(cartographic, camera.position);
+        } else {
+          projection.project(cartographic, camera.position);
+        }
+        heightUpdated = true;
+      }
+    }
+  }
+
+  if (Cesium.defined(transform)) {
+    camera._setTransform(transform);
+    if (heightUpdated) {
+      Cesium.Cartesian3.normalize(camera.position, camera.position);
+      Cesium.Cartesian3.negate(camera.position, camera.direction);
+      Cesium.Cartesian3.multiplyByScalar(
+        camera.position,
+        Math.max(mag, controller.minimumZoomDistance),
+        camera.position
+      );
+      Cesium.Cartesian3.normalize(camera.direction, camera.direction);
+      Cesium.Cartesian3.cross(camera.direction, camera.up, camera.right);
+      Cesium.Cartesian3.cross(camera.right, camera.direction, camera.up);
+    }
+  }
+}
 
 function update() {
 	
