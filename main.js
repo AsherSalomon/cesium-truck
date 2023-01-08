@@ -30,17 +30,17 @@ viewer.scene.moon = new Cesium.Moon();
 // Add Cesium OSM Buildings, a global 3D buildings layer.
 const buildingTileset = viewer.scene.primitives.add(Cesium.createOsmBuildings());   
 
-  viewer.camera.flyTo({
-    destination : Cesium.Cartesian3.fromDegrees(
-      initPosition[0] + 0.0003,
-      initPosition[1],
-      initPosition[2] + 6.6
-    ),
-    orientation : {
-      heading : Cesium.Math.toRadians(270),
-      pitch : Cesium.Math.toRadians(-15),
-    }
-  });
+viewer.camera.flyTo({
+  destination : Cesium.Cartesian3.fromDegrees(
+    initPosition[0] + 0.0003,
+    initPosition[1],
+    initPosition[2] + 6.6
+  ),
+  orientation : {
+    heading : Cesium.Math.toRadians(270),
+    pitch : Cesium.Math.toRadians(-15),
+  }
+});
 
 function createModel(url) {
   viewer.entities.removeAll();
