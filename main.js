@@ -44,7 +44,6 @@ viewer.camera.flyTo({
 
 function createModel(url) {
   viewer.entities.removeAll();
-
   const position = Cesium.Cartesian3.fromDegrees(
     initPosition[0],
     initPosition[1],
@@ -58,7 +57,6 @@ function createModel(url) {
     position,
     hpr
   );
-
   const entity = viewer.entities.add({
     name: url,
     position: position,
@@ -68,9 +66,7 @@ function createModel(url) {
     },
   });
   viewer.trackedEntity = entity;
-
   return entity;
-
 }
 
 truckEntities[0] = createModel('1984_Ford_F350.glb');
@@ -78,6 +74,7 @@ truckEntities[0] = createModel('1984_Ford_F350.glb');
 for (let i = 1; i <= 4; i++) {
   truckEntities[i] = viewer.entities.add({model: {uri: '1984_Ford_F350_wheel.glb'}});
 }
+truckEntities.now = function() { return viewer.clock.currentTime; }
 
 // let followTruck = false;
 window.addEventListener('keydown', function(e) {
