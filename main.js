@@ -43,7 +43,7 @@ for (let i = 1; i <= 4; i++) {
 }
 
 window.addEventListener('keydown', function(e) {
-  followTruck = true;
+  // followTruck = true;
   if (e.keyCode == 69) {
     if (viewer.trackedEntity == truckEntities[0]) {
       viewer.trackedEntity = null;
