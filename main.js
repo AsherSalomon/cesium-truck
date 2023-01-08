@@ -1,3 +1,5 @@
+import * as physics from './physics.js';
+
 const truckEntities = [];
 const initPosition = [-71.303343, 44.269824, 1916.7 - 33.9];
 
