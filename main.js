@@ -1,4 +1,5 @@
 const truckEntities = [];
+const initPosition = [-71.303343, 44.269824, 1916.7 - 33.9];
 
 // Your access token can be found at: https://ion.cesium.com/tokens.
 // Replace `your_access_token` with your Cesium ion access token.
@@ -37,7 +38,39 @@ viewer.camera.flyTo({
   }
 });
 
-truckEntities[0] = viewer.entities.add({model: {uri: '1984_Ford_F350.glb'}});
+function createModel(url) {
+  viewer.entities.removeAll();
+
+  const position = Cesium.Cartesian3.fromDegrees(
+    initPosition[0],
+    initPosition[1],
+    initPosition[2]
+  );
+  const heading = Cesium.Math.toRadians(54);
+  const pitch = 0;
+  const roll = 0;
+  const hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
+  const orientation = Cesium.Transforms.headingPitchRollQuaternion(
+    position,
+    hpr
+  );
+
+  const entity = viewer.entities.add({
+    name: url,
+    position: position,
+    orientation: orientation,
+    model: {
+      uri: url, // Cesium.ModelGraphics
+    },
+  });
+  viewer.trackedEntity = entity;
+
+  return entity;
+
+}
+
+truckEntities[0] = createModel('1984_Ford_F350.glb');
+// truckEntities[0] = viewer.entities.add({model: {uri: '1984_Ford_F350.glb'}});
 for (let i = 1; i <= 4; i++) {
   truckEntities[i] = viewer.entities.add({model: {uri: '1984_Ford_F350_wheel.glb'}});
 }
