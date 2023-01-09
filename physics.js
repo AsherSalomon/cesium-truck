@@ -166,4 +166,65 @@ function createVehicle(pos, quat) {
   const transform = new Ammo.btTransform();
   transform.setIdentity();
   transform.setOrigin(new Ammo.btVector3(0, 0, 0));
+  originOffset = new Cesium.Cartesian3(pos.x, pos.y, pos.z); // to do, reset originOffest each time the truck is placed somewhere on earth.
+
+  const quatB = new Cesium.Quaternion(0, 0, 0, 1);
+  Cesium.Quaternion.fromAxisAngle(Cesium.Cartesian3.UNIT_X, Math.PI / 2, quatB);
+  Cesium.Quaternion.multiply(quat, quatB, quat);
+  Cesium.Quaternion.fromAxisAngle(Cesium.Cartesian3.UNIT_Y, Math.PI, quatB);
+  Cesium.Quaternion.multiply(quat, quatB, quat);
+  transform.setRotation(new Ammo.btQuaternion(quat.x, quat.y, quat.z, quat.w));
+  const motionState = new Ammo.btDefaultMotionState(transform);
+
+  const body = new Ammo.btRigidBody(new Ammo.btRigidBodyConstructionInfo(massVehicle, motionState, geometry, localInertia));
+  body.setActivationState(DISABLE_DEACTIVATION);
+  physicsWorld.addRigidBody(body);
+  
+  // Raycast Vehicle
+  let engineForce = 0;
+  let vehicleSteering = 0;
+  let breakingForce = 0;
+  const tuning = new Ammo.btVehicleTuning();
+  const rayCaster = new Ammo.btDefaultVehicleRaycaster(physicsWorld);
+  vehicle = new Ammo.btRaycastVehicle(tuning, body, rayCaster);
+  vehicle.setCoordinateSystem(0, 1, 2);
+  physicsWorld.addAction(vehicle);
+  
+  // Wheels
+  const FRONT_LEFT = 0;
+  const FRONT_RIGHT = 1;
+  const BACK_LEFT = 2;
+  const BACK_RIGHT = 3;
+  const wheelMeshes = [];
+  const wheelDirectionCS0 = new Ammo.btVector3(0, -1, 0);
+  const wheelAxleCS = new Ammo.btVector3(-1, 0, 0);
+  
+  function addWheel(isFront, pos, radius, width, index) {
+    const wheelInfo = vehicle.addWheel(
+      pos,
+      wheelDirectionCS0,
+      wheelAxleCS,
+      suspensionRestLength,
+      radius,
+      tuning,
+      isFront);
+    wheelInfo.set_m_suspensionStiffness(suspensionStiffness);
+    wheelInfo.set_m_wheelsDampingRelaxation(suspensionDamping);
+    wheelInfo.set_m_wheelsDampingCompression(suspensionCompression);
+    wheelInfo.set_m_frictionSlip(friction);
+    wheelInfo.set_m_rollInfluence(rollInfluence);
+    wheelInfo.set_m_maxSuspensionForce(1000000);
+  }
+  
+  addWheel(true, new Ammo.btVector3(wheelHalfTrackFront, wheelAxisHeightFront, wheelAxisFrontPosition), wheelRadiusFront, wheelWidthFront, FRONT_LEFT);
+  addWheel(true, new Ammo.btVector3(-wheelHalfTrackFront, wheelAxisHeightFront, wheelAxisFrontPosition), wheelRadiusFront, wheelWidthFront, FRONT_RIGHT);
+  addWheel(false, new Ammo.btVector3(-wheelHalfTrackBack, wheelAxisHeightBack, wheelAxisPositionBack), wheelRadiusBack, wheelWidthBack, BACK_LEFT);
+  addWheel(false, new Ammo.btVector3(wheelHalfTrackBack, wheelAxisHeightBack, wheelAxisPositionBack), wheelRadiusBack, wheelWidthBack, BACK_RIGHT);
+
+  // Sync keybord actions and physics and graphics
+  function sync(dt) {
+    const speed = vehicle.getCurrentSpeedKmHour();
+    
+  }
+
 }
