@@ -218,5 +218,6 @@ function animate(timestamp) {
 
 Ammo().then(function (AmmoLib) {
   Ammo = AmmoLib;
+  physics.init(truckEntities, viewer);
   animate();
 });
