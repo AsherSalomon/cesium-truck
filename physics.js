@@ -64,8 +64,8 @@ export function update(delta) {
     const offset = new Cesium.Cartesian3();
     Cesium.Cartesian3.subtract(position, originOffset, offset);
     const btPosition = new Ammo.btVector3(offset.x, offset.y, offset.z);
-		const tm = vehicle.getChassisWorldTransform();
-		tm.setOrigin(btPosition);
+    cons = vehicle.getChassisWorldTransform();
+    tm.setOt tmrigin(btPosition);
 
     const orient = truckEntities[0].orientation._value.clone();
     const quatB = new Cesium.Quaternion(0, 0, 0, 1);
@@ -87,14 +87,40 @@ export function update(delta) {
       normal.op_mul(-gravity);
       physicsWorld.setGravity( normal );
     } else {
-    	physicsWorld.setGravity( new Ammo.btVector3(0, 0, 0) );
+      physicsWorld.setGravity( new Ammo.btVector3(0, 0, 0) );
     }
 
     frameCount++;
     if (frameCount % 1 == 0) {
-    	for (let i = 0; i < syncList.length; i++) { syncList[i](delta); }
-    	physicsWorld.stepSimulation(delta, 10);
+      for (let i = 0; i < syncList.length; i++) { syncList[i](delta); }
+      physicsWorld.stepSimulation(delta, 10);
     }
   }
   previousTruckSelected = truckSelected;
 }
+
+
+function keyup(e) {
+  if(keysActions[e.code]) {
+    actions[keysActions[e.code]] = false;
+    e.preventDefault();
+    e.stopPropagation();
+    return false;
+  }
+}
+
+function keydown(e) {
+  if(keysActions[e.code]) {
+    actions[keysActions[e.code]] = true;
+    e.preventDefault();
+    e.stopPropagation();
+    return false;
+  }
+}
+
+ion createObjects() {
+  const position = truckEntities[0].position.getValue(truckEntities.now());
+  const quaternion = truckEntities[0].orientation.getValue(truckEntities.now());
+  createVehicle(position, quaternion);
+}
+
