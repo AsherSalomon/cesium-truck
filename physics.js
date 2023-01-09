@@ -124,3 +124,46 @@ ion createObjects() {
   createVehicle(position, quaternion);
 }
 
+function createVehicle(pos, quat) {
+
+  // Vehicle contants
+
+  const chassisWidth = 2.032;
+  const chassisHeight = .8;
+  const chassisLength = 6.761 * 0.8;
+  const massVehicle = 3787.5; // 800;
+
+  const wheelAxisPositionBack = -2.07;
+  const wheelRadiusBack = 0.35;
+  const wheelWidthBack = 0.245;
+  const wheelHalfTrackBack = 0.8;
+  const wheelAxisHeightBack = 0.3;
+
+  const wheelAxisFrontPosition = 1.46;
+  const wheelHalfTrackFront = 0.8;
+  const wheelAxisHeightFront = 0.3;
+  const wheelRadiusFront = 0.35;
+  const wheelWidthFront = 0.245;
+
+  const friction = 1000;
+  const suspensionStiffness = 20; // 94.7; // 20.0;
+  const suspensionDamping = 2.3; // 10.9; // 2.3;
+  const suspensionCompression = 4.4; // 20.8; // 4.4;
+  const suspensionRestLength = 0.8;
+  const rollInfluence = 0.2;
+
+  const steeringIncrement = .2;
+  const steeringClamp = .5;
+  const maxEngineForce = 9468; // 2000;
+  const maxBreakingForce = 236; // 50;
+  
+  // Chassis
+  const geometry = new Ammo.btBoxShape(new Ammo.btVector3(chassisWidth * .5, chassisHeight * .5, chassisLength * .5));
+  
+  const localInertia = new Ammo.btVector3(0, 0, 0);
+  geometry.calculateLocalInertia(massVehicle, localInertia);
+  
+  const transform = new Ammo.btTransform();
+  transform.setIdentity();
+  transform.setOrigin(new Ammo.btVector3(0, 0, 0));
+}
