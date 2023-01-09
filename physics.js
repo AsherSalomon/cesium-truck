@@ -65,7 +65,7 @@ export function update(delta) {
     Cesium.Cartesian3.subtract(position, originOffset, offset);
     const btPosition = new Ammo.btVector3(offset.x, offset.y, offset.z);
     cons = vehicle.getChassisWorldTransform();
-    tm.setOt tmrigin(btPosition);
+    tm.setOrigin(btPosition);
 
     const orient = truckEntities[0].orientation._value.clone();
     const quatB = new Cesium.Quaternion(0, 0, 0, 1);
