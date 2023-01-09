@@ -335,3 +335,87 @@ function createVehicle(pos, quat) {
 	syncList.push(sync);
 
 }
+
+class DestroyableTerrainC {
+  constructor(positions, indices, skirtHeight) {
+    this.shapes = new Array(indices.length / 3);
+    this.vertices = new Array(positions.length);
+    this.skirtices = new Array(positions.length);
+    for (let i = 0; i < positions.length; i++) {
+      Cesium.Cartesian3.subtract(positions[i], originOffset, positions[i]);
+      this.vertices[i] = new Ammo.btVector3(positions[i].x, positions[i].y, positions[i].z);
+    }
+    const normal = originOffset.clone();
+    Cesium.Cartesian3.normalize(normal, normal);
+    Cesium.Cartesian3.multiplyByScalar(normal, skirtHeight, normal);
+    for (let i = 0; i < positions.length; i++) {
+      Cesium.Cartesian3.subtract(positions[i], normal, positions[i]);
+      this.skirtices[i] = new Ammo.btVector3(positions[i].x, positions[i].y, positions[i].z);
+    }
+    for (let i = 0; i < indices.length; i += 3) {
+      this.shapes[i / 3] = new Ammo.btConvexHullShape();
+      for (let j = 0; j < 3; j++) {
+        this.shapes[i / 3].addPoint(this.vertices[indices[i + j]]);
+        this.shapes[i / 3].addPoint(this.skirtices[indices[i + j]]);
+      }
+    }
+    const transform = new Ammo.btTransform();
+    transform.setIdentity();
+    transform.setOrigin(new Ammo.btVector3(0, 0, 0));
+    transform.setRotation(new Ammo.btQuaternion(0, 0, 0, 1));
+    this.motionState = new Ammo.btDefaultMotionState(transform);
+    Ammo.destroy(transform);
+    this.localInertia = new Ammo.btVector3(0, 0, 0);
+
+    this.terrainBodies = new Array(this.shapes.length);
+    for (let i = 0; i < this.shapes.length; i++) {
+      const rbInfo = new Ammo.btRigidBodyConstructionInfo(0, this.motionState, this.shapes[i], this.localInertia);
+      this.terrainBodies[i] = new Ammo.btRigidBody(rbInfo);
+      Ammo.destroy(rbInfo);
+
+      physicsWorld.addRigidBody(this.terrainBodies[i]);
+    }
+
+  }
+
+  destroy() {
+    for (let i = 0; i < this.terrainBodies.length; i++) {
+      physicsWorld.removeRigidBody(this.terrainBodies[i]);
+    }
+
+    for (let i = 0; i < this.vertices.length; i++) {
+      Ammo.destroy(this.vertices[i]);
+      Ammo.destroy(this.skirtices[i]);
+    }
+    delete this.vertices;
+    delete this.skirtices;
+    for (let i = 0; i < this.shapes.length; i++) {
+      Ammo.destroy(this.shapes[i]);
+    }
+    delete this.shapes;
+    Ammo.destroy(this.motionState);
+    Ammo.destroy(this.localInertia);
+    delete this.motionState;
+    delete this.localInertia;
+    for (let i = 0; i < this.terrainBodies.length; i++) {
+      Ammo.destroy(this.terrainBodies[i]);
+    }
+    delete this.terrainBodies;
+  }
+
+}
+
+export function createTerrain(positions, indices, skirtHeight, tileName) {
+  gravityOn = true;
+
+  terrainBodies[tileName] = new DestroyableTerrain(positions, indices, skirtHeight);
+  // console.log(Object.keys(terrainBodies).length, 'terrainBodies');
+
+}
+
+export function removeTerrain(tileName) {
+  terrainBodies[tileName].destroy();
+  delete terrainBodies[tileName];
+  // console.log(Object.keys(terrainBodies).length, 'terrainBodies');
+
+}
