@@ -271,6 +271,67 @@ function createVehicle(pos, quat) {
     vehicle.setSteeringValue(vehicleSteering, FRONT_LEFT);
     vehicle.setSteeringValue(vehicleSteering, FRONT_RIGHT);
     
+    let tm, p, q, v, i;
+    const n = vehicle.getNumWheels();
+    for (i = 0; i < n; i++) {
+      vehicle.updateWheelTransform(i, true);
+      tm = vehicle.getWheelTransformWS(i);
+      p = tm.getOrigin();
+      q = tm.getRotation();
+      
+      const position = new Cesium.Cartesian3(p.x(), p.y(), p.z());
+      Cesium.Cartesian3.add(position, originOffset, position);
+      truckEntities[i + 1].position = position;
+
+      const quaternion = new Cesium.Quaternion(q.x(), q.y(), q.z(), q.w());
+      if (i == 0 || i == 3) {
+        const quaternionB = new Cesium.Quaternion(0, 0, 0, 1);
+        Cesium.Quaternion.fromAxisAngle(Cesium.Cartesian3.UNIT_Y, Math.PI, quaternionB);
+        Cesium.Quaternion.multiply(quaternion, quaternionB, quaternion);
+      }
+      truckEntities[i + 1].orientation = quaternion;
+    }
+    
+    tm = vehicle.getChassisWorldTransform();
+    p = tm.getOrigin();
+    q = tm.getRotation();
+    v = body.getLinearVelocity();
+    
+    let position = new Cesium.Cartesian3(p.x(), p.y(), p.z());
+    const velocity = new Cesium.Cartesian3(v.x(), v.y(), v.z());
+    Cesium.Cartesian3.multiplyByScalar(velocity, 0.013, velocity);
+    Cesium.Cartesian3.subtract(position, velocity, position);
+    Cesium.Cartesian3.add(position, originOffset, position);
+    truckEntities[0].position = position;
+    
+    let quaternion = new Cesium.Quaternion(q.x(), q.y(), q.z(), q.w());
+    const quaternionB = new Cesium.Quaternion(0, 0, 0, 1);
+    Cesium.Quaternion.fromAxisAngle(Cesium.Cartesian3.UNIT_X, -Math.PI / 2, quaternionB);
+    Cesium.Quaternion.multiply(quaternion, quaternionB, quaternion);
+    Cesium.Quaternion.fromAxisAngle(Cesium.Cartesian3.UNIT_Z, Math.PI, quaternionB);
+    Cesium.Quaternion.multiply(quaternion, quaternionB, quaternion);
+    truckEntities[0].orientation = quaternion;
+    
+    if (actions.reset && gravityOn) {
+      let aboveVehicle = new Cesium.Cartesian3(0, 1, 0);
+      position = new Cesium.Cartesian3(p.x(), p.y(), p.z());
+      quaternion = new Cesium.Quaternion(q.x(), q.y(), q.z(), q.w());
+      const matrix3 = new Cesium.Matrix3();
+      Cesium.Matrix3.fromQuaternion(quaternion, matrix3);
+      Cesium.Matrix3.multiplyByVector(matrix3, aboveVehicle, aboveVehicle);
+      aboveVehicle = new Ammo.btVector3(aboveVehicle.x, aboveVehicle.y, aboveVehicle.z);
+      Cesium.Cartesian3.add(position, originOffset, position);
+      Cesium.Cartesian3.normalize(position, position);
+      const resetForce = massVehicle * gravity;
+      Cesium.Cartesian3.multiplyByScalar(position, resetForce, position);
+      position = new Ammo.btVector3(position.x, position.y, position.z);
+      body.applyForce(position, aboveVehicle);
+      Ammo.destroy(aboveVehicle);
+      Ammo.destroy(position);
+    }
+    
   }
+  
+	syncList.push(sync);
 
 }
