@@ -118,7 +118,7 @@ function keydown(e) {
   }
 }
 
-ion createObjects() {
+function createObjects() {
   const position = truckEntities[0].position.getValue(truckEntities.now());
   const quaternion = truckEntities[0].orientation.getValue(truckEntities.now());
   createVehicle(position, quaternion);
