@@ -91,13 +91,13 @@ export function update(delta) {
       physicsWorld.setGravity( new Ammo.btVector3(0, 0, 0) );
     }
 
-//     frameCount++;
-//     if (frameCount % 1 == 0) {
-//       for (let i = 0; i < syncList.length; i++) { syncList[i](delta); }
-//       physicsWorld.stepSimulation(delta, 10);
-//     }
+    frameCount++;
+    if (frameCount % 1 == 0) {
+      for (let i = 0; i < syncList.length; i++) { syncList[i](delta); }
+      physicsWorld.stepSimulation(delta, 10);
+    }
   }
-//   previousTruckSelected = truckSelected;
+  previousTruckSelected = truckSelected;
 }
 
 
