@@ -224,6 +224,52 @@ function createVehicle(pos, quat) {
   // Sync keybord actions and physics and graphics
   function sync(dt) {
     const speed = vehicle.getCurrentSpeedKmHour();
+    speedometer.innerHTML = Math.abs(speed * 0.621371).toFixed(0) + ' mph';
+    
+    breakingForce = 0;
+    engineForce = 0;
+    if (actions.acceleration) {
+      parkingBrake = false;
+      if (speed < -1) breakingForce = maxBreakingForce; else engineForce = maxEngineForce;
+    } else if (actions.braking) {
+      parkingBrake = false;
+      if (speed > 1) breakingForce = maxBreakingForce; else engineForce = -maxEngineForce;
+    } else if (Math.abs(speed) < 1 || parkingBrake) {
+      breakingForce = maxBreakingForce;
+      parkingBrake = true;
+    }
+    
+    const steeringSpeed = steeringIncrement * dt / 0.0167 / Math.max(Math.abs(speed), 10);
+    if (actions.left) {
+      if (vehicleSteering < steeringClamp)
+        vehicleSteering += steeringSpeed;
+    } else {
+      if (actions.right) {
+        if (vehicleSteering > -steeringClamp)
+          vehicleSteering -= steeringSpeed;
+      } else {
+        if (vehicleSteering < -steeringSpeed)
+          vehicleSteering += steeringSpeed;
+        else {
+          if (vehicleSteering > steeringSpeed)
+            vehicleSteering -= steeringSpeed;
+          else {
+            vehicleSteering = 0;
+          }
+        }
+      }
+    }
+    
+    vehicle.applyEngineForce(engineForce, BACK_LEFT);
+    vehicle.applyEngineForce(engineForce, BACK_RIGHT);
+
+    vehicle.setBrake(breakingForce / 2, FRONT_LEFT);
+    vehicle.setBrake(breakingForce / 2, FRONT_RIGHT);
+    vehicle.setBrake(breakingForce, BACK_LEFT);
+    vehicle.setBrake(breakingForce, BACK_RIGHT);
+
+    vehicle.setSteeringValue(vehicleSteering, FRONT_LEFT);
+    vehicle.setSteeringValue(vehicleSteering, FRONT_RIGHT);
     
   }
 
