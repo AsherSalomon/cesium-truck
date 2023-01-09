@@ -59,7 +59,7 @@ let frameCount = 0;
 let previousTruckSelected = false;
 export function update(delta) {
   const truckSelected = viewer.trackedEntity == truckEntities[0];
-//   if (truckSelected != previousTruckSelected) {
+  if (truckSelected != previousTruckSelected) {
 //     const position = truckEntities[0].position._value;
 //     const offset = new Cesium.Cartesian3();
 //     Cesium.Cartesian3.subtract(position, originOffset, offset);
@@ -78,7 +78,8 @@ export function update(delta) {
 //     const body = vehicle.getRigidBody();
 //     body.setLinearVelocity(new Ammo.btVector3(0, 0, 0));
 //     body.setAngularVelocity(new Ammo.btVector3(0, 0, 0));
-//   }
+  }
+  
 //   if (truckSelected) {
 //     if (gravityOn) {
 //       const position = truckEntities[0].position.getValue(truckEntities.now());
