@@ -211,7 +211,7 @@ function animate(timestamp) {
   previousTimeStamp = timestamp;
 
   update();
-  physics.update(delta);
+  // physics.update(delta);
 
   window.requestAnimationFrame(animate);
 }
