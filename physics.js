@@ -58,7 +58,7 @@ export function init(newTruck, newViewer) {
 let frameCount = 0;
 let previousTruckSelected = false;
 export function update(delta) {
-//   const truckSelected = viewer.trackedEntity == truckEntities[0];
+  const truckSelected = viewer.trackedEntity == truckEntities[0];
 //   if (truckSelected != previousTruckSelected) {
 //     const position = truckEntities[0].position._value;
 //     const offset = new Cesium.Cartesian3();
