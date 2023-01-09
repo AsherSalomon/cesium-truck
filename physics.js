@@ -73,7 +73,7 @@ export function update(delta) {
     Cesium.Quaternion.multiply(orient, quatB, orient);
     Cesium.Quaternion.fromAxisAngle(Cesium.Cartesian3.UNIT_Y, Math.PI, quatB);
     Cesium.Quaternion.multiply(orient, quatB, orient);
-  	tm.setRotation(new Ammo.btQuaternion(orient.x, orient.y, orient.z, orient.w));
+    tm.setRotation(new Ammo.btQuaternion(orient.x, orient.y, orient.z, orient.w));
 
     const body = vehicle.getRigidBody();
     body.setLinearVelocity(new Ammo.btVector3(0, 0, 0));
@@ -332,7 +332,7 @@ function createVehicle(pos, quat) {
     
   }
   
-	syncList.push(sync);
+  syncList.push(sync);
 
 }
 
