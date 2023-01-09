@@ -94,7 +94,7 @@ export function update(delta) {
     frameCount++;
     if (frameCount % 1 == 0) {
       for (let i = 0; i < syncList.length; i++) { syncList[i](delta); }
-      physicsWorld.stepSimulation(delta, 10);
+//       physicsWorld.stepSimulation(delta, 10);
     }
   }
   previousTruckSelected = truckSelected;
