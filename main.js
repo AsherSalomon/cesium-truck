@@ -162,7 +162,7 @@ function adjustHeightForTerrain(controller) {
 }
 
 function update() {
-	
+
   if (viewer.trackedEntity == truckEntities[0] && followTruck) {
     const vehicleDirection = new Cesium.Cartesian3(0, 1, 0);
     const quaternion = truckEntities[0].orientation.getValue(truckEntities.now());
@@ -211,6 +211,7 @@ function animate(timestamp) {
   previousTimeStamp = timestamp;
 
   update();
+  physics.update(delta);
 
   window.requestAnimationFrame(animate);
 }
