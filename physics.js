@@ -420,3 +420,5 @@ export function removeTerrain(tileName) {
   // console.log(Object.keys(terrainBodies).length, 'terrainBodies');
 
 }
+
+// sampleTerrainMostDetailed(terrainProvider, positions)
