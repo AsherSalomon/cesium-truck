@@ -211,13 +211,19 @@ function animate(timestamp) {
   previousTimeStamp = timestamp;
 
   update();
-//   physics.update(delta);
+  if (waitingForPhysicsInit == false) {
+    physics.update(delta);
+  }
 
   window.requestAnimationFrame(animate);
 }
 
+let waitingForPhysicsInit = true;
 Ammo().then(function (AmmoLib) {
   Ammo = AmmoLib;
-  physics.init(truckEntities, viewer);
+  setTimeout(function() {
+    physics.init(truckEntities, viewer);
+    waitingForPhysicsInit = false;
+  }, 1 * 1000);
   animate();
 });
