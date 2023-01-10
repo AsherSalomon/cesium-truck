@@ -224,6 +224,6 @@ Ammo().then(function (AmmoLib) {
   setTimeout(function() {
     physics.init(truckEntities, viewer);
     waitingForPhysicsInit = false;
-  }, 0);
+  }, 1000);
   animate();
 });
