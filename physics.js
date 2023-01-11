@@ -125,6 +125,16 @@ function createObjects() {
   createVehicle(position, quaternion);
 }
 
+function addPoint(cartesian3) {
+  return viewer.entities.add({
+    position: cartesian3,
+    point: {
+      pixelSize: 1,
+      color: Cesium.Color.WHITE,
+    },
+  });
+}
+
 function createVehicle(pos, quat) {
 
   // Vehicle contants
@@ -362,6 +372,11 @@ function createVehicle(pos, quat) {
     //   }
     // });
     
+    
+    // promise.then(data => {
+    //   // data
+    // }).catch(error => { throw error })
+    
   }
   
   syncList.push(sync);
@@ -451,3 +466,4 @@ export function removeTerrain(tileName) {
   // console.log(Object.keys(terrainBodies).length, 'terrainBodies');
 
 }
+
