@@ -376,7 +376,7 @@ function createVehicle(pos, quat) {
 //         }
         
 //         theConsole.log(  );
-        cost cartesian3 = Cesium.Cartographic.toCartesian(positions[0], ellipsoid);
+        const cartesian3 = Cesium.Cartographic.toCartesian(positions[0], ellipsoid);
         addPoint(cartesian3);
       }).catch(error => { throw error })
     }
