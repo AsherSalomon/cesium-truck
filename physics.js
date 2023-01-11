@@ -1,4 +1,5 @@
 // https://github.com/kripken/ammo.js/blob/main/examples/webgl_demo_vehicle/index.html
+let once = true;
 
 let viewer;
 
@@ -341,41 +342,42 @@ function createVehicle(pos, quat) {
       Ammo.destroy(position);
     }
     
-    // position = new Cesium.Cartesian3(p.x(), p.y(), p.z());
-    // Cesium.Cartesian3.add(position, originOffset, position);
-    // const terrainProvider = viewer.scene.globe.terrainProvider;
-    // const ellipsoid = terrainProvider.tilingScheme.projection.ellipsoid;
-    // const positions = [Cesium.Cartographic.fromCartesian(position, ellipsoid)];
-    // const promise = Cesium.sampleTerrainMostDetailed(terrainProvider, positions);
-    // Promise.resolve(promise).then(function(updatedPositions) {
-    //   const terrainHeight = positions[0].height;
-    //   position = new Cesium.Cartesian3(p.x(), p.y(), p.z());
-    //   Cesium.Cartesian3.add(position, originOffset, position);
-    //   const cartographic = Cesium.Cartographic.fromCartesian(position, ellipsoid);
-    //   const bodyHeight = cartographic.height;
-    //   if (bodyHeight < terrainHeight) {
-    //     const terrainSpringRate = massVehicle * gravity * 10;
-    //     const terrainForce = (terrainHeight - bodyHeight) * terrainSpringRate;
-    //     Cesium.Cartesian3.normalize(position, position);
-    //     Cesium.Cartesian3.multiplyByScalar(position, terrainForce, position);
-    //     position = new Ammo.btVector3(position.x, position.y, position.z);
-    //     const bodyCenter = new Cesium.Cartesian3(0, 0, 0);
-    //     body.clearForces();
-    //     body.applyForce(position, bodyCenter);
-    //
-    //     // const restore = (terrainHeight - bodyHeight) * 10;
-    //     // Cesium.Cartesian3.normalize(position, position);
-    //     // Cesium.Cartesian3.multiplyByScalar(position, restore, position);
-    //     // Cesium.Cartesian3.add(position, new Cesium.Cartesian3(p.x(), p.y(), p.z()), position);
-    //     // position = new Ammo.btVector3(position.x, position.y, position.z);
-    //     // tm.setOrigin(position);
-    //   }
-    // });
-    
-    
-    // promise.then(data => {
-    //   // data
-    // }).catch(error => { throw error })
+    if ( once ) {
+      once = false;
+      position = new Cesium.Cartesian3(p.x(), p.y(), p.z());
+      Cesium.Cartesian3.add(position, originOffset, position);
+      const terrainProvider = viewer.scene.globe.terrainProvider;
+      const ellipsoid = terrainProvider.tilingScheme.projection.ellipsoid;
+      const positions = [Cesium.Cartographic.fromCartesian(position, ellipsoid)];
+      const promise = Cesium.sampleTerrainMostDetailed(terrainProvider, positions);
+      Promise.resolve(promise).then(function(updatedPositions) {
+//         const terrainHeight = positions[0].height;
+//         position = new Cesium.Cartesian3(p.x(), p.y(), p.z());
+//         Cesium.Cartesian3.add(position, originOffset, position);
+//         const cartographic = Cesium.Cartographic.fromCartesian(position, ellipsoid);
+//         const bodyHeight = cartographic.height;
+//         if (bodyHeight < terrainHeight) {
+//           const terrainSpringRate = massVehicle * gravity * 10;
+//           const terrainForce = (terrainHeight - bodyHeight) * terrainSpringRate;
+//           Cesium.Cartesian3.normalize(position, position);
+//           Cesium.Cartesian3.multiplyByScalar(position, terrainForce, position);
+//           position = new Ammo.btVector3(position.x, position.y, position.z);
+//           const bodyCenter = new Cesium.Cartesian3(0, 0, 0);
+//           body.clearForces();
+//           body.applyForce(position, bodyCenter);
+
+//           // const restore = (terrainHeight - bodyHeight) * 10;
+//           // Cesium.Cartesian3.normalize(position, position);
+//           // Cesium.Cartesian3.multiplyByScalar(position, restore, position);
+//           // Cesium.Cartesian3.add(position, new Cesium.Cartesian3(p.x(), p.y(), p.z()), position);
+//           // position = new Ammo.btVector3(position.x, position.y, position.z);
+//           // tm.setOrigin(position);
+//         }
+        
+        conosle.log(positions[0]);
+//         addPoint(cartesian3)
+      }).catch(error => { throw error })
+    }
     
   }
   
