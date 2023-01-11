@@ -375,7 +375,7 @@ function createVehicle(pos, quat) {
 //           // tm.setOrigin(position);
 //         }
         
-        theConsole.log(typeof positions[0]);
+        theConsole.log(Cesium.Cartographic.toCartesian(positions[0], ellipsoid));
 //         addPoint(cartesian3)
       }).catch(error => { throw error })
     }
