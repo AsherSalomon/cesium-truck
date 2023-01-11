@@ -375,7 +375,7 @@ function createVehicle(pos, quat) {
 //           // tm.setOrigin(position);
 //         }
         
-        theConsole.log(positions[0]);
+        theConsole.log(typeof positions[0]);
 //         addPoint(cartesian3)
       }).catch(error => { throw error })
     }
