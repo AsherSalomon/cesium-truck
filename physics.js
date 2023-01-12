@@ -351,18 +351,22 @@ function createVehicle(pos, quat) {
       const cartographic = Cesium.Cartographic.fromCartesian(position, ellipsoid);
       
       const quadtreeLevel = 16;
-      const gridWidth = 8;
-      const longitudeIndex = ( cartographic.longitude - ( -Math.PI ) ) * Math.pow(2, quadtreeLevel);
-      const latitudeIndex = ( cartographic.latitude - ( -Math.PI / 2 ) ) * Math.pow(2, quadtreeLevel);
+      const quadtreePower = Math.pow(2, quadtreeLevel);
+      const gridWidth = 2;
+      const longitudeIndex = ( cartographic.longitude - ( -Math.PI ) ) * quadtreePower;
+      const latitudeIndex = ( cartographic.latitude - ( -Math.PI / 2 ) ) * quadtreePower;
       console.log(longitudeIndex, latitudeIndex);
-      for (let m = -gridWidth / 2; m < gridWidth / 2; m++) {
-        for (let n = -gridWidth / 2; n < gridWidth / 2; n++) {
-          const centerM = Math.round(longitudeIndex + 0.5) - 0.5;
-          const centerN = Math.round(latitudeIndex + 0.5) - 0.5;
+//       const positions = [Cesium.Cartographic.fromCartesian(position, ellipsoid)];
+      const positions = [];
+      for (let m = -gridWidth / 2; m <= gridWidth / 2 + 1; m++) {
+        for (let n = -gridWidth / 2; n <= gridWidth / 2 + 1; n++) {
+          const longitudeM = Math.floor(longitudeIndex + m) / quadtreePower + ( -Math.PI );
+          const latitudeN = Math.floor(latitudeIndex + n) / quadtreePower + ( -Math.PI / 2 );
+          const cartographicMN = new Cesium.Cartographic(longitudeM, latitudeN, 0);
+          positions.push(cartographicMN);
         }
       }
       
-      const positions = [Cesium.Cartographic.fromCartesian(position, ellipsoid)];
       const promise = Cesium.sampleTerrainMostDetailed(terrainProvider, positions);
       let theConsole = console;
       Promise.resolve(promise).then(function(updatedPositions) {
@@ -390,8 +394,10 @@ function createVehicle(pos, quat) {
 //         }
         
 //         theConsole.log(  );
-        const cartesian3 = Cesium.Cartographic.toCartesian(positions[0], ellipsoid);
-        addPoint(cartesian3);
+        for (let i = 0; i < positions.length; i++) {
+          const cartesian3 = Cesium.Cartographic.toCartesian(positions[i], ellipsoid);
+          addPoint(cartesian3);
+        }
       }).catch(error => { throw error })
     }
     
