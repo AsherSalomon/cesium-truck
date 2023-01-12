@@ -355,6 +355,13 @@ function createVehicle(pos, quat) {
       const longitudeIndex = ( cartographic.longitude - ( -Math.PI ) ) * Math.pow(2, quadtreeLevel);
       const latitudeIndex = ( cartographic.latitude - ( -Math.PI / 2 ) ) * Math.pow(2, quadtreeLevel);
       console.log(longitudeIndex, latitudeIndex);
+      for (let m = -gridWidth / 2; m < gridWidth / 2; m++) {
+        for (let n = -gridWidth / 2; n < gridWidth / 2; n++) {
+          const centerM = Math.round(longitudeIndex + 0.5) - 0.5;
+          const centerN = Math.round(latitudeIndex + 0.5) - 0.5;
+        }
+      }
+      
       const positions = [Cesium.Cartographic.fromCartesian(position, ellipsoid)];
       const promise = Cesium.sampleTerrainMostDetailed(terrainProvider, positions);
       let theConsole = console;
