@@ -345,6 +345,7 @@ function createVehicle(pos, quat) {
     if ( once ) {
       once = false;
       position = new Cesium.Cartesian3(p.x(), p.y(), p.z());
+      console.log(position);
       Cesium.Cartesian3.add(position, originOffset, position);
       const terrainProvider = viewer.scene.globe.terrainProvider;
       const ellipsoid = terrainProvider.tilingScheme.projection.ellipsoid;
@@ -355,7 +356,6 @@ function createVehicle(pos, quat) {
       const gridWidth = 2;
       const longitudeIndex = ( cartographic.longitude - ( -Math.PI ) ) * quadtreePower;
       const latitudeIndex = ( cartographic.latitude - ( -Math.PI / 2 ) ) * quadtreePower;
-//       console.log(longitudeIndex, latitudeIndex);
 //       const positions = [Cesium.Cartographic.fromCartesian(position, ellipsoid)];
       const positions = [];
       for (let m = -gridWidth / 2; m <= gridWidth / 2 + 1; m++) {
@@ -395,7 +395,8 @@ function createVehicle(pos, quat) {
         
         for (let i = 0; i < positions.length; i++) {
           const cartesian3 = Cesium.Cartographic.toCartesian(positions[i], ellipsoid);
-          theConsole.log( addPoint(cartesian3) );
+          theConsole.log( cartesian3 );
+          addPoint(cartesian3);
         }
       }).catch(error => { throw error })
     }
