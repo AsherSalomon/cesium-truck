@@ -361,47 +361,28 @@ function createVehicle(pos, quat) {
       const latitudeIndex = ( cartographic.latitude - ( -Math.PI / 2 ) ) * quadtreePower;
 //       const positions = [Cesium.Cartographic.fromCartesian(position, ellipsoid)];
       const positions = [];
+      const quadtreeNames = [];
       for (let m = -quadtreeGridWidth / 2; m <= quadtreeGridWidth / 2 + 1; m++) {
         for (let n = -quadtreeGridWidth / 2; n <= quadtreeGridWidth / 2 + 1; n++) {
-          const longitudeM = Math.floor(longitudeIndex + m) / quadtreePower + ( -Math.PI );
-          const latitudeN = Math.floor(latitudeIndex + n) / quadtreePower + ( -Math.PI / 2 );
+          const indexM = Math.floor(longitudeIndex + m);
+          const indexN = Math.floor(latitudeIndex + n);
+          const longitudeM = indexM / quadtreePower + ( -Math.PI );
+          const latitudeN = indexN / quadtreePower + ( -Math.PI / 2 );
           const cartographicMN = new Cesium.Cartographic(longitudeM, latitudeN, 0);
           positions.push(cartographicMN);
+          quadtreeNames.push(indexM + '_' + indexN);
         }
       }
       
       const promise = Cesium.sampleTerrainMostDetailed(terrainProvider, positions);
       let theConsole = console;
       Promise.resolve(promise).then(function(updatedPositions) {
-//         const terrainHeight = positions[0].height;
-//         position = new Cesium.Cartesian3(p.x(), p.y(), p.z());
-//         Cesium.Cartesian3.add(position, originOffset, position);
-//         const cartographic = Cesium.Cartographic.fromCartesian(position, ellipsoid);
-//         const bodyHeight = cartographic.height;
-//         if (bodyHeight < terrainHeight) {
-//           const terrainSpringRate = massVehicle * gravity * 10;
-//           const terrainForce = (terrainHeight - bodyHeight) * terrainSpringRate;
-//           Cesium.Cartesian3.normalize(position, position);
-//           Cesium.Cartesian3.multiplyByScalar(position, terrainForce, position);
-//           position = new Ammo.btVector3(position.x, position.y, position.z);
-//           const bodyCenter = new Cesium.Cartesian3(0, 0, 0);
-//           body.clearForces();
-//           body.applyForce(position, bodyCenter);
-
-//           // const restore = (terrainHeight - bodyHeight) * 10;
-//           // Cesium.Cartesian3.normalize(position, position);
-//           // Cesium.Cartesian3.multiplyByScalar(position, restore, position);
-//           // Cesium.Cartesian3.add(position, new Cesium.Cartesian3(p.x(), p.y(), p.z()), position);
-//           // position = new Ammo.btVector3(position.x, position.y, position.z);
-//           // tm.setOrigin(position);
-//         }
         
         for (let i = 0; i < positions.length; i++) {
           const skirtHeight = 1;
           const cartographicSkirt = new Cesium.Cartographic(positions[i].longitude, positions[i].latitude, positions[i].height - skirtHeight);
           const cartesian3 = Cesium.Cartographic.toCartesian(positions[i], ellipsoid);
           const skirtCartesian3 = Cesium.Cartographic.toCartesian(cartographicSkirt, ellipsoid);
-          
 //           theConsole.log( cartesian3 );
           if (showQuadtreeGrid) {
             addPoint(cartesian3);
