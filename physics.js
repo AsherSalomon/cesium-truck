@@ -345,8 +345,8 @@ function createVehicle(pos, quat) {
     if ( once ) {
       once = false;
       position = new Cesium.Cartesian3(p.x(), p.y(), p.z());
-      console.log(position);
       Cesium.Cartesian3.add(position, originOffset, position);
+      console.log(position);
       const terrainProvider = viewer.scene.globe.terrainProvider;
       const ellipsoid = terrainProvider.tilingScheme.projection.ellipsoid;
       const cartographic = Cesium.Cartographic.fromCartesian(position, ellipsoid);
