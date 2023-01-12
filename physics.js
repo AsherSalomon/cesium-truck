@@ -393,8 +393,8 @@ function createVehicle(pos, quat) {
 //           // tm.setOrigin(position);
 //         }
         
-        theConsole.log( positions.length );
         for (let i = 0; i < positions.length; i++) {
+          theConsole.log( positions[i] );
           const cartesian3 = Cesium.Cartographic.toCartesian(positions[i], ellipsoid);
           addPoint(cartesian3);
         }
