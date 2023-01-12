@@ -394,8 +394,8 @@ function createVehicle(pos, quat) {
 //         }
         
         for (let i = 0; i < positions.length; i++) {
-          theConsole.log( positions[i] );
           const cartesian3 = Cesium.Cartographic.toCartesian(positions[i], ellipsoid);
+          theConsole.log( cartesian3 );
           addPoint(cartesian3);
         }
       }).catch(error => { throw error })
