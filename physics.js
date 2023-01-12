@@ -4,6 +4,7 @@ let once = true;
 
 const quadtreeLevel = 22;
 const quadtreeGridWidth = 8;
+const showQuadtreeGrid = false;
 
 let viewer;
 
@@ -398,7 +399,9 @@ function createVehicle(pos, quat) {
         for (let i = 0; i < positions.length; i++) {
           const cartesian3 = Cesium.Cartographic.toCartesian(positions[i], ellipsoid);
 //           theConsole.log( cartesian3 );
-          addPoint(cartesian3);
+          if (showQuadtreeGrid) {
+            addPoint(cartesian3);
+          }
         }
       }).catch(error => { throw error })
     }
