@@ -348,6 +348,8 @@ function createVehicle(pos, quat) {
       Cesium.Cartesian3.add(position, originOffset, position);
       const terrainProvider = viewer.scene.globe.terrainProvider;
       const ellipsoid = terrainProvider.tilingScheme.projection.ellipsoid;
+//       quadtree
+      console.log(Cesium.Cartographic.fromCartesian(position, ellipsoid));
       const positions = [Cesium.Cartographic.fromCartesian(position, ellipsoid)];
       const promise = Cesium.sampleTerrainMostDetailed(terrainProvider, positions);
       let theConsole = console;
