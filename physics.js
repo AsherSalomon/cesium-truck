@@ -4,7 +4,7 @@ let once = true;
 
 const quadtreeLevel = 22;
 const quadtreeGridWidth = 8;
-const showQuadtreeGrid = false;
+const showQuadtreeGrid = true;
 
 let viewer;
 
