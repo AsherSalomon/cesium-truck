@@ -1,5 +1,9 @@
 // https://github.com/kripken/ammo.js/blob/main/examples/webgl_demo_vehicle/index.html
+
 let once = true;
+
+const quadtreeLevel = 20;
+const quadtreeGridWidth = 2;
 
 let viewer;
 
@@ -351,15 +355,13 @@ function createVehicle(pos, quat) {
       const ellipsoid = terrainProvider.tilingScheme.projection.ellipsoid;
       const cartographic = Cesium.Cartographic.fromCartesian(position, ellipsoid);
       
-      const quadtreeLevel = 18;
       const quadtreePower = Math.pow(2, quadtreeLevel);
-      const gridWidth = 2;
       const longitudeIndex = ( cartographic.longitude - ( -Math.PI ) ) * quadtreePower;
       const latitudeIndex = ( cartographic.latitude - ( -Math.PI / 2 ) ) * quadtreePower;
 //       const positions = [Cesium.Cartographic.fromCartesian(position, ellipsoid)];
       const positions = [];
-      for (let m = -gridWidth / 2; m <= gridWidth / 2 + 1; m++) {
-        for (let n = -gridWidth / 2; n <= gridWidth / 2 + 1; n++) {
+      for (let m = -quadtreeGridWidth / 2; m <= quadtreeGridWidth / 2 + 1; m++) {
+        for (let n = -quadtreeGridWidth / 2; n <= quadtreeGridWidth / 2 + 1; n++) {
           const longitudeM = Math.floor(longitudeIndex + m) / quadtreePower + ( -Math.PI );
           const latitudeN = Math.floor(latitudeIndex + n) / quadtreePower + ( -Math.PI / 2 );
           const cartographicMN = new Cesium.Cartographic(longitudeM, latitudeN, 0);
