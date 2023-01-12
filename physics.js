@@ -397,10 +397,15 @@ function createVehicle(pos, quat) {
 //         }
         
         for (let i = 0; i < positions.length; i++) {
+          const skirtHeight = 1;
+          const cartographicSkirt = new Cesium.Cartographic(positions[i].longitude, positions[i].latitude, positions[i].height - skirtHeight);
           const cartesian3 = Cesium.Cartographic.toCartesian(positions[i], ellipsoid);
+          const skirtCartesian3 = Cesium.Cartographic.toCartesian(cartographicSkirt, ellipsoid);
+          
 //           theConsole.log( cartesian3 );
           if (showQuadtreeGrid) {
             addPoint(cartesian3);
+            addPoint(skirtCartesian3);
           }
         }
       }).catch(error => { throw error })
