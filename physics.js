@@ -348,11 +348,13 @@ function createVehicle(pos, quat) {
       Cesium.Cartesian3.add(position, originOffset, position);
       const terrainProvider = viewer.scene.globe.terrainProvider;
       const ellipsoid = terrainProvider.tilingScheme.projection.ellipsoid;
-//       quadtree
       const cartographic = Cesium.Cartographic.fromCartesian(position, ellipsoid);
-      const longitude = cartographic.longitude
-      const latitude = cartographic.latitude
-      console.log(longitude, latitude);
+      
+      const quadtreeLevel = 16;
+      const gridWidth = 8;
+      const longitudeIndex = ( cartographic.longitude - ( -Math.PI ) ) * Math.pow(2, quadtreeLevel);
+      const latitudeIndex = ( cartographic.latitude - ( -Math.PI / 2 ) ) * Math.pow(2, quadtreeLevel);
+      console.log(longitudeIndex, latitudeIndex);
       const positions = [Cesium.Cartographic.fromCartesian(position, ellipsoid)];
       const promise = Cesium.sampleTerrainMostDetailed(terrainProvider, positions);
       let theConsole = console;
