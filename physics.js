@@ -355,7 +355,7 @@ function createVehicle(pos, quat) {
       const gridWidth = 2;
       const longitudeIndex = ( cartographic.longitude - ( -Math.PI ) ) * quadtreePower;
       const latitudeIndex = ( cartographic.latitude - ( -Math.PI / 2 ) ) * quadtreePower;
-      console.log(longitudeIndex, latitudeIndex);
+//       console.log(longitudeIndex, latitudeIndex);
 //       const positions = [Cesium.Cartographic.fromCartesian(position, ellipsoid)];
       const positions = [];
       for (let m = -gridWidth / 2; m <= gridWidth / 2 + 1; m++) {
@@ -393,7 +393,7 @@ function createVehicle(pos, quat) {
 //           // tm.setOrigin(position);
 //         }
         
-//         theConsole.log(  );
+        theConsole.log( positions.length );
         for (let i = 0; i < positions.length; i++) {
           const cartesian3 = Cesium.Cartographic.toCartesian(positions[i], ellipsoid);
           addPoint(cartesian3);
