@@ -2,7 +2,7 @@
 
 let once = true;
 
-const quadtreeLevel = 20;
+const quadtreeLevel = 22;
 const quadtreeGridWidth = 2;
 
 let viewer;
