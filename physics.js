@@ -18,7 +18,7 @@ let vehicle;
 // - Global variables -
 const DISABLE_DEACTIVATION = 4;
 
-let gravityOn = true;
+let gravityOn = false;
 const gravity = 9.82;
 
 let speedometer;
