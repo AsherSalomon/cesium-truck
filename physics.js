@@ -448,6 +448,7 @@ class DestroyableTerrain {
           addPoint(skirtCartesian3);
         }
       }
+      // to do: create and destroy phisics terrain
     }).catch(error => { throw error })
     
 //     this.shapes = new Array(indices.length / 3);
