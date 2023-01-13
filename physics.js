@@ -1,7 +1,5 @@
 // https://github.com/kripken/ammo.js/blob/main/examples/webgl_demo_vehicle/index.html
 
-let once = true;
-
 const quadtreeLevel = 22;
 const quadtreePower = Math.pow(2, quadtreeLevel);
 const quadtreeGridWidth = 8;
@@ -359,8 +357,7 @@ function createVehicle(pos, quat) {
       Ammo.destroy(position);
     }
     
-    if ( once ) {
-      once = false;
+    if ( true ) {
       
       resetWhitelist();
       
