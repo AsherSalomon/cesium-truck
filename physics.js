@@ -451,11 +451,11 @@ class DestroyableTerrain {
       gravityOn = true;
     }).catch(error => { throw error })
     
-//     console.log('created');
+    console.log('created');
   }
 
   destroy() {
-//     console.log('destroyed');
+    console.log('destroyed');
     
     for (let i = 0; i < this.vertices.length; i++) {
       Ammo.destroy(this.vertices[i]);
