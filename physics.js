@@ -442,7 +442,7 @@ class DestroyableTerrain {
         const cartographicSkirt = new Cesium.Cartographic(positions[i].longitude, positions[i].latitude, positions[i].height - skirtHeight);
         const skirtCartesian3 = Cesium.Cartographic.toCartesian(cartographicSkirt, ellipsoid);
         if (showQuadtreeGrid) {
-          addPoint(cartesian3);
+          console.log(addPoint(cartesian3));
           addPoint(skirtCartesian3);
         }
       }
