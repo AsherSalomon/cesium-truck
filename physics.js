@@ -485,6 +485,7 @@ class DestroyableTerrain {
 
 //       physicsWorld.addRigidBody(this.terrainBodies[i]);
 //     }
+    console.log(this.longitudeIndex, this.latitudeIndex, 'created');
 
   }
 
