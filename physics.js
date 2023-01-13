@@ -418,7 +418,7 @@ class DestroyableTerrain {
   constructor(lon, lat) {
     this.longitudeIndex = lon;
     this.latitudeIndex = lat;
-    this.whitelist = false;
+    this.whitelist = true;
     
     const positions = [];
     for (let m = 0; m <= 1; m++) {
