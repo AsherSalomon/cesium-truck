@@ -415,6 +415,7 @@ class DestroyableTerrain {
     const promise = Cesium.sampleTerrainMostDetailed(terrainProvider, positions);
     const thisTerrain = this;
     Promise.resolve(promise).then(function(updatedPositions) {
+      thisTerrain.shape = new Ammo.btConvexHullShape();
       thisTerrain.vertices = new Array(8);
       for (let i = 0; i < positions.length; i++) {
         const cartesian3 = Cesium.Cartographic.toCartesian(positions[i], ellipsoid);
@@ -431,46 +432,22 @@ class DestroyableTerrain {
       for (let i = 0; i < thisTerrain.vertices.length; i++) {
         Cesium.Cartesian3.subtract(thisTerrain.vertices[i], originOffset, thisTerrain.vertices[i]);
         thisTerrain.vertices[i] = new Ammo.btVector3(thisTerrain.vertices[i].x, thisTerrain.vertices[i].y, thisTerrain.vertices[i].z);
+        thisTerrain.shape.addPoint(thisTerrain.vertices[i]);
       }
+      const transform = new Ammo.btTransform();
+      transform.setIdentity();
+      transform.setOrigin(new Ammo.btVector3(0, 0, 0));
+      transform.setRotation(new Ammo.btQuaternion(0, 0, 0, 1));
+      thisTerrain.motionState = new Ammo.btDefaultMotionState(transform);
+      Ammo.destroy(transform);
+      thisTerrain.localInertia = new Ammo.btVector3(0, 0, 0);
+
+      const rbInfo = new Ammo.btRigidBodyConstructionInfo(0, thisTerrain.motionState, thisTerrain.shape, thisTerrain.localInertia);
+      thisTerrain.terrainBody = new Ammo.btRigidBody(rbInfo);
+      Ammo.destroy(rbInfo);
+
+      physicsWorld.addRigidBody(thisTerrain.terrainBody);
     }).catch(error => { throw error })
-    
-//     this.shapes = new Array(indices.length / 3);
-//     this.vertices = new Array(positions.length);
-//     this.skirtices = new Array(positions.length);
-//     for (let i = 0; i < positions.length; i++) {
-//       Cesium.Cartesian3.subtract(positions[i], originOffset, positions[i]);
-//       this.vertices[i] = new Ammo.btVector3(positions[i].x, positions[i].y, positions[i].z);
-//     }
-//     const normal = originOffset.clone();
-//     Cesium.Cartesian3.normalize(normal, normal);
-//     Cesium.Cartesian3.multiplyByScalar(normal, skirtHeight, normal);
-//     for (let i = 0; i < positions.length; i++) {
-//       Cesium.Cartesian3.subtract(positions[i], normal, positions[i]);
-//       this.skirtices[i] = new Ammo.btVector3(positions[i].x, positions[i].y, positions[i].z);
-//     }
-//     for (let i = 0; i < indices.length; i += 3) {
-//       this.shapes[i / 3] = new Ammo.btConvexHullShape();
-//       for (let j = 0; j < 3; j++) {
-//         this.shapes[i / 3].addPoint(this.vertices[indices[i + j]]);
-//         this.shapes[i / 3].addPoint(this.skirtices[indices[i + j]]);
-//       }
-//     }
-//     const transform = new Ammo.btTransform();
-//     transform.setIdentity();
-//     transform.setOrigin(new Ammo.btVector3(0, 0, 0));
-//     transform.setRotation(new Ammo.btQuaternion(0, 0, 0, 1));
-//     this.motionState = new Ammo.btDefaultMotionState(transform);
-//     Ammo.destroy(transform);
-//     this.localInertia = new Ammo.btVector3(0, 0, 0);
-
-//     this.terrainBodies = new Array(this.shapes.length);
-//     for (let i = 0; i < this.shapes.length; i++) {
-//       const rbInfo = new Ammo.btRigidBodyConstructionInfo(0, this.motionState, this.shapes[i], this.localInertia);
-//       this.terrainBodies[i] = new Ammo.btRigidBody(rbInfo);
-//       Ammo.destroy(rbInfo);
-
-//       physicsWorld.addRigidBody(this.terrainBodies[i]);
-//     }
     
 //     console.log('created');
   }
@@ -478,28 +455,21 @@ class DestroyableTerrain {
   destroy() {
 //     console.log('destroyed');
     
-//     for (let i = 0; i < this.terrainBodies.length; i++) {
-//       physicsWorld.removeRigidBody(this.terrainBodies[i]);
-//     }
+    for (let i = 0; i < this.vertices.length; i++) {
+      Ammo.destroy(this.vertices[i]);
+    }
+    delete this.vertices;
+    Ammo.destroy(this.shape);
+    delete this.shape;
+    
+    physicsWorld.removeRigidBody(this.terrainBody);
 
-//     for (let i = 0; i < this.vertices.length; i++) {
-//       Ammo.destroy(this.vertices[i]);
-//       Ammo.destroy(this.skirtices[i]);
-//     }
-//     delete this.vertices;
-//     delete this.skirtices;
-//     for (let i = 0; i < this.shapes.length; i++) {
-//       Ammo.destroy(this.shapes[i]);
-//     }
-//     delete this.shapes;
-//     Ammo.destroy(this.motionState);
-//     Ammo.destroy(this.localInertia);
-//     delete this.motionState;
-//     delete this.localInertia;
-//     for (let i = 0; i < this.terrainBodies.length; i++) {
-//       Ammo.destroy(this.terrainBodies[i]);
-//     }
-//     delete this.terrainBodies;
+    Ammo.destroy(this.motionState);
+    Ammo.destroy(this.localInertia);
+    delete this.motionState;
+    delete this.localInertia;
+    Ammo.destroy(this.terrainBody);
+    delete this.terrainBody;
   }
 
 }
