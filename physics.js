@@ -447,6 +447,8 @@ class DestroyableTerrain {
       Ammo.destroy(rbInfo);
 
       physicsWorld.addRigidBody(thisTerrain.terrainBody);
+      
+      gravityOn = true;
     }).catch(error => { throw error })
     
 //     console.log('created');
