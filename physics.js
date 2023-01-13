@@ -87,6 +87,8 @@ export function update(delta) {
     const body = vehicle.getRigidBody();
     body.setLinearVelocity(new Ammo.btVector3(0, 0, 0));
     body.setAngularVelocity(new Ammo.btVector3(0, 0, 0));
+    
+    once = true;
   }
   
   if (truckSelected) {
