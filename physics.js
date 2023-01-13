@@ -464,8 +464,8 @@ class DestroyableTerrain {
     physicsWorld.removeRigidBody(this.terrainBody);
 
     Ammo.destroy(this.motionState);
-    Ammo.destroy(this.localInertia);
     delete this.motionState;
+    Ammo.destroy(this.localInertia);
     delete this.localInertia;
     Ammo.destroy(this.terrainBody);
     delete this.terrainBody;
