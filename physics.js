@@ -521,7 +521,7 @@ function tryToCreateTerrain(lon, lat) {
     }
   }
   if (alreadyCreated == false) {
-    createTerrain(lon, lat, data);
+    createTerrain(lon, lat);
   }
 }
 
