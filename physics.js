@@ -428,7 +428,10 @@ class DestroyableTerrain {
         thisTerrain.vertices[i * 2] = cartesian3;
         thisTerrain.vertices[i * 2 + 1] = skirtCartesian3;
       }
-      
+      for (let i = 0; i < thisTerrain.vertices.length; i++) {
+        Cesium.Cartesian3.subtract(thisTerrain.vertices[i], originOffset, thisTerrain.vertices[i]);
+        thisTerrain.vertices[i] = new Ammo.btVector3(thisTerrain.vertices[i].x, thisTerrain.vertices[i].y, thisTerrain.vertices[i].z);
+      }
     }).catch(error => { throw error })
     
 //     this.shapes = new Array(indices.length / 3);
