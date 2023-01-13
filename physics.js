@@ -486,11 +486,11 @@ class DestroyableTerrain {
 //       physicsWorld.addRigidBody(this.terrainBodies[i]);
 //     }
     
-    console.log('created');
+//     console.log('created');
   }
 
   destroy() {
-    console.log('destroyed');
+//     console.log('destroyed');
     
 //     for (let i = 0; i < this.terrainBodies.length; i++) {
 //       physicsWorld.removeRigidBody(this.terrainBodies[i]);
