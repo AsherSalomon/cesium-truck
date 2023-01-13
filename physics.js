@@ -488,7 +488,7 @@ class DestroyableTerrain {
 
   }
 
-//   destroy() {
+  destroy() {
 //     for (let i = 0; i < this.terrainBodies.length; i++) {
 //       physicsWorld.removeRigidBody(this.terrainBodies[i]);
 //     }
@@ -511,7 +511,7 @@ class DestroyableTerrain {
 //       Ammo.destroy(this.terrainBodies[i]);
 //     }
 //     delete this.terrainBodies;
-//   }
+  }
 
 }
 
