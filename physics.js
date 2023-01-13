@@ -374,38 +374,14 @@ function createVehicle(pos, quat) {
       const longitudeIndex = ( cartographic.longitude - ( -Math.PI ) ) * quadtreePower;
       const latitudeIndex = ( cartographic.latitude - ( -Math.PI / 2 ) ) * quadtreePower;
       
-//       const positions = [];
-//       const quadtreeNames = [];
       for (let m = -quadtreeGridWidth / 2; m <= quadtreeGridWidth / 2; m++) {
         for (let n = -quadtreeGridWidth / 2; n <= quadtreeGridWidth / 2; n++) {
           const indexM = Math.floor(longitudeIndex + m);
           const indexN = Math.floor(latitudeIndex + n);
           
           tryToCreateTerrain(indexM, indexN);
-//           const longitudeM = indexM / quadtreePower + ( -Math.PI );
-//           const latitudeN = indexN / quadtreePower + ( -Math.PI / 2 );
-//           const cartographicMN = new Cesium.Cartographic(longitudeM, latitudeN, 0);
-//           positions.push(cartographicMN);
-//           quadtreeNames.push(indexM + '_' + indexN);
         }
       }
-      
-//       const promise = Cesium.sampleTerrainMostDetailed(terrainProvider, positions);
-      
-//       Promise.resolve(promise).then(function(updatedPositions) {
-        
-//         for (let i = 0; i < positions.length; i++) {
-//           const skirtHeight = 1;
-//           const cartographicSkirt = new Cesium.Cartographic(positions[i].longitude, positions[i].latitude, positions[i].height - skirtHeight);
-//           const cartesian3 = Cesium.Cartographic.toCartesian(positions[i], ellipsoid);
-//           const skirtCartesian3 = Cesium.Cartographic.toCartesian(cartographicSkirt, ellipsoid);
-      
-//           if (showQuadtreeGrid) {
-//             addPoint(cartesian3);
-//             addPoint(skirtCartesian3);
-//           }
-//         }
-//       }).catch(error => { throw error })
       
       cleanUpTerrain();
     }
@@ -437,7 +413,9 @@ class DestroyableTerrain {
     const terrainProvider = viewer.scene.globe.terrainProvider;
     const ellipsoid = terrainProvider.tilingScheme.projection.ellipsoid;
     const promise = Cesium.sampleTerrainMostDetailed(terrainProvider, positions);
+    const thisTerrain = this;
     Promise.resolve(promise).then(function(updatedPositions) {
+      thisTerrain.vertices = new Array(8);
       for (let i = 0; i < positions.length; i++) {
         const cartesian3 = Cesium.Cartographic.toCartesian(positions[i], ellipsoid);
         const skirtHeight = 1;
@@ -447,8 +425,10 @@ class DestroyableTerrain {
           addPoint(cartesian3);
           addPoint(skirtCartesian3);
         }
+        thisTerrain.vertices[i * 2] = cartesian3;
+        thisTerrain.vertices[i * 2 + 1] = skirtCartesian3;
       }
-      // to do: create and destroy phisics terrain
+      
     }).catch(error => { throw error })
     
 //     this.shapes = new Array(indices.length / 3);
