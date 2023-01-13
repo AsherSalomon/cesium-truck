@@ -486,11 +486,11 @@ class DestroyableTerrain {
 //       physicsWorld.addRigidBody(this.terrainBodies[i]);
 //     }
     
-//     console.log(this.longitudeIndex, this.latitudeIndex, 'created');
+    console.log('created');
   }
 
   destroy() {
-//     console.log(this.longitudeIndex, this.latitudeIndex, 'destoyed');
+    console.log('destroyed');
     
 //     for (let i = 0; i < this.terrainBodies.length; i++) {
 //       physicsWorld.removeRigidBody(this.terrainBodies[i]);
@@ -523,7 +523,6 @@ function createTerrain(lon, lat) {
 }
 
 function tryToCreateTerrain(lon, lat) {
-  let counter = 0;
   let alreadyCreated = false;
   for (let i = 0; i < terrainBodies.length; i++) {
     if (terrainBodies[i].longitudeIndex == lon && terrainBodies[i].latitudeIndex == lat) {
@@ -534,9 +533,7 @@ function tryToCreateTerrain(lon, lat) {
   }
   if (alreadyCreated == false) {
     createTerrain(lon, lat);
-    counter++;
   }
-  console.log(counter, 'created');
 }
 
 // function removeTerrain(lon, lat) {
@@ -557,14 +554,11 @@ function resetWhitelist() {
 }
 
 function cleanUpTerrain() {
-  let counter = 0;
   for (let i = terrainBodies.length - 1; i >= 0; i--) {
     if(terrainBodies[i].whitelist == false) {
       terrainBodies[i].destroy();
       delete terrainBodies[i];
       terrainBodies.splice(i, 1);
-      counter++;
     }
   }
-  console.log(counter, 'destroyed');
 }
