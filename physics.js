@@ -85,7 +85,7 @@ export function update(delta) {
     body.setLinearVelocity(new Ammo.btVector3(0, 0, 0));
     body.setAngularVelocity(new Ammo.btVector3(0, 0, 0));
     
-    
+    resetOriginOffset();
   }
   
   if (truckSelected) {
