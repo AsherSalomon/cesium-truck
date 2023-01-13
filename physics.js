@@ -360,6 +360,8 @@ function createVehicle(pos, quat) {
     if ( once ) {
       once = false;
       
+      resetWhitelist();
+      
       position = new Cesium.Cartesian3(p.x(), p.y(), p.z());
       Cesium.Cartesian3.add(position, originOffset, position);
       
@@ -402,6 +404,8 @@ function createVehicle(pos, quat) {
 //           }
 //         }
 //       }).catch(error => { throw error })
+      
+      cleanUpTerrain();
     }
     
   }
@@ -414,6 +418,7 @@ class DestroyableTerrain {
   constructor(lon, lat) {
     this.longitudeIndex = lon;
     this.latitudeIndex = lat;
+    this.whitelist = false;
     
     const positions = [];
     for (let m = 0; m <= 1; m++) {
@@ -510,7 +515,7 @@ class DestroyableTerrain {
 
 }
 
-export function createTerrain(lon, lat) {
+function createTerrain(lon, lat) {
   terrainBodies.push(new DestroyableTerrain(lon, lat));
 }
 
@@ -519,23 +524,38 @@ function tryToCreateTerrain(lon, lat) {
   for (let i = 0; i < terrainBodies.length; i++) {
     if (terrainBodies[i].longitudeIndex == lon && terrainBodies[i].latitudeIndex == lat) {
       alreadyCreated = true;
+      terrainBodies[i].whitelist = true;
       break;
     }
   }
   if (alreadyCreated == false) {
     createTerrain(lon, lat);
-  } else {
-    console.log('redundancy', lon, lat);
   }
 }
 
-export function removeTerrain(lon, lat) {
+// function removeTerrain(lon, lat) {
+//   for (let i = 0; i < terrainBodies.length; i++) {
+//     if (terrainBodies[i].longitudeIndex == lon && terrainBodies[i].latitudeIndex == lat) {
+//       terrainBodies[i].destroy();
+//       delete terrainBodies[i];
+//       terrainBodies.splice(i, 1);
+//       break;
+//     }
+//   }
+// }
+
+function resetWhitelist() {
   for (let i = 0; i < terrainBodies.length; i++) {
-    if (terrainBodies[i].longitudeIndex == lon && terrainBodies[i].latitudeIndex == lat) {
+    terrainBodies[i].whitelist = false;
+  }
+}
+
+function cleanUpTerrain() {
+  for (let i = terrainBodies.length - 1; i >= 0; i--) {
+    if(terrainBodies[i].whitelist == false) {
       terrainBodies[i].destroy();
-      delete terrainBodies[tileName];
+      delete terrainBodies[i];
       terrainBodies.splice(i, 1);
-      break;
     }
   }
 }
