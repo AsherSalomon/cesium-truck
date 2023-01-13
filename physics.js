@@ -85,7 +85,7 @@ export function update(delta) {
     body.setLinearVelocity(new Ammo.btVector3(0, 0, 0));
     body.setAngularVelocity(new Ammo.btVector3(0, 0, 0));
     
-    once = true;
+    
   }
   
   if (truckSelected) {
@@ -143,6 +143,11 @@ function addPoint(cartesian3) {
   });
 }
 
+function resetOriginOffset() {
+  const position = truckEntities[0].position.getValue(truckEntities.now());
+  originOffset = new Cesium.Cartesian3(position.x, position.y, position.z);
+}
+
 function createVehicle(pos, quat) {
 
   // Vehicle contants
@@ -185,7 +190,7 @@ function createVehicle(pos, quat) {
   const transform = new Ammo.btTransform();
   transform.setIdentity();
   transform.setOrigin(new Ammo.btVector3(0, 0, 0));
-  originOffset = new Cesium.Cartesian3(pos.x, pos.y, pos.z); // to do, reset originOffest each time the truck is placed somewhere on earth.
+  resetOriginOffset();
 
   const quatB = new Cesium.Quaternion(0, 0, 0, 1);
   Cesium.Quaternion.fromAxisAngle(Cesium.Cartesian3.UNIT_X, Math.PI / 2, quatB);
