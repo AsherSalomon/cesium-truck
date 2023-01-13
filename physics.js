@@ -489,6 +489,7 @@ class DestroyableTerrain {
   }
 
   destroy() {
+    console.log(this.longitudeIndex, this.latitudeIndex, 'destoyed');
 //     for (let i = 0; i < this.terrainBodies.length; i++) {
 //       physicsWorld.removeRigidBody(this.terrainBodies[i]);
 //     }
