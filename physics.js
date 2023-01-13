@@ -524,6 +524,8 @@ function tryToCreateTerrain(lon, lat) {
   }
   if (alreadyCreated == false) {
     createTerrain(lon, lat);
+  } else {
+    console.log('redundancy', lon, lat);
   }
 }
 
