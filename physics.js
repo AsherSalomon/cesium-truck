@@ -493,7 +493,8 @@ class DestroyableTerrain {
 
   destroy() {
     for (let i = 0; i < this.points.length; i++) {
-      viewer.entities.remove(this.points[i]);
+//       viewer.entities.remove(this.points[i]);
+      this.points[i].show = false;
     }
 //     for (let i = 0; i < this.terrainBodies.length; i++) {
 //       physicsWorld.removeRigidBody(this.terrainBodies[i]);
