@@ -9,7 +9,7 @@ const showQuadtreeGrid = true;
 let viewer;
 
 let truckEntities;
-const terrainBodies = {};
+const terrainBodies = [];
 let originOffset;
 
 let vehicle;
@@ -86,7 +86,6 @@ export function update(delta) {
     const body = vehicle.getRigidBody();
     body.setLinearVelocity(new Ammo.btVector3(0, 0, 0));
     body.setAngularVelocity(new Ammo.btVector3(0, 0, 0));
-    
   }
   
   if (truckSelected) {
@@ -357,9 +356,10 @@ function createVehicle(pos, quat) {
     
     if ( once ) {
       once = false;
+      
       position = new Cesium.Cartesian3(p.x(), p.y(), p.z());
       Cesium.Cartesian3.add(position, originOffset, position);
-//       console.log(position);
+      
       const terrainProvider = viewer.scene.globe.terrainProvider;
       const ellipsoid = terrainProvider.tilingScheme.projection.ellipsoid;
       const cartographic = Cesium.Cartographic.fromCartesian(position, ellipsoid);
@@ -367,37 +367,39 @@ function createVehicle(pos, quat) {
       const quadtreePower = Math.pow(2, quadtreeLevel);
       const longitudeIndex = ( cartographic.longitude - ( -Math.PI ) ) * quadtreePower;
       const latitudeIndex = ( cartographic.latitude - ( -Math.PI / 2 ) ) * quadtreePower;
-//       const positions = [Cesium.Cartographic.fromCartesian(position, ellipsoid)];
-      const positions = [];
-      const quadtreeNames = [];
-      for (let m = -quadtreeGridWidth / 2; m <= quadtreeGridWidth / 2 + 1; m++) {
-        for (let n = -quadtreeGridWidth / 2; n <= quadtreeGridWidth / 2 + 1; n++) {
+      
+//       const positions = [];
+//       const quadtreeNames = [];
+      for (let m = -quadtreeGridWidth / 2; m <= quadtreeGridWidth / 2; m++) {
+        for (let n = -quadtreeGridWidth / 2; n <= quadtreeGridWidth / 2; n++) {
           const indexM = Math.floor(longitudeIndex + m);
           const indexN = Math.floor(latitudeIndex + n);
-          const longitudeM = indexM / quadtreePower + ( -Math.PI );
-          const latitudeN = indexN / quadtreePower + ( -Math.PI / 2 );
-          const cartographicMN = new Cesium.Cartographic(longitudeM, latitudeN, 0);
-          positions.push(cartographicMN);
-          quadtreeNames.push(indexM + '_' + indexN);
+          
+          tryToCreateTerrain(indexM, indexN);
+//           const longitudeM = indexM / quadtreePower + ( -Math.PI );
+//           const latitudeN = indexN / quadtreePower + ( -Math.PI / 2 );
+//           const cartographicMN = new Cesium.Cartographic(longitudeM, latitudeN, 0);
+//           positions.push(cartographicMN);
+//           quadtreeNames.push(indexM + '_' + indexN);
         }
       }
       
-      const promise = Cesium.sampleTerrainMostDetailed(terrainProvider, positions);
-      let theConsole = console;
-      Promise.resolve(promise).then(function(updatedPositions) {
+//       const promise = Cesium.sampleTerrainMostDetailed(terrainProvider, positions);
+      
+//       Promise.resolve(promise).then(function(updatedPositions) {
         
-        for (let i = 0; i < positions.length; i++) {
-          const skirtHeight = 1;
-          const cartographicSkirt = new Cesium.Cartographic(positions[i].longitude, positions[i].latitude, positions[i].height - skirtHeight);
-          const cartesian3 = Cesium.Cartographic.toCartesian(positions[i], ellipsoid);
-          const skirtCartesian3 = Cesium.Cartographic.toCartesian(cartographicSkirt, ellipsoid);
-//           theConsole.log( cartesian3 );
-          if (showQuadtreeGrid) {
-            addPoint(cartesian3);
-            addPoint(skirtCartesian3);
-          }
-        }
-      }).catch(error => { throw error })
+//         for (let i = 0; i < positions.length; i++) {
+//           const skirtHeight = 1;
+//           const cartographicSkirt = new Cesium.Cartographic(positions[i].longitude, positions[i].latitude, positions[i].height - skirtHeight);
+//           const cartesian3 = Cesium.Cartographic.toCartesian(positions[i], ellipsoid);
+//           const skirtCartesian3 = Cesium.Cartographic.toCartesian(cartographicSkirt, ellipsoid);
+      
+//           if (showQuadtreeGrid) {
+//             addPoint(cartesian3);
+//             addPoint(skirtCartesian3);
+//           }
+//         }
+//       }).catch(error => { throw error })
     }
     
   }
@@ -406,8 +408,39 @@ function createVehicle(pos, quat) {
 
 }
 
-class DestroyableTerrainC {
-//   constructor(positions, indices, skirtHeight) {
+class DestroyableTerrain {
+  constructor(lon, lat) {
+    this.longitudeIndex = lon;
+    this.latitudeIndex = lat;
+    
+    const positions = [];
+    for (let m = 0; m <= 1; m++) {
+      for (let n = 0; n <= 1; n++) {
+        const indexM = Math.floor(this.longitudeIndex + m);
+        const indexN = Math.floor(this.latitudeIndex + n);
+        const longitudeM = indexM / quadtreePower + ( -Math.PI );
+        const latitudeN = indexN / quadtreePower + ( -Math.PI / 2 );
+        const cartographicMN = new Cesium.Cartographic(longitudeM, latitudeN, 0);
+        positions.push(cartographicMN);
+      }
+    }
+    
+    const terrainProvider = viewer.scene.globe.terrainProvider;
+    const ellipsoid = terrainProvider.tilingScheme.projection.ellipsoid;
+    const promise = Cesium.sampleTerrainMostDetailed(terrainProvider, positions);
+    Promise.resolve(promise).then(function(updatedPositions) {
+      for (let i = 0; i < positions.length; i++) {
+        const cartesian3 = Cesium.Cartographic.toCartesian(positions[i], ellipsoid);
+        const skirtHeight = 1;
+        const cartographicSkirt = new Cesium.Cartographic(positions[i].longitude, positions[i].latitude, positions[i].height - skirtHeight);
+        const skirtCartesian3 = Cesium.Cartographic.toCartesian(cartographicSkirt, ellipsoid);
+        if (showQuadtreeGrid) {
+          addPoint(cartesian3);
+          addPoint(skirtCartesian3);
+        }
+      }
+    }).catch(error => { throw error })
+    
 //     this.shapes = new Array(indices.length / 3);
 //     this.vertices = new Array(positions.length);
 //     this.skirtices = new Array(positions.length);
@@ -446,7 +479,7 @@ class DestroyableTerrainC {
 //       physicsWorld.addRigidBody(this.terrainBodies[i]);
 //     }
 
-//   }
+  }
 
 //   destroy() {
 //     for (let i = 0; i < this.terrainBodies.length; i++) {
@@ -475,18 +508,30 @@ class DestroyableTerrainC {
 
 }
 
-export function createTerrain(positions, indices, skirtHeight, tileName) {
-//   gravityOn = true;
-
-//   terrainBodies[tileName] = new DestroyableTerrain(positions, indices, skirtHeight);
-//   // console.log(Object.keys(terrainBodies).length, 'terrainBodies');
-
+export function createTerrain(lon, lat) {
+  terrainBodies.push(new DestroyableTerrain(lon, lat));
 }
 
-export function removeTerrain(tileName) {
-//   terrainBodies[tileName].destroy();
-//   delete terrainBodies[tileName];
-//   // console.log(Object.keys(terrainBodies).length, 'terrainBodies');
-
+function tryToCreateTerrain(lon, lat) {
+  let alreadyCreated = false;
+  for (let i = 0; i < terrainBodies.length; i++) {
+    if (terrainBodies[i].longitudeIndex == lon && terrainBodies[i].latitudeIndex == lat) {
+      alreadyCreated = true;
+      break;
+    }
+  }
+  if (alreadyCreated == false) {
+    createTerrain(lon, lat, data);
+  }
 }
 
+export function removeTerrain(lon, lat) {
+  for (let i = 0; i < terrainBodies.length; i++) {
+    if (terrainBodies[i].longitudeIndex == lon && terrainBodies[i].latitudeIndex == lat) {
+      terrainBodies[i].destroy();
+      delete terrainBodies[tileName];
+      terrainBodies.splice(i, 1);
+      break;
+    }
+  }
+}
