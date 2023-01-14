@@ -413,7 +413,7 @@ class DestroyableTerrain {
     this.isResolved = false;
     const thisTerrain = this;
     Promise.resolve(promise).then(function(updatedPositions) {
-      isResolved = true;
+      thisTerrain.isResolved = true;
       thisTerrain.shape = new Ammo.btConvexHullShape();
       thisTerrain.vertices = new Array(8);
       for (let i = 0; i < positions.length; i++) {
