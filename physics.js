@@ -410,8 +410,10 @@ class DestroyableTerrain {
     const terrainProvider = viewer.scene.globe.terrainProvider;
     const ellipsoid = terrainProvider.tilingScheme.projection.ellipsoid;
     const promise = Cesium.sampleTerrainMostDetailed(terrainProvider, positions);
+    this.isResolved = false;
     const thisTerrain = this;
     Promise.resolve(promise).then(function(updatedPositions) {
+      isResolved = true;
       thisTerrain.shape = new Ammo.btConvexHullShape();
       thisTerrain.vertices = new Array(8);
       for (let i = 0; i < positions.length; i++) {
@@ -453,25 +455,23 @@ class DestroyableTerrain {
 
   destroy() {
 //     console.log('destroyed');
-    
-    if (this.verticies == undefined) {
-      console.log('undefined');
-    }
-    for (let i = 0; i < this.vertices.length; i++) {
-      Ammo.destroy(this.vertices[i]);
-    }
-    delete this.vertices;
-    Ammo.destroy(this.shape);
-    delete this.shape;
-    
-    physicsWorld.removeRigidBody(this.terrainBody);
+    if (this.isResolved) {
+      for (let i = 0; i < this.vertices.length; i++) {
+        Ammo.destroy(this.vertices[i]);
+      }
+      delete this.vertices;
+      Ammo.destroy(this.shape);
+      delete this.shape;
 
-    Ammo.destroy(this.motionState);
-    delete this.motionState;
-    Ammo.destroy(this.localInertia);
-    delete this.localInertia;
-    Ammo.destroy(this.terrainBody);
-    delete this.terrainBody;
+      physicsWorld.removeRigidBody(this.terrainBody);
+
+      Ammo.destroy(this.motionState);
+      delete this.motionState;
+      Ammo.destroy(this.localInertia);
+      delete this.localInertia;
+      Ammo.destroy(this.terrainBody);
+      delete this.terrainBody;
+    }
   }
 
 }
@@ -493,17 +493,6 @@ function tryToCreateTerrain(lon, lat) {
     createTerrain(lon, lat);
   }
 }
-
-// function removeTerrain(lon, lat) {
-//   for (let i = 0; i < terrainBodies.length; i++) {
-//     if (terrainBodies[i].longitudeIndex == lon && terrainBodies[i].latitudeIndex == lat) {
-//       terrainBodies[i].destroy();
-//       delete terrainBodies[i];
-//       terrainBodies.splice(i, 1);
-//       break;
-//     }
-//   }
-// }
 
 function resetWhitelist() {
   for (let i = 0; i < terrainBodies.length; i++) {
