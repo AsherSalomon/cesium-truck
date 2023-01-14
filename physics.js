@@ -357,7 +357,7 @@ function createVehicle(pos, quat) {
       Ammo.destroy(position);
     }
     
-    if (truckSelected) {
+    if (viewer.trackedEntity == truckEntities[0]) {
       
       resetWhitelist();
       
