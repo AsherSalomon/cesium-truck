@@ -454,6 +454,9 @@ class DestroyableTerrain {
   destroy() {
 //     console.log('destroyed');
     
+    if (this.verticies == undefined) {
+      console.log('undefined');
+    }
     for (let i = 0; i < this.vertices.length; i++) {
       Ammo.destroy(this.vertices[i]);
     }
