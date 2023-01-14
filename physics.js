@@ -64,7 +64,8 @@ let frameCount = 0;
 let previousTruckSelected = false;
 export function update(delta) {
   const truckSelected = viewer.trackedEntity == truckEntities[0];
-  if (truckSelected && truckSelected != previousTruckSelected) {
+//   if (truckSelected && truckSelected != previousTruckSelected) {
+  if (truckSelected == false) {
     resetOriginOffset();
     
     const position = truckEntities[0].position._value;
@@ -91,7 +92,8 @@ export function update(delta) {
     cleanUpTerrain();
   }
   
-  if (truckSelected) {
+//   if (truckSelected) {
+  if (true) {
     if (gravityOn) {
       const position = truckEntities[0].position.getValue(truckEntities.now());
       const normal = new Ammo.btVector3(position.x, position.y, position.z);
