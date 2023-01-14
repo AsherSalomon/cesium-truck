@@ -357,7 +357,7 @@ function createVehicle(pos, quat) {
       Ammo.destroy(position);
     }
     
-    if ( true ) {
+    if (truckSelected) {
       
       resetWhitelist();
       
