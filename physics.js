@@ -67,7 +67,7 @@ let previousTruckSelected = false;
 export function update(delta) {
   const truckSelected = viewer.trackedEntity == truckEntities[0];
 //   if (truckSelected && truckSelected != previousTruckSelected) {
-  if (truckSelected == false || hardReset) {
+  if (truckSelected == false) {
     resetOriginOffset();
     
     const position = truckEntities[0].position._value;
@@ -118,6 +118,7 @@ export function update(delta) {
   const position = truckEntities[0].position.getValue(truckEntities.now());
   if (Cesium.Cartesian3.magnitude(position) < deadSeaElevation) {
     hardReset = true;
+    viewer.trackedEntity = null;
   } else {
     hardReset = false;
   }
