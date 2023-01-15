@@ -20,6 +20,7 @@ let gravityOn = false;
 const gravity = 9.82;
 
 let speedometer;
+const limiter = 85;//mph
 
 // Physics variables
 let collisionConfiguration;
@@ -261,15 +262,15 @@ function createVehicle(pos, quat) {
 
   // Sync keybord actions and physics and graphics
   function sync(dt) {
-    const speed = vehicle.getCurrentSpeedKmHour();
-    speedometer.innerHTML = Math.abs(speed * 0.621371).toFixed(0) + ' mph';
+    const speed = vehicle.getCurrentSpeedKmHour() * 0.621371;
+    speedometer.innerHTML = Math.abs(speed).toFixed(0) + ' mph';
     
     breakingForce = 0;
     engineForce = 0;
-    if (actions.acceleration) {
+    if (actions.acceleration && speed < limiter) {
       parkingBrake = false;
       if (speed < -1) breakingForce = maxBreakingForce; else engineForce = maxEngineForce;
-    } else if (actions.braking) {
+    } else if (actions.braking && speed > -limiter) {
       parkingBrake = false;
       if (speed > 1) breakingForce = maxBreakingForce; else engineForce = -maxEngineForce;
     } else if (Math.abs(speed) < 1 || parkingBrake) {
