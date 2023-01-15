@@ -40,6 +40,7 @@ const keysActions = {
   "KeyR":'reset'
 };
 let parkingBrake = false;
+let hardReset = false;
 
 export function init(newTruck, newViewer) {
   truckEntities = newTruck;
@@ -65,7 +66,7 @@ let previousTruckSelected = false;
 export function update(delta) {
   const truckSelected = viewer.trackedEntity == truckEntities[0];
 //   if (truckSelected && truckSelected != previousTruckSelected) {
-  if (truckSelected == false) {
+  if (truckSelected == false || hardReset) {
     resetOriginOffset();
     
     const position = truckEntities[0].position._value;
@@ -111,6 +112,14 @@ export function update(delta) {
     }
   }
   previousTruckSelected = truckSelected;
+  
+  const deadSeaElevation = 430.5;
+  const position = truckEntities[0].position.getValue(truckEntities.now());
+  if (Cesium.Cartesian3.magnitude(position) < deadSeaElevation) {
+    hardReset = true;
+  } else {
+    hardReset = false;
+  }
 }
 
 
