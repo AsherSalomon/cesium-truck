@@ -118,6 +118,7 @@ export function update(delta) {
   const position = truckEntities[0].position.getValue(truckEntities.now());
   if (Cesium.Cartesian3.magnitude(position) < deadSeaElevation) {
     hardReset = true;
+    console.log('hardReset');
     viewer.trackedEntity = null;
   } else {
     hardReset = false;
