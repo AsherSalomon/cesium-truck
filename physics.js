@@ -116,14 +116,16 @@ export function update(delta) {
   
   const deadSeaElevation = 430.5;
   const position = truckEntities[0].position.getValue(truckEntities.now());
-  console.log(Cesium.Cartesian3.magnitude(position), 6378100 - deadSeaElevation);
-  if (Cesium.Cartesian3.magnitude(position) < 6378100 - deadSeaElevation) {
-    hardReset = true;
-    console.log('hardReset');
-    viewer.trackedEntity = null;
-  } else {
-    hardReset = false;
-  }
+  const ellipsoid = terrainProvider.tilingScheme.projection.ellipsoid;
+  const cartographic = Cesium.Cartographic.fromCartesian(position, ellipsoid);
+  console.log(cartographic.elevation, deadSeaElevation);
+//   if (Cesium.Cartesian3.magnitude(position) < 6378100 - deadSeaElevation) {
+//     hardReset = true;
+//     console.log('hardReset');
+//     viewer.trackedEntity = null;
+//   } else {
+//     hardReset = false;
+//   }
 }
 
 
