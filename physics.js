@@ -116,6 +116,7 @@ export function update(delta) {
   
   const deadSeaElevation = 430.5;
   const position = truckEntities[0].position.getValue(truckEntities.now());
+  const terrainProvider = viewer.scene.globe.terrainProvider;
   const ellipsoid = terrainProvider.tilingScheme.projection.ellipsoid;
   const cartographic = Cesium.Cartographic.fromCartesian(position, ellipsoid);
   console.log(cartographic.elevation, deadSeaElevation);
