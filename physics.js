@@ -120,6 +120,7 @@ export function update(delta) {
   const ellipsoid = terrainProvider.tilingScheme.projection.ellipsoid;
   const cartographic = Cesium.Cartographic.fromCartesian(position, ellipsoid);
   if (cartographic.height < deadSeaElevation) {
+    console.log(cartographic.height, deadSeaElevation);
     hardReset = true;
     console.log('hardReset');
     viewer.trackedEntity = null;
