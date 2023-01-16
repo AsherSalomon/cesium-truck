@@ -114,7 +114,7 @@ export function update(delta) {
   }
   previousTruckSelected = truckSelected;
   
-  const deadSeaElevation = 430.5;
+  const deadSeaElevation = -430.5;
   const position = truckEntities[0].position.getValue(truckEntities.now());
   const terrainProvider = viewer.scene.globe.terrainProvider;
   const ellipsoid = terrainProvider.tilingScheme.projection.ellipsoid;
