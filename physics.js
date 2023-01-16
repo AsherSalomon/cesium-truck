@@ -120,13 +120,13 @@ export function update(delta) {
   const ellipsoid = terrainProvider.tilingScheme.projection.ellipsoid;
   const cartographic = Cesium.Cartographic.fromCartesian(position, ellipsoid);
   console.log(cartographic.height, deadSeaElevation);
-//   if (Cesium.Cartesian3.magnitude(position) < 6378100 - deadSeaElevation) {
-//     hardReset = true;
-//     console.log('hardReset');
-//     viewer.trackedEntity = null;
-//   } else {
-//     hardReset = false;
-//   }
+  if (cartographic.height < deadSeaElevation) {
+    hardReset = true;
+    console.log('hardReset');
+    viewer.trackedEntity = null;
+  } else {
+    hardReset = false;
+  }
 }
 
 
