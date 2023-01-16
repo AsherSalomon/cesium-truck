@@ -125,6 +125,7 @@ export function update(delta) {
     viewer.trackedEntity = null;
   } else {
     hardReset = false;
+    viewer.trackedEntity = truckEntities[0];
   }
 }
 
