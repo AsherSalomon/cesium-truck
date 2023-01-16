@@ -119,7 +119,6 @@ export function update(delta) {
   const terrainProvider = viewer.scene.globe.terrainProvider;
   const ellipsoid = terrainProvider.tilingScheme.projection.ellipsoid;
   const cartographic = Cesium.Cartographic.fromCartesian(position, ellipsoid);
-  console.log(cartographic.height, deadSeaElevation);
   if (cartographic.height < deadSeaElevation) {
     hardReset = true;
     console.log('hardReset');
