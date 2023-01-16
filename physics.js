@@ -116,6 +116,7 @@ export function update(delta) {
   
   const deadSeaElevation = 430.5;
   const position = truckEntities[0].position.getValue(truckEntities.now());
+  console.log(Cesium.Cartesian3.magnitude(position));
   if (Cesium.Cartesian3.magnitude(position) < 6378.1 - deadSeaElevation) {
     hardReset = true;
     console.log('hardReset');
