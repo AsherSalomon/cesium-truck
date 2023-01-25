@@ -3,7 +3,7 @@
 const quadtreeLevel = 22;
 const quadtreePower = Math.pow(2, quadtreeLevel);
 const quadtreeGridWidth = 8;
-const showQuadtreeGrid = true;
+const showQuadtreeGrid = false;
 
 let viewer;
 
@@ -367,7 +367,7 @@ function createVehicle(pos, quat) {
       aboveVehicle = new Ammo.btVector3(aboveVehicle.x, aboveVehicle.y, aboveVehicle.z);
       Cesium.Cartesian3.add(position, originOffset, position);
       Cesium.Cartesian3.normalize(position, position);
-      const resetForce = massVehicle * gravity;
+      const resetForce = massVehicle * gravity / 2;
       Cesium.Cartesian3.multiplyByScalar(position, resetForce, position);
       position = new Ammo.btVector3(position.x, position.y, position.z);
       body.applyForce(position, aboveVehicle);
