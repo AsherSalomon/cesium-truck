@@ -447,7 +447,7 @@ class DestroyableTerrain {
         if (showQuadtreeGrid) {
           const uniqueId = thisTerrain.uniqueId + '_' + i;
           thisTerrain.uniqueIdList.push(uniqueId + '_a');
-          typeof addPoint(cartesian3, thisTerrain.uniqueIdList[thisTerrain.uniqueIdList.length-1]);
+          console.log(typeof addPoint(cartesian3, thisTerrain.uniqueIdList[thisTerrain.uniqueIdList.length-1]));
           thisTerrain.uniqueIdList.push(uniqueId + '_b');
           addPoint(skirtCartesian3, thisTerrain.uniqueIdList[thisTerrain.uniqueIdList.length-1]);
         }
