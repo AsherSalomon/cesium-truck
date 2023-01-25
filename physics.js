@@ -528,7 +528,7 @@ function resetWhitelist() {
 
 function cleanUpTerrain() {
   for (let i = terrainBodies.length - 1; i >= 0; i--) {
-    if(terrainBodies[i].whitelist == false) {
+    if (terrainBodies[i].whitelist == false && terrainBodies[i].isResolved == true) {
       terrainBodies[i].destroy();
       delete terrainBodies[i];
       terrainBodies.splice(i, 1);
