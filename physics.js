@@ -413,6 +413,7 @@ class DestroyableTerrain {
   constructor(lon, lat) {
     this.uniqueId = destroyableTerrainCounter;
     destroyableTerrainCounter++;
+    this.uniqueIdList = [];
     this.longitudeIndex = lon;
     this.latitudeIndex = lat;
     this.whitelist = true;
@@ -445,8 +446,10 @@ class DestroyableTerrain {
         const skirtCartesian3 = Cesium.Cartographic.toCartesian(cartographicSkirt, ellipsoid);
         if (showQuadtreeGrid) {
           const uniqueId = thisTerrain.uniqueId + '_' + i;
-          addPoint(cartesian3, uniqueId + '_a');
-          addPoint(skirtCartesian3, uniqueId + '_b');
+          thisTerrain.uniqueIdList.push(uniqueId + '_a');
+          addPoint(cartesian3, thisTerrain.uniqueIdList[thisTerrain.uniqueIdList.length-1]);
+          thisTerrain.uniqueIdList.push(uniqueId + '_b');
+          addPoint(skirtCartesian3, thisTerrain.uniqueIdList[thisTerrain.uniqueIdList.length-1]);
         }
         thisTerrain.vertices[i * 2] = cartesian3;
         thisTerrain.vertices[i * 2 + 1] = skirtCartesian3;
