@@ -3,7 +3,7 @@
 const quadtreeLevel = 22;
 const quadtreePower = Math.pow(2, quadtreeLevel);
 const quadtreeGridWidth = 8;
-const showQuadtreeGrid = false;
+const showQuadtreeGrid = true;
 
 let viewer;
 
