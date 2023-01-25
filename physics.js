@@ -447,7 +447,7 @@ class DestroyableTerrain {
         if (showQuadtreeGrid) {
           const uniqueId = thisTerrain.uniqueId + '_' + i;
           thisTerrain.uniqueIdList.push(uniqueId + '_a');
-          addPoint(cartesian3, thisTerrain.uniqueIdList[thisTerrain.uniqueIdList.length-1]);
+          typeof addPoint(cartesian3, thisTerrain.uniqueIdList[thisTerrain.uniqueIdList.length-1]);
           thisTerrain.uniqueIdList.push(uniqueId + '_b');
           addPoint(skirtCartesian3, thisTerrain.uniqueIdList[thisTerrain.uniqueIdList.length-1]);
         }
@@ -497,6 +497,10 @@ class DestroyableTerrain {
       delete this.localInertia;
       Ammo.destroy(this.terrainBody);
       delete this.terrainBody;
+      
+      if (showQuadtreeGrid) {
+        // thisTerrain.uniqueIdList[]
+      }
     }
   }
 
