@@ -154,8 +154,9 @@ function createObjects() {
   createVehicle(position, quaternion);
 }
 
-function addPoint(cartesian3) {
+function addPoint(cartesian3, uniqueId) {
   return viewer.entities.add({
+    id: uniqueId,
     position: cartesian3,
     point: {
       pixelSize: 1,
@@ -407,8 +408,11 @@ function createVehicle(pos, quat) {
 
 }
 
+let destroyableTerrainCounter = 0;
 class DestroyableTerrain {
   constructor(lon, lat) {
+    this.uniqueId = destroyableTerrainCounter;
+    destroyableTerrainCounter++;
     this.longitudeIndex = lon;
     this.latitudeIndex = lat;
     this.whitelist = true;
@@ -440,8 +444,9 @@ class DestroyableTerrain {
         const cartographicSkirt = new Cesium.Cartographic(positions[i].longitude, positions[i].latitude, positions[i].height - skirtHeight);
         const skirtCartesian3 = Cesium.Cartographic.toCartesian(cartographicSkirt, ellipsoid);
         if (showQuadtreeGrid) {
-          addPoint(cartesian3);
-          addPoint(skirtCartesian3);
+          const uniqueId = thisTerrain.uniqueId + '_' + i;
+          addPoint(cartesian3, uniqueId + '_a');
+          addPoint(skirtCartesian3, uniqueId + '_b');
         }
         thisTerrain.vertices[i * 2] = cartesian3;
         thisTerrain.vertices[i * 2 + 1] = skirtCartesian3;
