@@ -410,6 +410,7 @@ function createVehicle(pos, quat) {
 let destroyableTerrainCounter = 0;
 class DestroyableTerrain {
   constructor(lon, lat) {
+    this.quadtreeGridPoints = [];
     this.longitudeIndex = lon;
     this.latitudeIndex = lat;
     this.whitelist = true;
@@ -441,8 +442,8 @@ class DestroyableTerrain {
         const cartographicSkirt = new Cesium.Cartographic(positions[i].longitude, positions[i].latitude, positions[i].height - skirtHeight);
         const skirtCartesian3 = Cesium.Cartographic.toCartesian(cartographicSkirt, ellipsoid);
         if (showQuadtreeGrid) {
-          console.log(typeof addPoint(cartesian3));
-          addPoint(skirtCartesian3);
+          thisTerrain.quadtreeGridPoints.push(addPoint(cartesian3));
+          thisTerrain.quadtreeGridPoints.push(addPoint(skirtCartesian3));
         }
         thisTerrain.vertices[i * 2] = cartesian3;
         thisTerrain.vertices[i * 2 + 1] = skirtCartesian3;
@@ -492,7 +493,9 @@ class DestroyableTerrain {
       delete this.terrainBody;
       
       if (showQuadtreeGrid) {
-        // thisTerrain.uniqueIdList[]
+        for (let i = 0; i < this.quadtreeGridPoints.length; i++) {
+          viewer.entities.remove(this.quadtreeGridPoints[i]);
+        }
       }
     }
   }
