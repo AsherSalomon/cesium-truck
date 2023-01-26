@@ -184,7 +184,7 @@ function update() {
     viewer.camera.rotateUp(dotProductRight * Math.PI / 128); // positive rotatesUp, pushing camera down
 
     const camToTruck = Cesium.Cartesian3.subtract(truckEntities[0].position._value, viewer.camera.positionWC, new Cesium.Cartesian3);
-    const forwardMove = (Cesium.Cartesian3.magnitude(camToTruck) - 30) * 0.05;
+    const forwardMove = (Cesium.Cartesian3.magnitude(camToTruck) - 20) * 0.05;
     viewer.camera.moveForward(forwardMove);
   }
 
