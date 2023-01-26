@@ -183,8 +183,8 @@ function update() {
     const dotProductRight = Cesium.Cartesian3.dot(viewer.camera.rightWC, crossProduct);
     viewer.camera.rotateUp(dotProductRight * Math.PI / 256); // positive rotatesUp, pushing camera down
 
-    if (viewer.camera.positionWC != undefined) {
-      const camToTruck = Cesium.Cartesian3.subtract(truckEntities[0].position._value, viewer.camera.positionWC);
+    const camToTruck = Cesium.Cartesian3.subtract(truckEntities[0].position._value, viewer.camera.positionWC);
+    if (camToTruck != undefined) {
       const forwardMove = (Cesium.Cartesian3.magnitude(camToTruck) - 3) * 0.001;
       viewer.camera.moveForward(forwardMove);
     }
