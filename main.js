@@ -179,9 +179,9 @@ function update() {
     const crossProduct = new Cesium.Cartesian3();
     Cesium.Cartesian3.cross(viewer.camera.directionWC, vehicleDirection, crossProduct);
     const dotProduct = Cesium.Cartesian3.dot(viewer.camera.upWC, crossProduct);
-    viewer.camera.rotateRight(dotProduct * Math.PI / 256); // to do, make camera follow at distance and tilt
+    viewer.camera.rotateRight(dotProduct * Math.PI / 128); // to do, make camera follow at distance and tilt
     const dotProductRight = Cesium.Cartesian3.dot(viewer.camera.rightWC, crossProduct);
-    viewer.camera.rotateUp(dotProductRight * Math.PI / 256); // positive rotatesUp, pushing camera down
+    viewer.camera.rotateUp(dotProductRight * Math.PI / 128); // positive rotatesUp, pushing camera down
 
     const camToTruck = Cesium.Cartesian3.subtract(truckEntities[0].position._value, viewer.camera.positionWC, new Cesium.Cartesian3);
     const forwardMove = (Cesium.Cartesian3.magnitude(camToTruck) - 10) * 0.05;
