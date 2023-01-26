@@ -91,20 +91,20 @@ document.body.onmouseup = function() {
 }
 window.addEventListener('keydown', function(e) {
   followTruck = true;
-  if (e.keyCode == 69) {
-    if (viewer.trackedEntity == truckEntities[0]) {
-      viewer.trackedEntity = null;
-    } else if (viewer.trackedEntity != truckEntities[0]) {
-      const matrix4 = new Cesium.Matrix4();
-      Cesium.Transforms.eastNorthUpToFixedFrame(
-        truckEntities[0].position._value, Cesium.Ellipsoid.WGS84, matrix4);
-      Cesium.Matrix4.inverse(matrix4, matrix4);
-      const position = new Cesium.Cartesian3();
-      Cesium.Matrix4.multiplyByPoint(matrix4, viewer.camera.position, position);
-      truckEntities[0].viewFrom = position;
-      viewer.trackedEntity = truckEntities[0];
-    }
-  }
+//   if (e.keyCode == 69) { // the E key
+//     if (viewer.trackedEntity == truckEntities[0]) {
+//       viewer.trackedEntity = null;
+//     } else if (viewer.trackedEntity != truckEntities[0]) {
+//       const matrix4 = new Cesium.Matrix4();
+//       Cesium.Transforms.eastNorthUpToFixedFrame(
+//         truckEntities[0].position._value, Cesium.Ellipsoid.WGS84, matrix4);
+//       Cesium.Matrix4.inverse(matrix4, matrix4);
+//       const position = new Cesium.Cartesian3();
+//       Cesium.Matrix4.multiplyByPoint(matrix4, viewer.camera.position, position);
+//       truckEntities[0].viewFrom = position;
+//       viewer.trackedEntity = truckEntities[0];
+//     }
+//   }
 });
 
 function adjustHeightForTerrain(controller) {
