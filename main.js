@@ -173,8 +173,9 @@ function update() {
     Cesium.Cartesian3.cross(viewer.camera.directionWC, vehicleDirection, crossProduct);
     const dotProduct = Cesium.Cartesian3.dot(viewer.camera.upWC, crossProduct);
     viewer.camera.rotateRight(dotProduct * Math.PI / 256); // to do, make camera follow at distance and tilt
-//     viewer.camera.moveForward(0.01);
-    viewer.camera.rotateUp(Math.PI / 360 * 0.01);
+    const dotProductRight = Cesium.Cartesian3.dot(viewer.camera.rightWC, crossProduct);
+    viewer.camera.rotateUp(dotProductRight * Math.PI / 256); // positive rotatesUp, pushing camera down
+//     viewer.camera.moveForward(0.01); // positive zooms in
   }
 
   adjustHeightForTerrain(viewer.scene.screenSpaceCameraController);
