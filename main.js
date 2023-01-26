@@ -184,7 +184,8 @@ function update() {
     viewer.camera.rotateUp(dotProductRight * Math.PI / 256); // positive rotatesUp, pushing camera down
 
     const camToTruck = Cesium.Cartesian3.subtract(truckEntities[0].position._value, viewer.camera.positionWC);
-//     viewer.camera.moveForward(0.01); // positive zooms in
+    const forwardMove = (Cesium.Cartesian3.magnitude(cartesian) - 3) * 0.001;
+    viewer.camera.moveForward(forwardMove);
   }
 
   adjustHeightForTerrain(viewer.scene.screenSpaceCameraController);
