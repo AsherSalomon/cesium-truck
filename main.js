@@ -82,6 +82,13 @@ let followTruck = false;
 document.addEventListener('mousemove', function(e) {
   followTruck = false;
 });
+var mouseDown = false;
+document.body.onmousedown = function() { 
+  mouseDown = true;
+}
+document.body.onmouseup = function() {
+  mouseDown = false;
+}
 window.addEventListener('keydown', function(e) {
   followTruck = true;
   if (e.keyCode == 69) {
@@ -163,7 +170,7 @@ function adjustHeightForTerrain(controller) {
 
 function update() {
 
-  if (viewer.trackedEntity == truckEntities[0] && followTruck) {
+  if (viewer.trackedEntity == truckEntities[0] && followTruck && mouseDown == false) {
     const vehicleDirection = new Cesium.Cartesian3(0, 1, 0);
     const quaternion = truckEntities[0].orientation.getValue(truckEntities.now());
     const matrix3 = new Cesium.Matrix3();
