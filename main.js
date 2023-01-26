@@ -186,7 +186,7 @@ function update() {
 //     console.log(truckEntities[0].position._value, viewer.camera.positionWC);
     const camToTruck = Cesium.Cartesian3.subtract(truckEntities[0].position._value, viewer.camera.positionWC, new Cesium.Cartesian3);
 //     console.log(camToTruck);
-    const forwardMove = (Cesium.Cartesian3.magnitude(camToTruck) - 3) * 0.001;
+    const forwardMove = (Cesium.Cartesian3.magnitude(camToTruck) - 3) * 0.01;
     viewer.camera.moveForward(forwardMove);
 //     if (camToTruck != undefined) {
 //     }
