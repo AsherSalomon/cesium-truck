@@ -172,7 +172,7 @@ function update() {
 
   if (viewer.trackedEntity == truckEntities[0] && followTruck && mouseDown == false) {
     const vehicleDirection = new Cesium.Cartesian3(0, 1, 0);
-    const vehicleDirection2 = new Cesium.Cartesian3(1, 0, 0.2);
+    const vehicleDirection2 = new Cesium.Cartesian3(1, 0.2, 0);
     const quaternion = truckEntities[0].orientation.getValue(truckEntities.now());
     const matrix3 = new Cesium.Matrix3();
     Cesium.Matrix3.fromQuaternion(quaternion, matrix3);
