@@ -171,7 +171,7 @@ function adjustHeightForTerrain(controller) {
 function update() {
 
   if (viewer.trackedEntity == truckEntities[0] && followTruck && mouseDown == false) {
-    const vehicleDirection = new Cesium.Cartesian3(0, 1, -0.5);
+    const vehicleDirection = new Cesium.Cartesian3(0, 1, -0.1);
     const quaternion = truckEntities[0].orientation.getValue(truckEntities.now());
     const matrix3 = new Cesium.Matrix3();
     Cesium.Matrix3.fromQuaternion(quaternion, matrix3);
