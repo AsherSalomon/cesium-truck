@@ -192,7 +192,7 @@ function update() {
     Cesium.Matrix3.multiplyByVector(matrix3, vehicleUp, vehicleUp);
     
     const cameraUp = new Cesium.Cartesian3(0, -0.2, 1);
-    const quaternion2 = viewer.camera.orientation._value;
+    const quaternion2 = viewer.camera.orientation;
     const cameraMatrix3 = new Cesium.Matrix3();
     Cesium.Matrix3.fromQuaternion(quaternion2, cameraMatrix3);
     Cesium.Matrix3.multiplyByVector(cameraMatrix3, cameraUp, cameraUp);
