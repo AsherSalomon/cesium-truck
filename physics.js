@@ -417,7 +417,7 @@ function createVehicle(pos, quat) {
       Cesium.Cartesian3.cross(aboveVehicle, position, crossProduct);
       Cesium.Cartesian3.multiplyByScalar(crossProduct, resetTorque, crossProduct);
       
-      const restoreTorque = new Ammo.btVector3(crossProductSum.x, crossProductSum.y, crossProductSum.z);
+      const restoreTorque = new Ammo.btVector3(crossProduct.x, crossProduct.y, crossProduct.z);
       body.applyTorque(restoreTorque);
       Ammo.destroy(restoreTorque);
       
