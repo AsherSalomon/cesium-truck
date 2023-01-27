@@ -40,7 +40,7 @@ const keysActions = {
   "KeyD":'right',
   "KeyR":'reset'
 };
-const resetTorque = 1000000;
+const resetTorque = 10000;
 let parkingBrake = false;
 let hardReset = false;
 
