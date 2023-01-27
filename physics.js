@@ -375,6 +375,17 @@ function createVehicle(pos, quat) {
       Ammo.destroy(aboveVehicle);
       Ammo.destroy(position);
       
+//       let ux = new Cesium.Cartesian3(1, 0, 0);
+//       let uy = new Cesium.Cartesian3(0, 1, 0);
+//       let uz = new Cesium.Cartesian3(0, 0, 1);
+//       quaternion = new Cesium.Quaternion(q.x(), q.y(), q.z(), q.w());
+//       const matrix3 = new Cesium.Matrix3();
+//       Cesium.Matrix3.fromQuaternion(quaternion, matrix3);
+//       Cesium.Matrix3.multiplyByVector(matrix3, ux, ux);
+//       Cesium.Matrix3.multiplyByVector(matrix3, uy, uy);
+//       Cesium.Matrix3.multiplyByVector(matrix3, uz, uz);
+//       const // to do 
+      
 //       body.applyTorque
     }
     
