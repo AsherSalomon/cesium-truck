@@ -358,6 +358,7 @@ function createVehicle(pos, quat) {
     truckEntities[0].orientation = quaternion;
     
     if (actions.reset && gravityOn) {
+      // flips vehicle but also makes it fly, not great
       let aboveVehicle = new Cesium.Cartesian3(0, 1, 0);
       position = new Cesium.Cartesian3(p.x(), p.y(), p.z());
       quaternion = new Cesium.Quaternion(q.x(), q.y(), q.z(), q.w());
@@ -373,6 +374,8 @@ function createVehicle(pos, quat) {
       body.applyForce(position, aboveVehicle);
       Ammo.destroy(aboveVehicle);
       Ammo.destroy(position);
+      
+//       body.applyTorque
     }
     
     if (viewer.trackedEntity == truckEntities[0]) {
