@@ -362,22 +362,22 @@ function createVehicle(pos, quat) {
     truckEntities[0].orientation = quaternion;
     
     if (actions.reset && gravityOn) {
-//       // flips vehicle but also makes it fly, not great
-//       let aboveVehicle = new Cesium.Cartesian3(0, 1, 0);
-//       position = new Cesium.Cartesian3(p.x(), p.y(), p.z());
-//       quaternion = new Cesium.Quaternion(q.x(), q.y(), q.z(), q.w());
-//       const matrix3 = new Cesium.Matrix3();
-//       Cesium.Matrix3.fromQuaternion(quaternion, matrix3);
-//       Cesium.Matrix3.multiplyByVector(matrix3, aboveVehicle, aboveVehicle);
-//       aboveVehicle = new Ammo.btVector3(aboveVehicle.x, aboveVehicle.y, aboveVehicle.z);
-//       Cesium.Cartesian3.add(position, originOffset, position);
-//       Cesium.Cartesian3.normalize(position, position);
-//       const resetForce = massVehicle * gravity;
-//       Cesium.Cartesian3.multiplyByScalar(position, resetForce, position);
-//       position = new Ammo.btVector3(position.x, position.y, position.z);
-//       body.applyForce(position, aboveVehicle);
-//       Ammo.destroy(aboveVehicle);
-//       Ammo.destroy(position);
+      // flips vehicle but also makes it fly, not great
+      let aboveVehicle = new Cesium.Cartesian3(0, 1, 0);
+      position = new Cesium.Cartesian3(p.x(), p.y(), p.z());
+      quaternion = new Cesium.Quaternion(q.x(), q.y(), q.z(), q.w());
+      const matrix3 = new Cesium.Matrix3();
+      Cesium.Matrix3.fromQuaternion(quaternion, matrix3);
+      Cesium.Matrix3.multiplyByVector(matrix3, aboveVehicle, aboveVehicle);
+      aboveVehicle = new Ammo.btVector3(aboveVehicle.x, aboveVehicle.y, aboveVehicle.z);
+      Cesium.Cartesian3.add(position, originOffset, position);
+      Cesium.Cartesian3.normalize(position, position);
+      const resetForce = massVehicle * gravity;
+      Cesium.Cartesian3.multiplyByScalar(position, resetForce, position);
+      position = new Ammo.btVector3(position.x, position.y, position.z);
+      body.applyForce(position, aboveVehicle);
+      Ammo.destroy(aboveVehicle);
+      Ammo.destroy(position);
       
 //       let ux = new Cesium.Cartesian3(1, 0, 0);
 //       let uy = new Cesium.Cartesian3(0, 1, 0);
@@ -406,20 +406,20 @@ function createVehicle(pos, quat) {
 //       Cesium.Cartesian3.multiplyByScalar(position, dotProduct, position);
 //       Cesium.Cartesian3.subtract(crossProductSum, position, crossProductSum);
       
-      let aboveVehicle = new Cesium.Cartesian3(0, 1, 0);
-      quaternion = new Cesium.Quaternion(q.x(), q.y(), q.z(), q.w());
-      const matrix3 = new Cesium.Matrix3();
-      Cesium.Matrix3.fromQuaternion(quaternion, matrix3);
-      Cesium.Matrix3.multiplyByVector(matrix3, aboveVehicle, aboveVehicle);
-      position = new Cesium.Cartesian3(p.x(), p.y(), p.z());
-      Cesium.Cartesian3.normalize(position, position);
-      const crossProduct = new Cesium.Cartesian3();
-      Cesium.Cartesian3.cross(aboveVehicle, position, crossProduct);
-      Cesium.Cartesian3.multiplyByScalar(crossProduct, resetTorque, crossProduct);
+//       let aboveVehicle = new Cesium.Cartesian3(0, 1, 0);
+//       quaternion = new Cesium.Quaternion(q.x(), q.y(), q.z(), q.w());
+//       const matrix3 = new Cesium.Matrix3();
+//       Cesium.Matrix3.fromQuaternion(quaternion, matrix3);
+//       Cesium.Matrix3.multiplyByVector(matrix3, aboveVehicle, aboveVehicle);
+//       position = new Cesium.Cartesian3(p.x(), p.y(), p.z());
+//       Cesium.Cartesian3.normalize(position, position);
+//       const crossProduct = new Cesium.Cartesian3();
+//       Cesium.Cartesian3.cross(aboveVehicle, position, crossProduct);
+//       Cesium.Cartesian3.multiplyByScalar(crossProduct, resetTorque, crossProduct);
       
-      const restoreTorque = new Ammo.btVector3(crossProduct.x, crossProduct.y, crossProduct.z);
-      body.applyTorque(restoreTorque);
-      Ammo.destroy(restoreTorque);
+//       const restoreTorque = new Ammo.btVector3(crossProduct.x, crossProduct.y, crossProduct.z);
+//       body.applyTorque(restoreTorque);
+//       Ammo.destroy(restoreTorque);
       
       body.setDamping(0, resetDamping);
     } else {
