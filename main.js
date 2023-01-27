@@ -172,16 +172,12 @@ function update() {
 
   if (viewer.trackedEntity == truckEntities[0] && followTruck && mouseDown == false) {
     const vehicleDirection = new Cesium.Cartesian3(0, 1, -0.2);
-    const vehicleDirection2 = new Cesium.Cartesian3(1, 0.2, 0);
     const quaternion = truckEntities[0].orientation.getValue(truckEntities.now());
     const matrix3 = new Cesium.Matrix3();
     Cesium.Matrix3.fromQuaternion(quaternion, matrix3);
     Cesium.Matrix3.multiplyByVector(matrix3, vehicleDirection, vehicleDirection);
-    Cesium.Matrix3.multiplyByVector(matrix3, vehicleDirection2, vehicleDirection2);
     const crossProduct = new Cesium.Cartesian3();
-    const crossProduct2 = new Cesium.Cartesian3();
     Cesium.Cartesian3.cross(viewer.camera.directionWC, vehicleDirection, crossProduct);
-    Cesium.Cartesian3.cross(viewer.camera.directionWC, vehicleDirection2, crossProduct2);
     const dotProduct = Cesium.Cartesian3.dot(viewer.camera.upWC, crossProduct);
     viewer.camera.rotateRight(dotProduct * Math.PI / 128);
     const dotProductRight = Cesium.Cartesian3.dot(viewer.camera.rightWC, crossProduct);
