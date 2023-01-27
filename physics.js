@@ -410,9 +410,9 @@ function createVehicle(pos, quat) {
 //       body.applyTorque(restoreTorque);
 //       Ammo.destroy(restoreTorque);
       
-      body.setDamping(0, 0.001);
-      console.log(body.getLinearDamping(), body.getAngularDamping());
-      
+      body.setDamping(0, resetDamping);
+    } else {
+      body.setDamping(0, 0);
     }
     
     if (viewer.trackedEntity == truckEntities[0]) {
