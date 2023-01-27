@@ -398,11 +398,11 @@ function createVehicle(pos, quat) {
       Cesium.Cartesian3.add(crossProductSum, crossProductZ, crossProductSum);
       Cesium.Cartesian3.multiplyByScalar(crossProductSum, resetTorque, crossProductSum);
       
-      position = new Cesium.Cartesian3(p.x(), p.y(), p.z());
-      Cesium.Cartesian3.normalize(position, position);
-      const dotProduct = Cesium.Cartesian3.dot(crossProductSum, position);
-      Cesium.Cartesian3.multiplyByScalar(position, dotProduct, position);
-      Cesium.Cartesian3.subtract(crossProductSum, position, crossProductSum);
+//       position = new Cesium.Cartesian3(p.x(), p.y(), p.z());
+//       Cesium.Cartesian3.normalize(position, position);
+//       const dotProduct = Cesium.Cartesian3.dot(crossProductSum, position);
+//       Cesium.Cartesian3.multiplyByScalar(position, dotProduct, position);
+//       Cesium.Cartesian3.subtract(crossProductSum, position, crossProductSum);
       
       const restoreTorque = new Ammo.btVector3(crossProductSum.x, crossProductSum.y, crossProductSum.z);
       body.applyTorque(restoreTorque);
