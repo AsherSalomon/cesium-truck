@@ -406,7 +406,7 @@ function createVehicle(pos, quat) {
 //       Cesium.Cartesian3.multiplyByScalar(position, dotProduct, position);
 //       Cesium.Cartesian3.subtract(crossProductSum, position, crossProductSum);
       
-      let aboveVehicle = new Cesium.Cartesian3(0, 1, 0);
+      let aboveVehicle = new Cesium.Cartesian3(1, 0, 0);
       quaternion = new Cesium.Quaternion(q.x(), q.y(), q.z(), q.w());
       const matrix3 = new Cesium.Matrix3();
       Cesium.Matrix3.fromQuaternion(quaternion, matrix3);
