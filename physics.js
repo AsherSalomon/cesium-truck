@@ -409,6 +409,7 @@ function createVehicle(pos, quat) {
 //       const restoreTorque = new Ammo.btVector3(crossProductSum.x, crossProductSum.y, crossProductSum.z);
 //       body.applyTorque(restoreTorque);
 //       Ammo.destroy(restoreTorque);
+      body.m_angularDamping = 0.001;
       console.log(body.getAngularDamping());
       
     }
