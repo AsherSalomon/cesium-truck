@@ -379,32 +379,43 @@ function createVehicle(pos, quat) {
 //       Ammo.destroy(aboveVehicle);
 //       Ammo.destroy(position);
       
-      let ux = new Cesium.Cartesian3(1, 0, 0);
-      let uy = new Cesium.Cartesian3(0, 1, 0);
-      let uz = new Cesium.Cartesian3(0, 0, 1);
+//       let ux = new Cesium.Cartesian3(1, 0, 0);
+//       let uy = new Cesium.Cartesian3(0, 1, 0);
+//       let uz = new Cesium.Cartesian3(0, 0, 1);
+//       quaternion = new Cesium.Quaternion(q.x(), q.y(), q.z(), q.w());
+//       const matrix3 = new Cesium.Matrix3();
+//       Cesium.Matrix3.fromQuaternion(quaternion, matrix3);
+//       Cesium.Matrix3.multiplyByVector(matrix3, ux, ux);
+//       Cesium.Matrix3.multiplyByVector(matrix3, uy, uy);
+//       Cesium.Matrix3.multiplyByVector(matrix3, uz, uz);
+//       const crossProductX = new Cesium.Cartesian3();
+//       const crossProductY = new Cesium.Cartesian3();
+//       const crossProductZ = new Cesium.Cartesian3();
+//       Cesium.Cartesian3.cross(ux, new Cesium.Cartesian3(1, 0, 0), crossProductX);
+//       Cesium.Cartesian3.cross(uy, new Cesium.Cartesian3(0, 1, 0), crossProductY);
+//       Cesium.Cartesian3.cross(uz, new Cesium.Cartesian3(0, 0, 1), crossProductZ);
+//       const crossProductSum = new Cesium.Cartesian3();
+//       Cesium.Cartesian3.add(crossProductSum, crossProductX, crossProductSum);
+//       Cesium.Cartesian3.add(crossProductSum, crossProductY, crossProductSum);
+//       Cesium.Cartesian3.add(crossProductSum, crossProductZ, crossProductSum);
+//       Cesium.Cartesian3.multiplyByScalar(crossProductSum, resetTorque, crossProductSum);
+      
+//       position = new Cesium.Cartesian3(p.x(), p.y(), p.z());
+//       Cesium.Cartesian3.normalize(position, position);
+//       const dotProduct = Cesium.Cartesian3.dot(crossProductSum, position);
+//       Cesium.Cartesian3.multiplyByScalar(position, dotProduct, position);
+//       Cesium.Cartesian3.subtract(crossProductSum, position, crossProductSum);
+      
+      let aboveVehicle = new Cesium.Cartesian3(0, 1, 0);
       quaternion = new Cesium.Quaternion(q.x(), q.y(), q.z(), q.w());
       const matrix3 = new Cesium.Matrix3();
       Cesium.Matrix3.fromQuaternion(quaternion, matrix3);
-      Cesium.Matrix3.multiplyByVector(matrix3, ux, ux);
-      Cesium.Matrix3.multiplyByVector(matrix3, uy, uy);
-      Cesium.Matrix3.multiplyByVector(matrix3, uz, uz);
-      const crossProductX = new Cesium.Cartesian3();
-      const crossProductY = new Cesium.Cartesian3();
-      const crossProductZ = new Cesium.Cartesian3();
-      Cesium.Cartesian3.cross(ux, new Cesium.Cartesian3(1, 0, 0), crossProductX);
-      Cesium.Cartesian3.cross(uy, new Cesium.Cartesian3(0, 1, 0), crossProductY);
-      Cesium.Cartesian3.cross(uz, new Cesium.Cartesian3(0, 0, 1), crossProductZ);
-      const crossProductSum = new Cesium.Cartesian3();
-      Cesium.Cartesian3.add(crossProductSum, crossProductX, crossProductSum);
-      Cesium.Cartesian3.add(crossProductSum, crossProductY, crossProductSum);
-      Cesium.Cartesian3.add(crossProductSum, crossProductZ, crossProductSum);
-      Cesium.Cartesian3.multiplyByScalar(crossProductSum, resetTorque, crossProductSum);
-      
+      Cesium.Matrix3.multiplyByVector(matrix3, aboveVehicle, aboveVehicle);
       position = new Cesium.Cartesian3(p.x(), p.y(), p.z());
       Cesium.Cartesian3.normalize(position, position);
-      const dotProduct = Cesium.Cartesian3.dot(crossProductSum, position);
-      Cesium.Cartesian3.multiplyByScalar(position, dotProduct, position);
-      Cesium.Cartesian3.subtract(crossProductSum, position, crossProductSum);
+      const crossProduct = new Cesium.Cartesian3();
+      Cesium.Cartesian3.cross(aboveVehicle, position, crossProduct);
+      Cesium.Cartesian3.multiplyByScalar(crossProduct, resetTorque, crossProduct);
       
       const restoreTorque = new Ammo.btVector3(crossProductSum.x, crossProductSum.y, crossProductSum.z);
       body.applyTorque(restoreTorque);
