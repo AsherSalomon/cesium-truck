@@ -40,6 +40,7 @@ const keysActions = {
   "KeyD":'right',
   "KeyR":'reset'
 };
+const resetTorque = 10;
 let parkingBrake = false;
 let hardReset = false;
 
@@ -403,7 +404,7 @@ function createVehicle(pos, quat) {
       Cesium.Cartesian3.add(crossProductSum, crossProductX, crossProductSum);
       Cesium.Cartesian3.add(crossProductSum, crossProductY, crossProductSum);
       Cesium.Cartesian3.add(crossProductSum, crossProductZ, crossProductSum);
-      Cesium.Cartesian3.multiplyByScalar(crossProductSum, 1, crossProductSum);
+      Cesium.Cartesian3.multiplyByScalar(crossProductSum, resetTorque, crossProductSum);
       const restoreTorque = new Ammo.btVector3(crossProductSum.x, crossProductSum.y, crossProductSum.z);
       body.applyTorque(restoreTorque);
       Ammo.destroy(restoreTorque);
