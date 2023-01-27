@@ -195,7 +195,7 @@ function update() {
     const crossProduct2 = new Cesium.Cartesian3();
     Cesium.Cartesian3.cross(cameraUp, vehicleUp, crossProduct2);
     const dotProductRight = Cesium.Cartesian3.dot(viewer.camera.rightWC, crossProduct2);
-    viewer.camera.rotateUp(dotProductRight * Math.PI / 128);
+    viewer.camera.rotateUp(-dotProductRight * Math.PI / 128);
     
   }
 
