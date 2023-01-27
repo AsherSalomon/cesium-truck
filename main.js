@@ -190,7 +190,7 @@ function update() {
     
     const vehicleUp = new Cesium.Cartesian3(0, 0, 1);
     Cesium.Matrix3.multiplyByVector(matrix3, vehicleUp, vehicleUp);
-    const cameraUp = new Cesium.Cartesian3(1, 0, 0);
+    const cameraUp = new Cesium.Cartesian3(0, 1, 0);
     viewer.camera.cameraToWorldCoordinatesVector(cameraUp, cameraUp);
     const crossProduct2 = new Cesium.Cartesian3();
     Cesium.Cartesian3.cross(cameraUp, vehicleUp, crossProduct2);
