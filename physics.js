@@ -375,6 +375,15 @@ function createVehicle(pos, quat) {
       Ammo.destroy(aboveVehicle);
       Ammo.destroy(position);
       
+//     const vehicleUp = new Cesium.Cartesian3(0, 0, 1);
+//     Cesium.Matrix3.multiplyByVector(matrix3, vehicleUp, vehicleUp);
+//     const cameraUp = new Cesium.Cartesian3(0, 0, 1);
+//     viewer.camera.cameraToWorldCoordinatesVector(cameraUp, cameraUp);
+//     const crossProduct2 = new Cesium.Cartesian3();
+//     Cesium.Cartesian3.cross(cameraUp, vehicleUp, crossProduct2);
+//     const dotProductRight = Cesium.Cartesian3.dot(viewer.camera.rightWC, crossProduct2);
+//     viewer.camera.rotateUp(-dotProductRight * Math.PI / 128);
+      
 //       let ux = new Cesium.Cartesian3(1, 0, 0);
 //       let uy = new Cesium.Cartesian3(0, 1, 0);
 //       let uz = new Cesium.Cartesian3(0, 0, 1);
@@ -384,9 +393,21 @@ function createVehicle(pos, quat) {
 //       Cesium.Matrix3.multiplyByVector(matrix3, ux, ux);
 //       Cesium.Matrix3.multiplyByVector(matrix3, uy, uy);
 //       Cesium.Matrix3.multiplyByVector(matrix3, uz, uz);
-//       const // to do 
-      
+//       const crossProductX = new Cesium.Cartesian3();
+//       const crossProductY = new Cesium.Cartesian3();
+//       const crossProductZ = new Cesium.Cartesian3();
+//       Cesium.Cartesian3.cross(ux, new Cesium.Cartesian3(1, 0, 0), crossProductX);
+//       Cesium.Cartesian3.cross(uy, new Cesium.Cartesian3(0, 1, 0), crossProductY);
+//       Cesium.Cartesian3.cross(uz, new Cesium.Cartesian3(0, 0, 1), crossProductZ);
+//       const crossProductSum = new Cesium.Cartesian3();
+//       Cesium.Cartesian3.add(crossProductSum, crossProductX, crossProductSum);
+//       Cesium.Cartesian3.add(crossProductSum, crossProductY, crossProductSum);
+//       Cesium.Cartesian3.add(crossProductSum, crossProductZ, crossProductSum);
+//       position = new Ammo.btVector3(position.x, position.y, position.z);
 //       body.applyTorque
+//       Ammo.destroy(position);
+      
+      
     }
     
     if (viewer.trackedEntity == truckEntities[0]) {
