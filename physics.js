@@ -410,6 +410,7 @@ function createVehicle(pos, quat) {
 //       body.applyTorque(restoreTorque);
 //       Ammo.destroy(restoreTorque);
       
+      body.setDamping(0, 0.001);
       console.log(body.getLinearDamping(), body.getAngularDamping());
       
     }
