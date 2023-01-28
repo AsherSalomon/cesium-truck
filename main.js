@@ -174,15 +174,15 @@ function adjustHeightForTerrain(controller) {
 function update() {
 
   if (viewer.trackedEntity == truckEntities[0] && followTruck && mouseDown == false) {
-    const vehicleDirection = new Cesium.Cartesian3(0, 1, -0.2);
-    const quaternion = truckEntities[0].orientation.getValue(truckEntities.now());
-    const matrix3 = new Cesium.Matrix3();
-    Cesium.Matrix3.fromQuaternion(quaternion, matrix3);
-    Cesium.Matrix3.multiplyByVector(matrix3, vehicleDirection, vehicleDirection);
-    const crossProduct = new Cesium.Cartesian3();
-    Cesium.Cartesian3.cross(viewer.camera.directionWC, vehicleDirection, crossProduct);
-    const dotProduct = Cesium.Cartesian3.dot(viewer.camera.upWC, crossProduct);
-    viewer.camera.rotateRight(dotProduct * Math.PI / 128);
+//     const vehicleDirection = new Cesium.Cartesian3(0, 1, -0.2);
+//     const quaternion = truckEntities[0].orientation.getValue(truckEntities.now());
+//     const matrix3 = new Cesium.Matrix3();
+//     Cesium.Matrix3.fromQuaternion(quaternion, matrix3);
+//     Cesium.Matrix3.multiplyByVector(matrix3, vehicleDirection, vehicleDirection);
+//     const crossProduct = new Cesium.Cartesian3();
+//     Cesium.Cartesian3.cross(viewer.camera.directionWC, vehicleDirection, crossProduct);
+//     const dotProduct = Cesium.Cartesian3.dot(viewer.camera.upWC, crossProduct);
+//     viewer.camera.rotateRight(dotProduct * Math.PI / 128);
     
     const camToTruck = Cesium.Cartesian3.subtract(truckEntities[0].position._value, viewer.camera.positionWC, new Cesium.Cartesian3);
     const forwardMove = (Cesium.Cartesian3.magnitude(camToTruck) - 20) * 0.05;
