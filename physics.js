@@ -412,12 +412,7 @@ function createVehicle(pos, quat) {
       Cesium.Matrix3.fromQuaternion(quaternion, matrix3);
 //       Cesium.Matrix3.inverse(matrix3, matrix3);
       Cesium.Matrix3.multiplyByVector(matrix3, aboveVehicle, aboveVehicle);
-      
-      const debug = new Cesium.Cartesian3(p.x(), p.y(), p.z());
-      Cesium.Cartesian3.add(debug, aboveVehicle, debug);
-      addPoint(debug);
-      
-      position = new Cesium.Cartesian3(p.x(), p.y(), p.z());
+      const truckPosition = truckEntities[0].position._value.clone();
       Cesium.Cartesian3.normalize(position, position);
       const crossProduct = new Cesium.Cartesian3();
       Cesium.Cartesian3.cross(aboveVehicle, position, crossProduct);
