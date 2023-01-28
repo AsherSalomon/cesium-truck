@@ -175,9 +175,9 @@ function update() {
 
   if (viewer.trackedEntity == truckEntities[0] && followTruck && mouseDown == false) {
 //     const vehicleDirection = new Cesium.Cartesian3(0, 1, -0.2);
-//     const quaternion = truckEntities[0].orientation.getValue(truckEntities.now());
-//     const matrix3 = new Cesium.Matrix3();
-//     Cesium.Matrix3.fromQuaternion(quaternion, matrix3);
+    const quaternion = truckEntities[0].orientation.getValue(truckEntities.now());
+    const matrix3 = new Cesium.Matrix3();
+    Cesium.Matrix3.fromQuaternion(quaternion, matrix3);
 //     Cesium.Matrix3.multiplyByVector(matrix3, vehicleDirection, vehicleDirection);
 //     const crossProduct = new Cesium.Cartesian3();
 //     Cesium.Cartesian3.cross(viewer.camera.directionWC, vehicleDirection, crossProduct);
