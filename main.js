@@ -188,21 +188,23 @@ function update() {
     const forwardMove = (Cesium.Cartesian3.magnitude(camToTruck) - 20) * 0.05;
     viewer.camera.moveForward(forwardMove);
     
-//     const dotProductRight = Cesium.Cartesian3.dot(viewer.camera.rightWC, crossProduct);
-//     viewer.camera.rotateUp(dotProductRight * Math.PI / 128);
-    
-    const debugPosition = truckEntities[0].position._value.clone();
-    Cesium.Cartesian3.normalize(debugPosition, debugPosition);
-    
-    const vehicleUp = new Cesium.Cartesian3(0, 0, 1);
-    Cesium.Matrix3.multiplyByVector(matrix3, vehicleUp, vehicleUp);
-    const cameraUp = new Cesium.Cartesian3(0, 0, 1);
-    viewer.camera.cameraToWorldCoordinatesVector(cameraUp, cameraUp);
-    console.log(Cesium.Cartesian3.angleBetween(debugPosition, cameraUp) * 180 / Math.PI);
-    const crossProduct2 = new Cesium.Cartesian3();
-    Cesium.Cartesian3.cross(cameraUp, vehicleUp, crossProduct2);
-    const dotProductRight = Cesium.Cartesian3.dot(viewer.camera.rightWC, crossProduct2);
+    const dotProductRight = Cesium.Cartesian3.dot(viewer.camera.rightWC, crossProduct);
     viewer.camera.rotateUp(dotProductRight * Math.PI / 128);
+    
+//     const upDirection = truckEntities[0].position._value.clone();
+//     Cesium.Cartesian3.normalize(upDirection, upDirection);
+    
+//     const vehicleUp = new Cesium.Cartesian3(0, 0, 1);
+//     Cesium.Matrix3.multiplyByVector(matrix3, vehicleUp, vehicleUp);
+// //     const cameraUp = new Cesium.Cartesian3(0, 0, 1);
+// //     viewer.camera.cameraToWorldCoordinatesVector(cameraUp, cameraUp);
+//     const angle = Cesium.Cartesian3.angleBetween(upDirection, vehicleUp) * 180 / Math.PI;
+//     if (angle > 90) { angle = 0; }
+//     console.log(angle);
+//     const crossProduct2 = new Cesium.Cartesian3();
+//     Cesium.Cartesian3.cross(vehicleUp, upDirection, crossProduct2);
+//     const dotProductRight = Cesium.Cartesian3.dot(viewer.camera.rightWC, crossProduct2);
+//     viewer.camera.rotateUp(dotProductRight * Math.PI / 128);
     
   }
 
