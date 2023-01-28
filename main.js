@@ -194,7 +194,7 @@ function update() {
     const debugPosition = truckEntities[0].position._value.clone();
     Cesium.Cartesian3.normalize(debugPosition, debugPosition);
     
-    const vehicleUp = new Cesium.Cartesian3(0, 1, 0);
+    const vehicleUp = new Cesium.Cartesian3(0, 0, 1);
     Cesium.Matrix3.multiplyByVector(matrix3, vehicleUp, vehicleUp);
     console.log(Cesium.Cartesian3.angleBetween(debugPosition, vehicleUp) * 180 / Math.PI);
     const cameraUp = new Cesium.Cartesian3(0, 0, 1);
