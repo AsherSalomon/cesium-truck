@@ -42,7 +42,7 @@ const keysActions = {
 };
 
 const resetTorque = 100000;
-const resetDamping = 0.2;
+const resetDamping = 1;
 
 let parkingBrake = false;
 let hardReset = false;
