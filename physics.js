@@ -41,7 +41,7 @@ const keysActions = {
   "KeyR":'reset'
 };
 
-const resetTorque = 1;
+const resetTorque = 1000;
 const resetDamping = 1;
 
 let parkingBrake = false;
