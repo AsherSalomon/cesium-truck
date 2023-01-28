@@ -410,7 +410,7 @@ function createVehicle(pos, quat) {
       quaternion = new Cesium.Quaternion(q.x(), q.y(), q.z(), q.w());
       const matrix3 = new Cesium.Matrix3();
       Cesium.Matrix3.fromQuaternion(quaternion, matrix3);
-      Cesium.Matrix3.inverse(matrix3, matrix3);
+//       Cesium.Matrix3.inverse(matrix3, matrix3);
       Cesium.Matrix3.multiplyByVector(matrix3, aboveVehicle, aboveVehicle);
       position = new Cesium.Cartesian3(p.x(), p.y(), p.z());
       Cesium.Cartesian3.normalize(position, position);
@@ -421,6 +421,8 @@ function createVehicle(pos, quat) {
       const restoreTorque = new Ammo.btVector3(crossProduct.x, crossProduct.y, crossProduct.z);
       body.applyTorque(restoreTorque);
       Ammo.destroy(restoreTorque);
+      
+      // Cesium.Cartesian3.angleBetween(left, right)
       
       body.setDamping(0, resetDamping);
     } else {
