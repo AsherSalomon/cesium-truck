@@ -214,7 +214,7 @@ function createVehicle(pos, quat) {
   const tailLength = 3.25;
   const hoodBedHeight = .45;
   const bottomHeight = .25;
-  const cabHeight = .9;
+  const cabHeight = .925;
   const cabLengthFront = .4;
   const cabLengthBack = .85;
   const halfTruckWidth = .85;
