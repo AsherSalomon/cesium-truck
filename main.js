@@ -192,7 +192,7 @@ function update() {
 //     viewer.camera.rotateUp(dotProductRight * Math.PI / 128);
     
     const verticalComponent = Cesium.Cartesian3.dot(vehicleDirection, viewer.camera.upWC);
-    const truckAngle = Math.atan2(verticalComponent);
+    const truckAngle = Math.atan2(verticalComponent, 1);
     console.log(truckAngle);
     console.log(viewer.camera.pitch); // top down is -PI/2, look up is PI/2, horizon is 0
     const desiredCameraPitch = truckAngle;
