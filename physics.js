@@ -201,7 +201,7 @@ function createVehicle(pos, quat) {
   const suspensionRestLength = 0.8;
   const rollInfluence = 0.2;
 
-  const steeringIncrement = .01;
+  const steeringIncrement = .1;
   let steeringClamp = Math.PI/6;
   const maxEngineForce = 9468; // 2000;
   const maxBreakingForce = 236; // 50;
