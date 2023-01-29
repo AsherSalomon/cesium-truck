@@ -316,26 +316,30 @@ function createVehicle(pos, quat) {
     let steeringSpeed = steeringIncrement * dt / 0.0167; // / Math.max(Math.abs(speed), 10);
     steeringClamp = Math.asin( 3.5 * 9.807 / Math.abs(vehicle.getCurrentSpeedKmHour()) ** 2 );
     if (steeringClamp > Math.PI/6 || isNaN(steeringClamp)) { steeringClamp = Math.PI/6; }
-    steeringSpeed = steeringClamp / 60;
-    if (actions.left) {
-      if (vehicleSteering < steeringClamp)
-        vehicleSteering += steeringSpeed;
-    } else {
-      if (actions.right) {
-        if (vehicleSteering > -steeringClamp)
-          vehicleSteering -= steeringSpeed;
-      } else {
-        if (vehicleSteering < -steeringSpeed)
-          vehicleSteering += steeringSpeed;
-        else {
-          if (vehicleSteering > steeringSpeed)
-            vehicleSteering -= steeringSpeed;
-          else {
-            vehicleSteering = 0;
-          }
-        }
-      }
-    }
+//     steeringSpeed = steeringClamp / 10;
+//     if (actions.left) {
+//       if (vehicleSteering < steeringClamp)
+//         vehicleSteering += steeringSpeed;
+//     } else {
+//       if (actions.right) {
+//         if (vehicleSteering > -steeringClamp)
+//           vehicleSteering -= steeringSpeed;
+//       } else {
+//         if (vehicleSteering < -steeringSpeed)
+//           vehicleSteering += steeringSpeed;
+//         else {
+//           if (vehicleSteering > steeringSpeed)
+//             vehicleSteering -= steeringSpeed;
+//           else {
+//             vehicleSteering = 0;
+//           }
+//         }
+//       }
+//     }
+    if (actions.left && vehicleSteering < steeringClamp) { vehicleSteering += steeringSpeed; }
+    if (actions.right && vehicleSteering > -steeringClamp) { vehicleSteering -= steeringSpeed; }
+    if (vehicleSteering < -steeringClamp) { vehicleSteering = -steeringClamp; }
+    if (vehicleSteering > steeringClamp) { vehicleSteering = steeringClamp; }
     
     vehicle.applyEngineForce(engineForce, BACK_LEFT);
     vehicle.applyEngineForce(engineForce, BACK_RIGHT);
