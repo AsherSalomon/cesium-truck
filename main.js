@@ -197,8 +197,8 @@ function update() {
     const truckAngle = Math.atan2(verticalComponent, 1);
     console.log(truckAngle);
     console.log(viewer.camera.pitch); // top down is -PI/2, look up is PI/2, horizon is 0
-    const desiredCameraPitch = truckAngle - Math.PI / 6;
-    viewer.camera.rotateUp((desiredCameraPitch - viewer.camera.pitch) * 0.01);
+    const desiredCameraPitch = truckAngle - Math.PI / 12;
+    viewer.camera.rotateUp((desiredCameraPitch - viewer.camera.pitch) * 0.1);
     
     
 //     const vehicleUp = new Cesium.Cartesian3(0, 0, 1);
