@@ -125,7 +125,7 @@ export function update(delta) {
   const cartographic = Cesium.Cartographic.fromCartesian(position, ellipsoid);
   if (cartographic.height < deadSeaElevation) {
     hardReset = true;
-    console.log('hardReset');
+//     console.log('hardReset');
     viewer.trackedEntity = null;
   } else if(hardReset) {
     hardReset = false;
