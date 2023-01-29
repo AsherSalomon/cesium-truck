@@ -199,7 +199,7 @@ function update() {
 //     console.log(viewer.camera.pitch); // top down is -PI/2, look up is PI/2, horizon is 0
     const desiredCameraPitch = truckAngle - Math.PI / 12;
     if (desiredCameraPitch < -Math.PI/2) { desiredCameraPitch = -Math.PI/2; }
-    viewer.camera.rotateUp((desiredCameraPitch - viewer.camera.pitch) * 0.1);
+    viewer.camera.rotateUp((desiredCameraPitch - viewer.camera.pitch) * 0.02);
     
     
 //     const vehicleUp = new Cesium.Cartesian3(0, 0, 1);
