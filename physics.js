@@ -315,8 +315,8 @@ function createVehicle(pos, quat) {
     
     let steeringSpeed = steeringIncrement * dt / 0.0167; // / Math.max(Math.abs(speed), 10);
     steeringClamp = Math.asin( 3.5 * 9.807 / Math.abs(speed) ** 2 );
-    if (steeringClamp > Math.PI/6) { steeringClamp = Math.PI/6; }
-    steeringSpeed = steeringClamp / 10;
+    if (steeringClamp > Math.PI/6 || isNaN(steeringClamp)) { steeringClamp = Math.PI/6; }
+//     steeringSpeed = steeringClamp / 10;
     if (actions.left) {
       if (vehicleSteering < steeringClamp)
         vehicleSteering += steeringSpeed;
