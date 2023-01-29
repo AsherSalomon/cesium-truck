@@ -336,10 +336,21 @@ function createVehicle(pos, quat) {
 //         }
 //       }
 //     }
-    if (actions.left && vehicleSteering < steeringClamp) { vehicleSteering += steeringSpeed; }
-    if (actions.right && vehicleSteering > -steeringClamp) { vehicleSteering -= steeringSpeed; }
+    let notSteering = true;
+    if (actions.left && vehicleSteering < steeringClamp) {
+      vehicleSteering += steeringSpeed;
+      notSteering = false;
+    }
+    if (actions.right && vehicleSteering > -steeringClamp) {
+      vehicleSteering -= steeringSpeed;
+      notSteering = false;
+    }
     if (vehicleSteering < -steeringClamp) { vehicleSteering = -steeringClamp; }
     if (vehicleSteering > steeringClamp) { vehicleSteering = steeringClamp; }
+    if (notSteering) {
+      if (vehicleSteering > steeringSpeed) { vehicleSteering -= steeringSpeed; }
+      if (vehicleSteering < -steeringSpeed) { vehicleSteering += steeringSpeed; }
+    }
     
     vehicle.applyEngineForce(engineForce, BACK_LEFT);
     vehicle.applyEngineForce(engineForce, BACK_RIGHT);
