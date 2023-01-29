@@ -174,7 +174,7 @@ function adjustHeightForTerrain(controller) {
 function update() {
 
   if (viewer.trackedEntity == truckEntities[0] && followTruck && mouseDown == false) {
-    const vehicleDirection = new Cesium.Cartesian3(0, 1, -0.2);
+    const vehicleDirection = new Cesium.Cartesian3(0, 1, 0); // -0.2);
     const quaternion = truckEntities[0].orientation.getValue(truckEntities.now());
     const matrix3 = new Cesium.Matrix3();
     Cesium.Matrix3.fromQuaternion(quaternion, matrix3);
@@ -188,8 +188,13 @@ function update() {
     const forwardMove = (Cesium.Cartesian3.magnitude(camToTruck) - 20) * 0.05;
     viewer.camera.moveForward(forwardMove);
     
-    const dotProductRight = Cesium.Cartesian3.dot(viewer.camera.rightWC, crossProduct);
-    viewer.camera.rotateUp(dotProductRight * Math.PI / 128);
+//     const dotProductRight = Cesium.Cartesian3.dot(viewer.camera.rightWC, crossProduct);
+//     viewer.camera.rotateUp(dotProductRight * Math.PI / 128);
+    
+    const verticalComponent = Cesium.Cartesian3.dot(vehicleDirection, viewer.camera.upWC);
+    const truckAngle = Math.atan2(verticalComponent);
+    const desiredCameraAngle = truckAngle;
+    console.log(viewer.camera.pitch);
     
 //     const upDirection = truckEntities[0].position._value.clone();
 //     Cesium.Cartesian3.normalize(upDirection, upDirection);
