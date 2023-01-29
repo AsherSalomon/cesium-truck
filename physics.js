@@ -177,9 +177,9 @@ function createVehicle(pos, quat) {
 
   // Vehicle contants
 
-  const chassisWidth = 2.032;
-  const chassisHeight = .8;
-  const chassisLength = 6.761 * 0.8;
+//   const chassisWidth = 2.032;
+//   const chassisHeight = .8;
+//   const chassisLength = 6.761 * 0.8;
   const massVehicle = 3787.5; // 800;
 
   const wheelAxisPositionBack = -2.07;
@@ -209,14 +209,30 @@ function createVehicle(pos, quat) {
   // Chassis
 //   const geometry = new Ammo.btBoxShape(new Ammo.btVector3(chassisWidth * .5, chassisHeight * .5, chassisLength * .5));
   const geometry = new Ammo.btConvexHullShape();
-  geometry.addPoint(new Ammo.btVector3( chassisWidth * .5,  chassisHeight * .5,  chassisLength * .5));
-  geometry.addPoint(new Ammo.btVector3(-chassisWidth * .5,  chassisHeight * .5,  chassisLength * .5));
-  geometry.addPoint(new Ammo.btVector3( chassisWidth * .5, -chassisHeight * .5,  chassisLength * .5));
-  geometry.addPoint(new Ammo.btVector3(-chassisWidth * .5, -chassisHeight * .5,  chassisLength * .5));
-  geometry.addPoint(new Ammo.btVector3( chassisWidth * .5,  chassisHeight * .5, -chassisLength * .5));
-  geometry.addPoint(new Ammo.btVector3(-chassisWidth * .5,  chassisHeight * .5, -chassisLength * .5));
-  geometry.addPoint(new Ammo.btVector3( chassisWidth * .5, -chassisHeight * .5, -chassisLength * .5));
-  geometry.addPoint(new Ammo.btVector3(-chassisWidth * .5, -chassisHeight * .5, -chassisLength * .5));
+  
+  const hoodLength = 2;
+  const tailLength = 3.25;
+  const hoodBedHeight = .45;
+  const bottomHeight = .25;
+  const cabHeight = 1;
+  const cabLengthFront = .4;
+  const cabLengthBack = .85;
+  const halfTruckWidth = .85;
+  const halfCabWidth = .65;
+  
+  geometry.addPoint(new Ammo.btVector3( halfTruckWidth,  hoodBedHeight,  hoodLength));
+  geometry.addPoint(new Ammo.btVector3(-halfTruckWidth,  hoodBedHeight,  hoodLength));
+  geometry.addPoint(new Ammo.btVector3( halfTruckWidth, -bottomHeight,  hoodLength));
+  geometry.addPoint(new Ammo.btVector3(-halfTruckWidth, -bottomHeight,  hoodLength));
+  geometry.addPoint(new Ammo.btVector3( halfTruckWidth,  hoodBedHeight, -tailLength));
+  geometry.addPoint(new Ammo.btVector3(-halfTruckWidth,  hoodBedHeight, -tailLength));
+  geometry.addPoint(new Ammo.btVector3( halfTruckWidth, -bottomHeight, -tailLength));
+  geometry.addPoint(new Ammo.btVector3(-halfTruckWidth, -bottomHeight, -tailLength));
+  
+//   geometry.addPoint(new Ammo.btVector3( chassisWidth * .5,  chassisHeight * .5,  cabHeight));
+//   geometry.addPoint(new Ammo.btVector3(-chassisWidth * .5,  chassisHeight * .5,  cabHeight));
+//   geometry.addPoint(new Ammo.btVector3( chassisWidth * .5, -chassisHeight * .5,  cabHeight));
+//   geometry.addPoint(new Ammo.btVector3(-chassisWidth * .5, -chassisHeight * .5,  cabHeight));
   
   const localInertia = new Ammo.btVector3(0, 0, 0);
   geometry.calculateLocalInertia(massVehicle, localInertia);
