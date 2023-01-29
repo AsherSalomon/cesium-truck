@@ -222,17 +222,17 @@ function createVehicle(pos, quat) {
   
   geometry.addPoint(new Ammo.btVector3( halfTruckWidth,  hoodBedHeight,  hoodLength));
   geometry.addPoint(new Ammo.btVector3(-halfTruckWidth,  hoodBedHeight,  hoodLength));
-  geometry.addPoint(new Ammo.btVector3( halfTruckWidth, -bottomHeight,  hoodLength));
-  geometry.addPoint(new Ammo.btVector3(-halfTruckWidth, -bottomHeight,  hoodLength));
+  geometry.addPoint(new Ammo.btVector3( halfTruckWidth, -bottomHeight,   hoodLength));
+  geometry.addPoint(new Ammo.btVector3(-halfTruckWidth, -bottomHeight,   hoodLength));
   geometry.addPoint(new Ammo.btVector3( halfTruckWidth,  hoodBedHeight, -tailLength));
   geometry.addPoint(new Ammo.btVector3(-halfTruckWidth,  hoodBedHeight, -tailLength));
-  geometry.addPoint(new Ammo.btVector3( halfTruckWidth, -bottomHeight, -tailLength));
-  geometry.addPoint(new Ammo.btVector3(-halfTruckWidth, -bottomHeight, -tailLength));
+  geometry.addPoint(new Ammo.btVector3( halfTruckWidth, -bottomHeight,  -tailLength));
+  geometry.addPoint(new Ammo.btVector3(-halfTruckWidth, -bottomHeight,  -tailLength));
   
-//   geometry.addPoint(new Ammo.btVector3( chassisWidth * .5,  chassisHeight * .5,  cabHeight));
-//   geometry.addPoint(new Ammo.btVector3(-chassisWidth * .5,  chassisHeight * .5,  cabHeight));
-//   geometry.addPoint(new Ammo.btVector3( chassisWidth * .5, -chassisHeight * .5,  cabHeight));
-//   geometry.addPoint(new Ammo.btVector3(-chassisWidth * .5, -chassisHeight * .5,  cabHeight));
+  geometry.addPoint(new Ammo.btVector3( halfCabWidth, cabHeight,  cabLengthFront));
+  geometry.addPoint(new Ammo.btVector3(-halfCabWidth, cabHeight,  cabLengthFront));
+  geometry.addPoint(new Ammo.btVector3( halfCabWidth, cabHeight, -cabLengthBack));
+  geometry.addPoint(new Ammo.btVector3(-halfCabWidth, cabHeight, -cabLengthBack));
   
   const localInertia = new Ammo.btVector3(0, 0, 0);
   geometry.calculateLocalInertia(massVehicle, localInertia);
