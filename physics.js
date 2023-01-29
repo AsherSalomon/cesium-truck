@@ -207,7 +207,16 @@ function createVehicle(pos, quat) {
   const maxBreakingForce = 236; // 50;
   
   // Chassis
-  const geometry = new Ammo.btBoxShape(new Ammo.btVector3(chassisWidth * .5, chassisHeight * .5, chassisLength * .5));
+//   const geometry = new Ammo.btBoxShape(new Ammo.btVector3(chassisWidth * .5, chassisHeight * .5, chassisLength * .5));
+  const geometry = new Ammo.btConvexHullShape();
+  geometry.addPoint(new Ammo.btVector3( chassisWidth * .5,  chassisHeight * .5,  chassisLength * .5));
+  geometry.addPoint(new Ammo.btVector3(-chassisWidth * .5,  chassisHeight * .5,  chassisLength * .5));
+  geometry.addPoint(new Ammo.btVector3( chassisWidth * .5, -chassisHeight * .5,  chassisLength * .5));
+  geometry.addPoint(new Ammo.btVector3(-chassisWidth * .5, -chassisHeight * .5,  chassisLength * .5));
+  geometry.addPoint(new Ammo.btVector3( chassisWidth * .5,  chassisHeight * .5, -chassisLength * .5));
+  geometry.addPoint(new Ammo.btVector3(-chassisWidth * .5,  chassisHeight * .5, -chassisLength * .5));
+  geometry.addPoint(new Ammo.btVector3( chassisWidth * .5, -chassisHeight * .5, -chassisLength * .5));
+  geometry.addPoint(new Ammo.btVector3(-chassisWidth * .5, -chassisHeight * .5, -chassisLength * .5));
   
   const localInertia = new Ammo.btVector3(0, 0, 0);
   geometry.calculateLocalInertia(massVehicle, localInertia);
