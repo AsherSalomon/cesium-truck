@@ -202,7 +202,7 @@ function createVehicle(pos, quat) {
   const rollInfluence = 0.2;
 
   const steeringIncrement = .01;
-  let steeringClamp = Math.PI / 4;
+  let steeringClamp = Math.PI/6;
   const maxEngineForce = 9468; // 2000;
   const maxBreakingForce = 236; // 50;
   
@@ -315,6 +315,7 @@ function createVehicle(pos, quat) {
     
     const steeringSpeed = steeringIncrement * dt / 0.0167; // / Math.max(Math.abs(speed), 10);
     steeringClamp = Math.asin( 3.5 * 9.807 / Math.abs(speed) ** 2 );
+    if (steeringClamp > Math.PI/6) { steeringClamp = Math.PI/6; }
     if (actions.left) {
       if (vehicleSteering < steeringClamp)
         vehicleSteering += steeringSpeed;
