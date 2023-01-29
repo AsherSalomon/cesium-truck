@@ -389,7 +389,7 @@ function createVehicle(pos, quat) {
       Cesium.Cartesian3.normalize(position, position);
       const crossProduct = new Cesium.Cartesian3();
       Cesium.Cartesian3.cross(aboveVehicle, position, crossProduct);
-      let resetTorqueValue = Cesium.Cartesian3.angleBetween(aboveVehicle, position) * resetTorque / (15 * Math.PI / 180);
+      let resetTorqueValue = Cesium.Cartesian3.angleBetween(aboveVehicle, position) * resetTorque / (Math.PI / 4);
       if (resetTorqueValue > resetTorque) { resetTorqueValue = resetTorqueValue; }
       Cesium.Cartesian3.normalize(crossProduct, crossProduct);
       Cesium.Cartesian3.multiplyByScalar(crossProduct, resetTorque, crossProduct);
