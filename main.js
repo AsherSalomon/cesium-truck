@@ -191,15 +191,15 @@ function update() {
 //     const dotProductRight = Cesium.Cartesian3.dot(viewer.camera.rightWC, crossProduct);
 //     viewer.camera.rotateUp(dotProductRight * Math.PI / 128);
     
-    const verticalComponent = Cesium.Cartesian3.dot(vehicleDirection, viewer.camera.upWC);
+    const upDirection = truckEntities[0].position._value.clone();
+    Cesium.Cartesian3.normalize(upDirection, upDirection);
+    const verticalComponent = Cesium.Cartesian3.dot(vehicleDirection, upDirection);
     const truckAngle = Math.atan2(verticalComponent, 1);
     console.log(truckAngle);
     console.log(viewer.camera.pitch); // top down is -PI/2, look up is PI/2, horizon is 0
     const desiredCameraPitch = truckAngle;
     
     
-//     const upDirection = truckEntities[0].position._value.clone();
-//     Cesium.Cartesian3.normalize(upDirection, upDirection);
     
 //     const vehicleUp = new Cesium.Cartesian3(0, 0, 1);
 //     Cesium.Matrix3.multiplyByVector(matrix3, vehicleUp, vehicleUp);
