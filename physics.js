@@ -22,7 +22,7 @@ const gravity = 9.82;
 const resetTorque = 200000;
 const resetDamping = 1;
 const tippingAcceleration = gravity * 25;
-const framesToFullSteer = 30;
+const framesToFullSteer = 50;
 
 let speedometer;
 const limiter = 85;//mph
