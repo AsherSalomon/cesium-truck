@@ -19,6 +19,10 @@ const DISABLE_DEACTIVATION = 4;
 let gravityOn = false;
 const gravity = 9.82;
 
+const resetTorque = 200000;
+const resetDamping = 1;
+const tippingAcceleration = gravity * 2;
+
 let speedometer;
 const limiter = 85;//mph
 
@@ -40,9 +44,6 @@ const keysActions = {
   "KeyD":'right',
   "KeyR":'reset'
 };
-
-const resetTorque = 200000;
-const resetDamping = 1;
 
 let parkingBrake = false;
 let hardReset = false;
@@ -314,7 +315,7 @@ function createVehicle(pos, quat) {
     }
     
     let steeringSpeed = steeringIncrement * dt / 0.0167; // / Math.max(Math.abs(speed), 10);
-    steeringClamp = Math.asin( 3.5 * 9.807 / Math.abs(vehicle.getCurrentSpeedKmHour()) ** 2 );
+    steeringClamp = Math.asin( 3.5 * tippingAcceleration / Math.abs(vehicle.getCurrentSpeedKmHour()) ** 2 );
     if (steeringClamp > Math.PI/6 || isNaN(steeringClamp)) { steeringClamp = Math.PI/6; }
 //     steeringSpeed = steeringClamp / 10;
 //     if (actions.left) {
