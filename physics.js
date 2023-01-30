@@ -21,7 +21,7 @@ const gravity = 9.82;
 
 const resetTorque = 200000;
 const resetDamping = 1;
-const tippingAcceleration = gravity * 2;
+const tippingAcceleration = gravity * 10;
 
 let speedometer;
 const limiter = 85;//mph
