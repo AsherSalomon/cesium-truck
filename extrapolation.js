@@ -42,6 +42,7 @@ export function fitHeightPlane(points = []) { // points in the form [[x, y, h], 
   
   // Solve the linear system.
   const det = xxSum * yySum - xySum * xySum;
+  console.log(det);
   if (det != 0) {
     // Compute the fitted plane h(x, y) = barH + barA0 * (x - barX) + barA1 * (y - barY).
     barX = mean[0];
@@ -49,7 +50,7 @@ export function fitHeightPlane(points = []) { // points in the form [[x, y, h], 
     barH = mean[2];
     barA0 = (yySum * xhSum - xySum * yhSum) / det;
     barA1 = (xxSum * yhSum - xySum * xhSum) / det;
-    console.log(barX, barY, barH, barA0, barA1);
+//     console.log(barX, barY, barH, barA0, barA1);
     return true;
   } else {
     // The output is invalid. The points are all the same or they are collinear.
