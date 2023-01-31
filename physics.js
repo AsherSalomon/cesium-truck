@@ -144,7 +144,7 @@ export function update(delta) {
     for (let i = 0; i < terrainBodies.length; i++) {
       if (terrainBodies[i].isResolved) {
         const data = terrainBodies[i].retainedData;
-        console.log(data.longitude);
+        console.log(data['longitude']);
         points.push([data.longitude, data.latitude, data.height]);
       }
     }
