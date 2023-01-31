@@ -515,8 +515,8 @@ class DestroyableTerrain {
       }
     }
     
-    const terrainProvider = viewer.scene.globe.terrainProvider;
-    const ellipsoid = terrainProvider.tilingScheme.projection.ellipsoid;
+//     const terrainProvider = viewer.scene.globe.terrainProvider;
+//     const ellipsoid = terrainProvider.tilingScheme.projection.ellipsoid;
     const promise = Cesium.sampleTerrainMostDetailed(terrainProvider, positions);
     this.isResolved = false;
     const thisTerrain = this;
@@ -535,6 +535,8 @@ class DestroyableTerrain {
   }
   
   makeTerrain(positions) {
+    const terrainProvider = viewer.scene.globe.terrainProvider;
+    const ellipsoid = terrainProvider.tilingScheme.projection.ellipsoid;
     this.shape = new Ammo.btConvexHullShape();
     this.vertices = new Array(8);
     for (let i = 0; i < positions.length; i++) {
