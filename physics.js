@@ -534,7 +534,7 @@ class DestroyableTerrain {
 //   console.log(extrapolation.extrapolate(1, 1));
   }
   
-  makeTerrain(updatedPositions) {
+  makeTerrain(positions) {
     this.shape = new Ammo.btConvexHullShape();
     this.vertices = new Array(8);
     for (let i = 0; i < positions.length; i++) {
