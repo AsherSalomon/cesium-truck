@@ -1,8 +1,6 @@
 // https://github.com/kripken/ammo.js/blob/main/examples/webgl_demo_vehicle/index.html
 
 import * as extrapolation from './extrapolation.js';
-// extrapolation.fitHeightPlane(points); // points in the form [[x, y, h], ...]
-// const h = extrapolation.extrapolate(x, y);
 
 const quadtreeLevel = 22;
 const quadtreePower = Math.pow(2, quadtreeLevel);
@@ -143,6 +141,11 @@ export function update(delta) {
   }
   
   // to do: update extrapolation
+  for (let i = 0; i < terrainBodies.length; i++) {
+    if (terrainBodies[i].isResolved) {
+      
+    }
+  }
 //   console.log(extrapolation.fitHeightPlane(points));
 }
 
@@ -518,39 +521,11 @@ class DestroyableTerrain {
     this.isResolved = false;
     const thisTerrain = this;
     Promise.resolve(promise).then(function(updatedPositions) {
+      thisTerrain.retainedData = updatedPositions;
       thisTerrain.isResolved = true;
-      thisTerrain.shape = new Ammo.btConvexHullShape();
-      thisTerrain.vertices = new Array(8);
-      for (let i = 0; i < positions.length; i++) {
-        const cartesian3 = Cesium.Cartographic.toCartesian(positions[i], ellipsoid);
-        const skirtHeight = 1;
-        const cartographicSkirt = new Cesium.Cartographic(positions[i].longitude, positions[i].latitude, positions[i].height - skirtHeight);
-        const skirtCartesian3 = Cesium.Cartographic.toCartesian(cartographicSkirt, ellipsoid);
-        if (showQuadtreeGrid) {
-          thisTerrain.quadtreeGridPoints.push(addPoint(cartesian3));
-          thisTerrain.quadtreeGridPoints.push(addPoint(skirtCartesian3));
-        }
-        thisTerrain.vertices[i * 2] = cartesian3;
-        thisTerrain.vertices[i * 2 + 1] = skirtCartesian3;
-      }
-      for (let i = 0; i < thisTerrain.vertices.length; i++) {
-        Cesium.Cartesian3.subtract(thisTerrain.vertices[i], originOffset, thisTerrain.vertices[i]);
-        thisTerrain.vertices[i] = new Ammo.btVector3(thisTerrain.vertices[i].x, thisTerrain.vertices[i].y, thisTerrain.vertices[i].z);
-        thisTerrain.shape.addPoint(thisTerrain.vertices[i]);
-      }
-      const transform = new Ammo.btTransform();
-      transform.setIdentity();
-      transform.setOrigin(new Ammo.btVector3(0, 0, 0));
-      transform.setRotation(new Ammo.btQuaternion(0, 0, 0, 1));
-      thisTerrain.motionState = new Ammo.btDefaultMotionState(transform);
-      Ammo.destroy(transform);
-      thisTerrain.localInertia = new Ammo.btVector3(0, 0, 0);
-
-      const rbInfo = new Ammo.btRigidBodyConstructionInfo(0, thisTerrain.motionState, thisTerrain.shape, thisTerrain.localInertia);
-      thisTerrain.terrainBody = new Ammo.btRigidBody(rbInfo);
-      Ammo.destroy(rbInfo);
-
-      physicsWorld.addRigidBody(thisTerrain.terrainBody);
+      
+//       thisTerrain.destroy();
+      thisTerrain.makeTerrain(updatedPositions);
       
       gravityOn = true;
     }).catch(error => { throw error })
@@ -558,32 +533,67 @@ class DestroyableTerrain {
   // to do: provide temporary terrain while waiting for promise
 //   console.log(extrapolation.extrapolate(1, 1));
   }
+  
+  makeTerrain() {
+    thisTerrain.shape = new Ammo.btConvexHullShape();
+    thisTerrain.vertices = new Array(8);
+    for (let i = 0; i < positions.length; i++) {
+      const cartesian3 = Cesium.Cartographic.toCartesian(positions[i], ellipsoid);
+      const skirtHeight = 1;
+      const cartographicSkirt = new Cesium.Cartographic(positions[i].longitude, positions[i].latitude, positions[i].height - skirtHeight);
+      const skirtCartesian3 = Cesium.Cartographic.toCartesian(cartographicSkirt, ellipsoid);
+      if (showQuadtreeGrid) {
+        thisTerrain.quadtreeGridPoints.push(addPoint(cartesian3));
+        thisTerrain.quadtreeGridPoints.push(addPoint(skirtCartesian3));
+      }
+      thisTerrain.vertices[i * 2] = cartesian3;
+      thisTerrain.vertices[i * 2 + 1] = skirtCartesian3;
+    }
+    for (let i = 0; i < thisTerrain.vertices.length; i++) {
+      Cesium.Cartesian3.subtract(thisTerrain.vertices[i], originOffset, thisTerrain.vertices[i]);
+      thisTerrain.vertices[i] = new Ammo.btVector3(thisTerrain.vertices[i].x, thisTerrain.vertices[i].y, thisTerrain.vertices[i].z);
+      thisTerrain.shape.addPoint(thisTerrain.vertices[i]);
+    }
+    const transform = new Ammo.btTransform();
+    transform.setIdentity();
+    transform.setOrigin(new Ammo.btVector3(0, 0, 0));
+    transform.setRotation(new Ammo.btQuaternion(0, 0, 0, 1));
+    thisTerrain.motionState = new Ammo.btDefaultMotionState(transform);
+    Ammo.destroy(transform);
+    thisTerrain.localInertia = new Ammo.btVector3(0, 0, 0);
+
+    const rbInfo = new Ammo.btRigidBodyConstructionInfo(0, thisTerrain.motionState, thisTerrain.shape, thisTerrain.localInertia);
+    thisTerrain.terrainBody = new Ammo.btRigidBody(rbInfo);
+    Ammo.destroy(rbInfo);
+
+    physicsWorld.addRigidBody(thisTerrain.terrainBody);
+  }
 
   destroy() {
-//     console.log('destroyed');
-    if (this.isResolved) {
-      for (let i = 0; i < this.vertices.length; i++) {
-        Ammo.destroy(this.vertices[i]);
-      }
-      delete this.vertices;
-      Ammo.destroy(this.shape);
-      delete this.shape;
-
-      physicsWorld.removeRigidBody(this.terrainBody);
-
-      Ammo.destroy(this.motionState);
-      delete this.motionState;
-      Ammo.destroy(this.localInertia);
-      delete this.localInertia;
-      Ammo.destroy(this.terrainBody);
-      delete this.terrainBody;
-      
-      if (showQuadtreeGrid) {
-        for (let i = 0; i < this.quadtreeGridPoints.length; i++) {
-          viewer.entities.remove(this.quadtreeGridPoints[i]);
-        }
-      }
+//     if (this.isResolved) {
+    for (let i = 0; i < this.vertices.length; i++) {
+      Ammo.destroy(this.vertices[i]);
     }
+    delete this.vertices;
+    Ammo.destroy(this.shape);
+    delete this.shape;
+
+    physicsWorld.removeRigidBody(this.terrainBody);
+
+    Ammo.destroy(this.motionState);
+    delete this.motionState;
+    Ammo.destroy(this.localInertia);
+    delete this.localInertia;
+    Ammo.destroy(this.terrainBody);
+    delete this.terrainBody;
+
+    if (showQuadtreeGrid) {
+      for (let i = 0; i < this.quadtreeGridPoints.length; i++) {
+        viewer.entities.remove(this.quadtreeGridPoints[i]);
+      }
+      this.quadtreeGridPoints = [];
+    }
+//     }
   }
 
 }
