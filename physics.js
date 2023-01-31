@@ -147,7 +147,7 @@ export function update(delta) {
         points.push([data.longitude, data.latitude, data.height]);
       }
     }
-    console.log(extrapolation.fitHeightPlane(points));
+    extrapolation.fitHeightPlane(points);
   }
 }
 
@@ -512,7 +512,7 @@ class DestroyableTerrain {
         const indexN = Math.floor(this.latitudeIndex + n);
         const longitudeM = indexM / quadtreePower + ( -Math.PI );
         const latitudeN = indexN / quadtreePower + ( -Math.PI / 2 );
-        console.log(extrapolation.extrapolate(longitudeM, latitudeN));
+        console.log(longitudeM, latitudeN, extrapolation.extrapolate(longitudeM, latitudeN));
         const cartographicMN = new Cesium.Cartographic(longitudeM, latitudeN, 0);
         positions.push(cartographicMN);
       }
