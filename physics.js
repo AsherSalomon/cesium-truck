@@ -1,6 +1,8 @@
 // https://github.com/kripken/ammo.js/blob/main/examples/webgl_demo_vehicle/index.html
 
 import * as extrapolation from './extrapolation.js';
+// extrapolation.fitHeightPlane(points); // points in the form [[x, y, h], ...]
+// const h = extrapolation.extrapolate(x, y);
 
 const quadtreeLevel = 22;
 const quadtreePower = Math.pow(2, quadtreeLevel);
