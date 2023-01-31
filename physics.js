@@ -118,11 +118,8 @@ export function update(delta) {
       physicsWorld.setGravity( new Ammo.btVector3(0, 0, 0) );
     }
 
-    frameCount++;
-    if (frameCount % 1 == 0) {
-      for (let i = 0; i < syncList.length; i++) { syncList[i](delta); }
-      physicsWorld.stepSimulation(delta, 10);
-    }
+    for (let i = 0; i < syncList.length; i++) { syncList[i](delta); }
+    physicsWorld.stepSimulation(delta, 10);
   }
   previousTruckSelected = truckSelected;
   
@@ -140,14 +137,17 @@ export function update(delta) {
     viewer.trackedEntity = truckEntities[0];
   }
   
-  const points = [];
-  for (let i = 0; i < terrainBodies.length; i++) {
-    if (terrainBodies[i].isResolved) {
-      const data = terrainBodies[i].retainedData;
-      points.push([data.longitude, data.latitude, data.height]);
+  frameCount++;
+  if (frameCount % 2 == 0) {
+    const points = [];
+    for (let i = 0; i < terrainBodies.length; i++) {
+      if (terrainBodies[i].isResolved) {
+        const data = terrainBodies[i].retainedData;
+        points.push([data.longitude, data.latitude, data.height]);
+      }
     }
+    console.log(extrapolation.fitHeightPlane(points));
   }
-  console.log(extrapolation.fitHeightPlane(points));
 }
 
 
