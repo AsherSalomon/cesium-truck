@@ -32,7 +32,7 @@ export function fitHeightPlane(points = []) { // points in the form [[x, y, h], 
     const diff = [0, 0, 0];
     for (let j = 0; j < 3; j++) {
       diff[j] = points[i][j] - mean[j];
-      console.log(diff[j]);
+      console.log(points[i][j], mean[j]);
     }
     xxSum += diff[0] * diff[0];
     xySum += diff[0] * diff[1];
