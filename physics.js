@@ -141,6 +141,9 @@ export function update(delta) {
     hardReset = false;
     viewer.trackedEntity = truckEntities[0];
   }
+  
+  // to do: update extrapolation
+//   console.log(extrapolation.fitHeightPlane(points));
 }
 
 
@@ -552,7 +555,8 @@ class DestroyableTerrain {
       gravityOn = true;
     }).catch(error => { throw error })
     
-//     console.log('created');
+  // to do: provide temporary terrain while waiting for promise
+//   console.log(extrapolation.extrapolate(1, 1));
   }
 
   destroy() {
