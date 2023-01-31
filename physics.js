@@ -143,7 +143,8 @@ export function update(delta) {
   // to do: update extrapolation
   for (let i = 0; i < terrainBodies.length; i++) {
     if (terrainBodies[i].isResolved) {
-      
+      console.log(terrainBodies[i].retainedData);
+      break;
     }
   }
 //   console.log(extrapolation.fitHeightPlane(points));
