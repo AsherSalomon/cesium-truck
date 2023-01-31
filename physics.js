@@ -71,9 +71,9 @@ export function init(newTruck, newViewer) {
   window.addEventListener( 'keydown', keydown);
   window.addEventListener( 'keyup', keyup);
   
-  const points = [[0,0,0],[1,0,0],[0,1,0]];
+  const points = [[0,0,0],[1,0,0.5],[0,1,1]];
   console.log(extrapolation.fitHeightPlane(points));
-  console.log(extrapolation.extrapolate(0, 0));
+  console.log(extrapolation.extrapolate(1, 1));
 }
 
 let frameCount = 0;
