@@ -1,6 +1,6 @@
 // https://github.com/kripken/ammo.js/blob/main/examples/webgl_demo_vehicle/index.html
 
-// import * as physics from './physics.js';
+import * as extrapolation from './extrapolation.js';
 
 const quadtreeLevel = 22;
 const quadtreePower = Math.pow(2, quadtreeLevel);
