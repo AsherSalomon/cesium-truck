@@ -6,8 +6,9 @@ let barH = 0;
 let barA0 = 0;
 let barA1 = 0;
 
-export function fitHeightPlane(points = []) {
-  // https://www.geometrictools.com/Documentation/LeastSquaresFitting.pdf page 7
+export function fitHeightPlane(points = []) { // points in the form [[x, y, h], ...]
+  // https://www.geometrictools.com/Documentation/LeastSquaresFitting.pdf
+  // 3.2.1 Pseudocode for Fitting by a Plane
   if (points.length < 3) { return = false; }
   
   // Compute the mean of the points.
@@ -56,6 +57,6 @@ export function fitHeightPlane(points = []) {
 }
 
 export function extrapolate(x, y) {
-  const h = 0;
+  const h = barA0 * (x - barX) + barA1 * (y - barY) + barH;
   return h;
 }
