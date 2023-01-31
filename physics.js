@@ -140,14 +140,14 @@ export function update(delta) {
     viewer.trackedEntity = truckEntities[0];
   }
   
-  // to do: update extrapolation
+  const points = [];
   for (let i = 0; i < terrainBodies.length; i++) {
     if (terrainBodies[i].isResolved) {
-      console.log(terrainBodies[i].retainedData);
-      break;
+      const data = terrainBodies[i].retainedData;
+      points.push([data.longitude, data.latitude, data.height]);
     }
   }
-//   console.log(extrapolation.fitHeightPlane(points));
+  console.log(extrapolation.fitHeightPlane(points));
 }
 
 
