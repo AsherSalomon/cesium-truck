@@ -32,6 +32,7 @@ export function fitHeightPlane(points = []) { // points in the form [[x, y, h], 
     const diff = [0, 0, 0];
     for (let j = 0; j < 3; j++) {
       diff[j] = points[i][j] - mean[j];
+      console.log(diff[j]);
     }
     xxSum += diff[0] * diff[0];
     xySum += diff[0] * diff[1];
@@ -42,7 +43,6 @@ export function fitHeightPlane(points = []) { // points in the form [[x, y, h], 
   
   // Solve the linear system.
   const det = xxSum * yySum - xySum * xySum;
-  console.log(xxSum, yySum, xySum, xySum);
   if (det != 0) {
     // Compute the fitted plane h(x, y) = barH + barA0 * (x - barX) + barA1 * (y - barY).
     barX = mean[0];
