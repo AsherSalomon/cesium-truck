@@ -512,10 +512,14 @@ class DestroyableTerrain {
         const indexN = Math.floor(this.latitudeIndex + n);
         const longitudeM = indexM / quadtreePower + ( -Math.PI );
         const latitudeN = indexN / quadtreePower + ( -Math.PI / 2 );
+        console.log(extrapolation.extrapolate(data.longitude, data.latitude));
         const cartographicMN = new Cesium.Cartographic(longitudeM, latitudeN, 0);
         positions.push(cartographicMN);
       }
     }
+    
+  // to do: provide temporary terrain while waiting for promise
+//   console.log(extrapolation.extrapolate(lon, lat));
     
     const terrainProvider = viewer.scene.globe.terrainProvider;
 //     const ellipsoid = terrainProvider.tilingScheme.projection.ellipsoid;
@@ -532,8 +536,6 @@ class DestroyableTerrain {
       gravityOn = true;
     }).catch(error => { throw error })
     
-  // to do: provide temporary terrain while waiting for promise
-//   console.log(extrapolation.extrapolate(1, 1));
   }
   
   makeTerrain(positions) {
