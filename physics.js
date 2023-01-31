@@ -1,6 +1,7 @@
 // https://github.com/kripken/ammo.js/blob/main/examples/webgl_demo_vehicle/index.html
 
 import * as extrapolation from './extrapolation.js';
+const framesBetweenExtrapolationFit = 10;
 
 const quadtreeLevel = 22;
 const quadtreePower = Math.pow(2, quadtreeLevel);
@@ -138,7 +139,7 @@ export function update(delta) {
   }
   
   frameCount++;
-  if (frameCount % 2 == 0) {
+  if (frameCount % framesBetweenExtrapolationFit == 0) {
     const points = [];
     for (let i = 0; i < terrainBodies.length; i++) {
       if (terrainBodies[i].isResolved) {
