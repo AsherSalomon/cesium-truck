@@ -515,7 +515,7 @@ class DestroyableTerrain {
       }
     }
     
-//     const terrainProvider = viewer.scene.globe.terrainProvider;
+    const terrainProvider = viewer.scene.globe.terrainProvider;
 //     const ellipsoid = terrainProvider.tilingScheme.projection.ellipsoid;
     const promise = Cesium.sampleTerrainMostDetailed(terrainProvider, positions);
     this.isResolved = false;
