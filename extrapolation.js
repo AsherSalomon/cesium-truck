@@ -49,6 +49,7 @@ export function fitHeightPlane(points = []) { // points in the form [[x, y, h], 
     barH = mean[2];
     barA0 = (yySum * xhSum - xySum * yhSum) / det;
     barA1 = (xxSum * yhSum - xySum * xhSum) / det;
+    console.log(barX, barY, barH, barA0, barA1);
     return true;
   } else {
     // The output is invalid. The points are all the same or they are collinear.
