@@ -478,7 +478,7 @@ function createVehicle(pos, quat) {
       const ellipsoid = terrainProvider.tilingScheme.projection.ellipsoid;
       const cartographic = Cesium.Cartographic.fromCartesian(position, ellipsoid);
       
-      quadtreeLevel = 22 - Math.floor(Math.abs(vehicle.getCurrentSpeedKmHour()) / 10);
+      quadtreeLevel = 22 - Math.floor(Math.abs(vehicle.getCurrentSpeedKmHour() ** 2) / 10);
       quadtreePower = Math.pow(2, quadtreeLevel);
       const longitudeIndex = ( cartographic.longitude - ( -Math.PI ) ) * quadtreePower;
       const latitudeIndex = ( cartographic.latitude - ( -Math.PI / 2 ) ) * quadtreePower;
