@@ -1,5 +1,7 @@
 // https://github.com/kripken/ammo.js/blob/main/examples/webgl_demo_vehicle/index.html
 
+let once = true;
+
 import * as extrapolation from './extrapolation.js';
 const framesBetweenExtrapolationFit = 10;
 
@@ -144,14 +146,13 @@ export function update(delta) {
     for (let i = 0; i < terrainBodies.length; i++) {
       if (terrainBodies[i].isResolved) {
         const data = terrainBodies[i].retainedData;
-        if (once) { console.log(data); once = false; }
+        if (once) { console.log(data[0].longitude); once = false; }
         points.push([data.longitude, data.latitude, data.height]);
       }
     }
     extrapolation.fitHeightPlane(points);
   }
 }
-let once = true;
 
 function keyup(e) {
   if(keysActions[e.code]) {
