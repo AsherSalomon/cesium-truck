@@ -520,7 +520,7 @@ class DestroyableTerrain {
     }
     
   // to do: provide temporary terrain while waiting for promise
-    thisTerrain.makeTerrain(positions);
+    this.makeTerrain(positions);
     
     const terrainProvider = viewer.scene.globe.terrainProvider;
 //     const ellipsoid = terrainProvider.tilingScheme.projection.ellipsoid;
