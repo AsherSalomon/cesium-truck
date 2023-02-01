@@ -144,14 +144,14 @@ export function update(delta) {
     for (let i = 0; i < terrainBodies.length; i++) {
       if (terrainBodies[i].isResolved) {
         const data = terrainBodies[i].retainedData;
-        console.log(data['longitude']);
+        if (once) { console.log(data); once = false; }
         points.push([data.longitude, data.latitude, data.height]);
       }
     }
     extrapolation.fitHeightPlane(points);
   }
 }
-
+let once = true;
 
 function keyup(e) {
   if(keysActions[e.code]) {
