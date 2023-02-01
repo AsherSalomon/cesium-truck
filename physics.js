@@ -25,7 +25,7 @@ const gravity = 9.82;
 
 const resetTorque = 200000;
 const resetDamping = 1;
-const tippingAcceleration = gravity * 25;
+const tippingAcceleration = gravity * 2;
 const framesToFullSteer = 40;
 
 let speedometer;
@@ -323,7 +323,7 @@ function createVehicle(pos, quat) {
       parkingBrake = true;
     }
     
-    steeringClamp = Math.asin( 3.5 * tippingAcceleration / Math.abs(vehicle.getCurrentSpeedKmHour()) ** 2 );
+    steeringClamp = Math.asin( 3.5 * tippingAcceleration / vehicle.getCurrentSpeedKmHour() / 3.6) ** 2;
     if (steeringClamp > Math.PI/6 || isNaN(steeringClamp)) { steeringClamp = Math.PI/6; }
     const steeringSpeed = steeringClamp / framesToFullSteer;
     let notSteering = true;
