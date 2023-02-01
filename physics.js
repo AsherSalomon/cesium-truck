@@ -71,16 +71,12 @@ export function init(newTruck, newViewer) {
   window.addEventListener( 'keydown', keydown);
   window.addEventListener( 'keyup', keyup);
   
-//   const points = [[0,0,0],[1,0,0.5],[0,1,1]];
-//   console.log(extrapolation.fitHeightPlane(points));
-//   console.log(extrapolation.extrapolate(1, 1));
 }
 
 let frameCount = 0;
 let previousTruckSelected = false;
 export function update(delta) {
   const truckSelected = viewer.trackedEntity == truckEntities[0];
-//   if (truckSelected && truckSelected != previousTruckSelected) {
   if (truckSelected == false) {
     resetOriginOffset();
     
@@ -103,7 +99,6 @@ export function update(delta) {
     body.setLinearVelocity(new Ammo.btVector3(0, 0, 0));
     body.setAngularVelocity(new Ammo.btVector3(0, 0, 0));
     
-//     once = true;
     resetWhitelist();
     cleanUpTerrain();
   }
@@ -197,9 +192,6 @@ function createVehicle(pos, quat) {
 
   // Vehicle contants
 
-//   const chassisWidth = 2.032;
-//   const chassisHeight = .8;
-//   const chassisLength = 6.761 * 0.8;
   const massVehicle = 3787.5; // 800;
 
   const wheelAxisPositionBack = -2.07;
@@ -227,7 +219,6 @@ function createVehicle(pos, quat) {
   const maxBreakingForce = 236; // 50;
   
   // Chassis
-//   const geometry = new Ammo.btBoxShape(new Ammo.btVector3(chassisWidth * .5, chassisHeight * .5, chassisLength * .5));
   const geometry = new Ammo.btConvexHullShape();
   
   const hoodLength = 2;
@@ -333,29 +324,9 @@ function createVehicle(pos, quat) {
       parkingBrake = true;
     }
     
-//     const steeringSpeed = steeringIncrement * dt / 0.0167; // / Math.max(Math.abs(speed), 10);
     steeringClamp = Math.asin( 3.5 * tippingAcceleration / Math.abs(vehicle.getCurrentSpeedKmHour()) ** 2 );
     if (steeringClamp > Math.PI/6 || isNaN(steeringClamp)) { steeringClamp = Math.PI/6; }
     const steeringSpeed = steeringClamp / framesToFullSteer;
-//     if (actions.left) {
-//       if (vehicleSteering < steeringClamp)
-//         vehicleSteering += steeringSpeed;
-//     } else {
-//       if (actions.right) {
-//         if (vehicleSteering > -steeringClamp)
-//           vehicleSteering -= steeringSpeed;
-//       } else {
-//         if (vehicleSteering < -steeringSpeed)
-//           vehicleSteering += steeringSpeed;
-//         else {
-//           if (vehicleSteering > steeringSpeed)
-//             vehicleSteering -= steeringSpeed;
-//           else {
-//             vehicleSteering = 0;
-//           }
-//         }
-//       }
-//     }
     let notSteering = true;
     if (actions.left && vehicleSteering < steeringClamp) {
       vehicleSteering += steeringSpeed;
@@ -425,35 +396,17 @@ function createVehicle(pos, quat) {
     truckEntities[0].orientation = quaternion;
     
     if (actions.reset && gravityOn) {
-//       // flips vehicle but also makes it fly, not great
-//       let aboveVehicle = new Cesium.Cartesian3(0, 1, 0);
-//       position = new Cesium.Cartesian3(p.x(), p.y(), p.z());
-//       quaternion = new Cesium.Quaternion(q.x(), q.y(), q.z(), q.w());
-//       const matrix3 = new Cesium.Matrix3();
-//       Cesium.Matrix3.fromQuaternion(quaternion, matrix3);
-//       Cesium.Matrix3.multiplyByVector(matrix3, aboveVehicle, aboveVehicle);
-//       aboveVehicle = new Ammo.btVector3(aboveVehicle.x, aboveVehicle.y, aboveVehicle.z);
-//       Cesium.Cartesian3.add(position, originOffset, position);
-//       Cesium.Cartesian3.normalize(position, position);
-//       const resetForce = massVehicle * gravity;
-//       Cesium.Cartesian3.multiplyByScalar(position, resetForce, position);
-//       position = new Ammo.btVector3(position.x, position.y, position.z);
-//       body.applyForce(position, aboveVehicle);
-//       Ammo.destroy(aboveVehicle);
-//       Ammo.destroy(position);
       
       let aboveVehicle = new Cesium.Cartesian3(0, 1, 0);
       quaternion = new Cesium.Quaternion(q.x(), q.y(), q.z(), q.w());
       const matrix3 = new Cesium.Matrix3();
       Cesium.Matrix3.fromQuaternion(quaternion, matrix3);
-//       Cesium.Matrix3.inverse(matrix3, matrix3); // world to object
       Cesium.Matrix3.multiplyByVector(matrix3, aboveVehicle, aboveVehicle);
       const truckPosition = truckEntities[0].position._value.clone();
       Cesium.Cartesian3.normalize(position, position);
       const crossProduct = new Cesium.Cartesian3();
       Cesium.Cartesian3.cross(aboveVehicle, position, crossProduct);
       let resetTorqueValue = Cesium.Cartesian3.angleBetween(aboveVehicle, position) * resetTorque / (Math.PI / 4);
-//       if (resetTorqueValue < 0) { resetTorqueValue = 0; }
       if (resetTorqueValue > resetTorque) { resetTorqueValue = resetTorqueValue; }
       Cesium.Cartesian3.normalize(crossProduct, crossProduct);
       Cesium.Cartesian3.multiplyByScalar(crossProduct, resetTorqueValue, crossProduct);
@@ -520,11 +473,9 @@ class DestroyableTerrain {
       }
     }
     
-  // to do: provide temporary terrain while waiting for promise
     this.makeTerrain(positions);
     
     const terrainProvider = viewer.scene.globe.terrainProvider;
-//     const ellipsoid = terrainProvider.tilingScheme.projection.ellipsoid;
     const promise = Cesium.sampleTerrainMostDetailed(terrainProvider, positions);
     this.isResolved = false;
     const thisTerrain = this;
@@ -578,7 +529,6 @@ class DestroyableTerrain {
   }
 
   destroy() {
-//     if (this.isResolved) {
     for (let i = 0; i < this.vertices.length; i++) {
       Ammo.destroy(this.vertices[i]);
     }
@@ -601,7 +551,6 @@ class DestroyableTerrain {
       }
       this.quadtreeGridPoints = [];
     }
-//     }
   }
 
 }
