@@ -454,7 +454,7 @@ function createVehicle(pos, quat) {
 
 }
 
-const histogram = new Array(10).fill(0);
+const histogram = new Array(15).fill(0);
 
 let destroyableTerrainCounter = 0;
 class DestroyableTerrain {
