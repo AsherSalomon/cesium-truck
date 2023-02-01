@@ -1,7 +1,7 @@
 // https://github.com/kripken/ammo.js/blob/main/examples/webgl_demo_vehicle/index.html
 
 import * as extrapolation from './extrapolation.js';
-const framesBetweenExtrapolationFit = 1;
+const framesBetweenExtrapolationFit = 10;
 
 const quadtreeLevel = 22;
 const quadtreePower = Math.pow(2, quadtreeLevel);
