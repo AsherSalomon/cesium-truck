@@ -145,9 +145,10 @@ export function update(delta) {
     const points = [];
     for (let i = 0; i < terrainBodies.length; i++) {
       if (terrainBodies[i].isResolved) {
-        const data = terrainBodies[i].retainedData;
-        if (once) { console.log(data[0].longitude); once = false; }
-        points.push([data.longitude, data.latitude, data.height]);
+        for (let j = 0; j < 4; j++) {
+          const data = terrainBodies[i].retainedData;
+          points.push([data[j].longitude, data[j].latitude, data[j].height]);
+        }
       }
     }
     extrapolation.fitHeightPlane(points);
