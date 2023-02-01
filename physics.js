@@ -127,7 +127,6 @@ export function update(delta) {
   const cartographic = Cesium.Cartographic.fromCartesian(position, ellipsoid);
   if (cartographic.height < deadSeaElevation && truckSelected == true) {
     hardReset = true;
-//     console.log('hardReset');
     viewer.trackedEntity = null;
   } else if(hardReset) {
     hardReset = false;
@@ -482,7 +481,7 @@ class DestroyableTerrain {
     const thisTerrain = this;
     Promise.resolve(promise).then(function(updatedPositions) {
       thisTerrain.loadEnded = performance.now()
-      console.log(`Call to doSomething took ${thisTerrain.loadEnded - thisTerrain.loadStarted} milliseconds`)
+      console.log(`Promise took ${thisTerrain.loadEnded - thisTerrain.loadStarted} milliseconds to resolve`)
       thisTerrain.retainedData = updatedPositions;
       thisTerrain.isResolved = true;
       
