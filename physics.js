@@ -6,6 +6,7 @@ const framesBetweenExtrapolationFit = 1;
 const quadtreeLevel = 22;
 const quadtreePower = Math.pow(2, quadtreeLevel);
 const quadtreeGridWidth = 8;
+const quadtreeGridHeight = 6;
 const showQuadtreeGrid = true;
 
 let viewer;
@@ -481,7 +482,7 @@ function createVehicle(pos, quat) {
       const latitudeIndex = ( cartographic.latitude - ( -Math.PI / 2 ) ) * quadtreePower;
       
       for (let m = -quadtreeGridWidth / 2; m <= quadtreeGridWidth / 2; m++) {
-        for (let n = -quadtreeGridWidth / 2; n <= quadtreeGridWidth / 2; n++) {
+        for (let n = -quadtreeGridHeight / 2; n <= quadtreeGridHeight / 2; n++) {
           const indexM = Math.floor(longitudeIndex + m);
           const indexN = Math.floor(latitudeIndex + n);
           
