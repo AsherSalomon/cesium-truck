@@ -490,7 +490,9 @@ class DestroyableTerrain {
       thisTerrain.retainedData = updatedPositions;
       thisTerrain.isResolved = true;
       
-      thisTerrain.destroy();
+      if (extrapolationEnabled) {
+        thisTerrain.destroy();
+      }
       thisTerrain.makeTerrain(updatedPositions);
       
       gravityOn = true;
