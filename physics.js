@@ -478,8 +478,11 @@ class DestroyableTerrain {
     const terrainProvider = viewer.scene.globe.terrainProvider;
     const promise = Cesium.sampleTerrainMostDetailed(terrainProvider, positions);
     this.isResolved = false;
+    this.loadStarted = performance.now();
     const thisTerrain = this;
     Promise.resolve(promise).then(function(updatedPositions) {
+      thisTerrain.loadEnded = performance.now()
+      console.log(`Call to doSomething took ${thisTerrain.loadEnded - thisTerrain.loadStarted} milliseconds`)
       thisTerrain.retainedData = updatedPositions;
       thisTerrain.isResolved = true;
       
