@@ -422,7 +422,7 @@ function createVehicle(pos, quat) {
       body.setDamping(0, 0);
     }
     
-    if (viewer.trackedEntity == truckEntities[0]) {
+    if (viewer.trackedEntity == truckEntities[0] && viewer.scene.globe.terrainProvider.tilingScheme != undefined) {
       
       resetWhitelist();
       
