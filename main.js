@@ -91,11 +91,11 @@ document.body.onmouseup = function() {
 }
 window.addEventListener('keydown', function(e) {
   followTruck = true;
-//   if (e.keyCode == 69) { // the E key
   const key = e.keyCode;
-  if (key == 65 || key == 68 || key == 83 || key == 87) { // the E key
+  if (e.keyCode == 27 && viewer.trackedEntity == truckEntities[0]) { // the esc key
+      viewer.trackedEntity = null;
+  } else if (key == 65 || key == 68 || key == 83 || key == 87) { // the E key
 //     if (viewer.trackedEntity == truckEntities[0]) {
-//       viewer.trackedEntity = null;
 //     } else 
     if (viewer.trackedEntity != truckEntities[0]) {
       const matrix4 = new Cesium.Matrix4();
