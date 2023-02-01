@@ -5,8 +5,8 @@ const framesBetweenExtrapolationFit = 1;
 
 const quadtreeLevel = 22;
 const quadtreePower = Math.pow(2, quadtreeLevel);
-const quadtreeGridWidth = 8;
-const quadtreeGridHeight = 6;
+const quadtreeGridWidth = 6;
+const quadtreeGridHeight = 4;
 const showQuadtreeGrid = true;
 
 let viewer;
