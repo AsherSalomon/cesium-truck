@@ -531,7 +531,7 @@ class DestroyableTerrain {
       thisTerrain.retainedData = updatedPositions;
       thisTerrain.isResolved = true;
       
-//       thisTerrain.destroy();
+      thisTerrain.destroy();
       thisTerrain.makeTerrain(updatedPositions);
       
       gravityOn = true;
