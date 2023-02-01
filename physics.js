@@ -481,7 +481,7 @@ class DestroyableTerrain {
     const thisTerrain = this;
     Promise.resolve(promise).then(function(updatedPositions) {
       thisTerrain.loadEnded = performance.now()
-      console.log(`Promise took ${thisTerrain.loadEnded - thisTerrain.loadStarted} milliseconds to resolve`)
+      console.log(Math.ceil(thisTerrain.loadEnded - thisTerrain.loadStarted));
       thisTerrain.retainedData = updatedPositions;
       thisTerrain.isResolved = true;
       
