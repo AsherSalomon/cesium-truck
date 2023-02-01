@@ -1,14 +1,12 @@
 // https://github.com/kripken/ammo.js/blob/main/examples/webgl_demo_vehicle/index.html
 
-let once = true;
-
 import * as extrapolation from './extrapolation.js';
 const framesBetweenExtrapolationFit = 10;
 
 const quadtreeLevel = 22;
 const quadtreePower = Math.pow(2, quadtreeLevel);
 const quadtreeGridWidth = 8;
-const showQuadtreeGrid = false;
+const showQuadtreeGrid = true;
 
 let viewer;
 
@@ -515,14 +513,14 @@ class DestroyableTerrain {
         const indexN = Math.floor(this.latitudeIndex + n);
         const longitudeM = indexM / quadtreePower + ( -Math.PI );
         const latitudeN = indexN / quadtreePower + ( -Math.PI / 2 );
-        console.log(longitudeM, latitudeN, extrapolation.extrapolate(longitudeM, latitudeN));
-        const cartographicMN = new Cesium.Cartographic(longitudeM, latitudeN, 0);
+        const predictedHeight = extrapolation.extrapolate(longitudeM, latitudeN);
+        const cartographicMN = new Cesium.Cartographic(longitudeM, latitudeN, predictedHeight);
         positions.push(cartographicMN);
       }
     }
     
   // to do: provide temporary terrain while waiting for promise
-//   console.log(extrapolation.extrapolate(lon, lat));
+    thisTerrain.makeTerrain(positions);
     
     const terrainProvider = viewer.scene.globe.terrainProvider;
 //     const ellipsoid = terrainProvider.tilingScheme.projection.ellipsoid;
