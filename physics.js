@@ -131,7 +131,7 @@ export function update(delta) {
     viewer.trackedEntity = null;
   } else if(hardReset) {
     hardReset = false;
-    viewer.camera.lookUp(Math.PI/8);
+    viewer.camera.lookUp(Math.PI/2);
     viewer.trackedEntity = truckEntities[0];
   }
   
