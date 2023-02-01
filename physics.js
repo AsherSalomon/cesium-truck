@@ -3,8 +3,8 @@
 import * as extrapolation from './extrapolation.js';
 const framesBetweenExtrapolationFit = 1;
 
-let quadtreeLevel = 22;
-let quadtreePower = 0;
+const quadtreeLevel = 22;
+const quadtreePower = Math.pow(2, quadtreeLevel);
 const quadtreeGridWidth = 8;
 const quadtreeGridHeight = 6;
 const showQuadtreeGrid = true;
@@ -478,8 +478,6 @@ function createVehicle(pos, quat) {
       const ellipsoid = terrainProvider.tilingScheme.projection.ellipsoid;
       const cartographic = Cesium.Cartographic.fromCartesian(position, ellipsoid);
       
-      quadtreeLevel = 22 - Math.floor(Math.abs(vehicle.getCurrentSpeedKmHour() ** 2) / 10);
-      quadtreePower = Math.pow(2, quadtreeLevel);
       const longitudeIndex = ( cartographic.longitude - ( -Math.PI ) ) * quadtreePower;
       const latitudeIndex = ( cartographic.latitude - ( -Math.PI / 2 ) ) * quadtreePower;
       
