@@ -130,7 +130,7 @@ export function update(delta) {
   const terrainProvider = viewer.scene.globe.terrainProvider;
   const ellipsoid = terrainProvider.tilingScheme.projection.ellipsoid;
   const cartographic = Cesium.Cartographic.fromCartesian(position, ellipsoid);
-  if (cartographic.height < deadSeaElevation) {
+  if (cartographic.height < deadSeaElevation && truckSelected == true) {
     hardReset = true;
 //     console.log('hardReset');
     viewer.trackedEntity = null;
