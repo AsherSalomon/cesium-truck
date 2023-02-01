@@ -454,6 +454,8 @@ function createVehicle(pos, quat) {
 
 }
 
+const histogram = new Array(10).fill(0);
+
 let destroyableTerrainCounter = 0;
 class DestroyableTerrain {
   constructor(lon, lat) {
@@ -485,8 +487,10 @@ class DestroyableTerrain {
     this.loadStarted = performance.now();
     const thisTerrain = this;
     Promise.resolve(promise).then(function(updatedPositions) {
-      thisTerrain.loadEnded = performance.now()
-      console.log(Math.ceil(thisTerrain.loadEnded - thisTerrain.loadStarted));
+      const delay = performance.now() - thisTerrain.loadStarted;
+      const index = Math.ceil(delay / 10);
+      if (index < histogram.length) { histogram[index]++; }
+      console.log(histogram);
       thisTerrain.retainedData = updatedPositions;
       thisTerrain.isResolved = true;
       
