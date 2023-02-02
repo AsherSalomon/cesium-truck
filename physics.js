@@ -447,17 +447,26 @@ function createVehicle(pos, quat) {
         }
       }
       
-//       const projectedLength = quadtreeLookAhead * Math.abs(vehicle.getCurrentSpeedKmHour() / 3.6);
-//       const forwardVector = vehicle.getForwardVector();
-//       const lookAheadPoint = new Cesium.Cartesian3(forwardVector.x(), forwardVector.y(), forwardVector.z());
-//       Cesium.Cartesian3.multiplyByScalar(lookAheadPoint, projectedLength, lookAheadPoint);
-//       Cesium.Cartesian3.add(lookAheadPoint, position, lookAheadPoint);
-//       const lookAheadCartographic = Cesium.Cartographic.fromCartesian(lookAheadPoint, ellipsoid);
-//       const lookAheadLongitudeIndex = ( lookAheadCartographic.longitude - ( -Math.PI ) ) * quadtreePower;
-//       const lookAheadLatitudeIndex = ( lookAheadCartographic.latitude - ( -Math.PI / 2 ) ) * quadtreePower;
-//       const deltaX = lookAheadLongitudeIndex - longitudeIndex;
-//       const deltaY = lookAheadLatitudeIndex - latitudeIndex;
-//       if (deltaX == 0 && deltaY == 0) {
+      const projectedLength = quadtreeLookAhead * Math.abs(vehicle.getCurrentSpeedKmHour() / 3.6);
+      const forwardVector = vehicle.getForwardVector();
+      const lookAheadPoint = new Cesium.Cartesian3(forwardVector.x(), forwardVector.y(), forwardVector.z());
+      Cesium.Cartesian3.multiplyByScalar(lookAheadPoint, projectedLength, lookAheadPoint);
+      Cesium.Cartesian3.add(lookAheadPoint, position, lookAheadPoint);
+      const lookAheadCartographic = Cesium.Cartographic.fromCartesian(lookAheadPoint, ellipsoid);
+      const lookAheadLongitudeIndex = ( lookAheadCartographic.longitude - ( -Math.PI ) ) * quadtreePower;
+      const lookAheadLatitudeIndex = ( lookAheadCartographic.latitude - ( -Math.PI / 2 ) ) * quadtreePower;
+      const deltaX = lookAheadLongitudeIndex - longitudeIndex;
+      const deltaY = lookAheadLatitudeIndex - latitudeIndex;
+      if (deltaX == 0 && deltaY == 0) {
+        for (let m = -quadtreeGridWidth / 2; m <= quadtreeGridWidth / 2; m++) {
+          for (let n = -quadtreeGridWidth / 2; n <= quadtreeGridWidth / 2; n++) {
+            const indexM = Math.floor(longitudeIndex + m);
+            const indexN = Math.floor(latitudeIndex + n);
+//             tryToCreateTerrain(indexM, indexN);
+          }
+        }
+      } else if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        const cap = Math.floor(Math.abs(deltaX) * Math.sqrt(deltaX ** 2 + deltaY ** 2) * quadtreeGridWidth / 2);
 //         for (let m = -quadtreeGridWidth / 2; m <= quadtreeGridWidth / 2; m++) {
 //           for (let n = -quadtreeGridWidth / 2; n <= quadtreeGridWidth / 2; n++) {
 //             const indexM = Math.floor(longitudeIndex + m);
@@ -465,11 +474,8 @@ function createVehicle(pos, quat) {
 // //             tryToCreateTerrain(indexM, indexN);
 //           }
 //         }
-//       } else if (deltaX > deltaY) {
-//         const cap = deltaX * Math.sqrt(deltaX ** 2 + deltaY ** 2);
-        
-//       } else if (deltaX < deltaY) {
-//       }
+      } else if (deltaX < deltaY) {
+      }
       
       cleanUpTerrain();
     }
