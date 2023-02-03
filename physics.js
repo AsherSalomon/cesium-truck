@@ -480,13 +480,13 @@ function createVehicle(pos, quat) {
         }
       } else if (Math.abs(deltaX) < Math.abs(deltaY)) {
         const cap = Math.floor(deltaY / Math.sqrt(deltaX ** 2 + deltaY ** 2) * quadtreeGridWidth / 2);
-        console.log(-cap, deltaY + cap);
         for (let n = -cap; n <= deltaY + cap; n++) {
           const offsetX = Math.round(n * deltaX / deltaY);
           for (let m = -cap; m <= cap; m++) {
             const offsetY = Math.round(m * deltaX / deltaY);
             const indexM = Math.floor(longitudeIndex + m + offsetX);
             const indexN = Math.floor(latitudeIndex + n + offsetY);
+            console.log(m + offsetX, n + offsetY);
             tryToCreateTerrain(indexM, indexN);
           }
         }
