@@ -535,7 +535,7 @@ class DestroyableTerrain {
       const delay = performance.now() - thisTerrain.loadStarted;
       const index = Math.ceil(delay / 10);
       if (index < histogram.length) { histogram[index]++; }
-      console.log(histogram);
+//       console.log(histogram);
       thisTerrain.retainedData = updatedPositions;
       thisTerrain.isResolved = true;
       
@@ -569,6 +569,7 @@ class DestroyableTerrain {
     if (showQuadtreeCentroids) {
       const centroid = positions[0].clone();
       Cesium.Cartesian3.add(centroid, positions[2], centroid);
+      Cesium.Cartesian3.divideByScalar(centroid, 2, centroid)
       this.quadtreeGridPoints.push(addPoint(centroid));
     }
     for (let i = 0; i < this.vertices.length; i++) {
