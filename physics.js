@@ -10,7 +10,7 @@ const quadtreePower = Math.pow(2, quadtreeLevel);
 const quadtreeGridWidth = 8;
 const quadtreeLookAhead = 0.06;
 const showQuadtreeGrid = false;
-const showQuadtreeCentroids = true;
+const showQuadtreeCentroids = false;
 
 let viewer;
 
