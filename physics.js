@@ -486,7 +486,6 @@ function createVehicle(pos, quat) {
             const offsetY = Math.round(m * deltaX / deltaY);
             const indexM = Math.floor(longitudeIndex + m + offsetX);
             const indexN = Math.floor(latitudeIndex + n + offsetY);
-            console.log(m + offsetX, n + offsetY);
             tryToCreateTerrain(indexM, indexN);
           }
         }
