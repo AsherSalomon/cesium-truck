@@ -10,7 +10,7 @@ const quadtreePower = Math.pow(2, quadtreeLevel);
 const quadtreeGridWidth = 8;
 const quadtreeLookAhead = 0.06;
 const showQuadtreeGrid = false;
-const showQuadtreeCentroids = false;
+const showQuadtreeCentroids = true;
 
 let viewer;
 
@@ -567,10 +567,10 @@ class DestroyableTerrain {
       this.vertices[i * 2 + 1] = skirtCartesian3;
     }
     if (showQuadtreeCentroids) {
-      const centroid = positions[0].clone();
-      Cesium.Cartesian3.add(centroid, positions[2], centroid);
-      Cesium.Cartesian3.divideByScalar(centroid, 2, centroid)
-      this.quadtreeGridPoints.push(addPoint(centroid));
+//       const centroid = positions[0].clone();
+//       Cesium.Cartesian3.add(centroid, positions[2], centroid);
+//       Cesium.Cartesian3.divideByScalar(centroid, 2, centroid)
+//       this.quadtreeGridPoints.push(addPoint(centroid));
     }
     for (let i = 0; i < this.vertices.length; i++) {
       Cesium.Cartesian3.subtract(this.vertices[i], originOffset, this.vertices[i]);
