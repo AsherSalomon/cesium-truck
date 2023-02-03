@@ -3,7 +3,7 @@
 
 import * as extrapolation from './extrapolation.js';
 const framesBetweenExtrapolationFit = 10;
-const extrapolationEnabled = true;
+const extrapolationEnabled = false;
 
 const quadtreeLevel = 22;
 const quadtreePower = Math.pow(2, quadtreeLevel);
