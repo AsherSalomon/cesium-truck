@@ -452,19 +452,20 @@ function createVehicle(pos, quat) {
       const forwardVector = vehicle.getForwardVector();
       const lookAheadPoint = new Cesium.Cartesian3(forwardVector.x(), forwardVector.y(), forwardVector.z());
       Cesium.Cartesian3.multiplyByScalar(lookAheadPoint, projectedLength, lookAheadPoint);
-      console.log(lookAheadPoint);
       Cesium.Cartesian3.add(lookAheadPoint, position, lookAheadPoint);
       const lookAheadCartographic = Cesium.Cartographic.fromCartesian(lookAheadPoint, ellipsoid);
       const lookAheadLongitudeIndex = ( lookAheadCartographic.longitude - ( -Math.PI ) ) * quadtreePower;
       const lookAheadLatitudeIndex = ( lookAheadCartographic.latitude - ( -Math.PI / 2 ) ) * quadtreePower;
       const deltaX = Math.round(lookAheadLongitudeIndex - longitudeIndex);
       const deltaY = Math.round(lookAheadLatitudeIndex - latitudeIndex);
+      let counter = 0;
       if (deltaX == 0 && deltaY == 0) {
         for (let m = -quadtreeGridWidth / 2; m <= quadtreeGridWidth / 2; m++) {
           for (let n = -quadtreeGridWidth / 2; n <= quadtreeGridWidth / 2; n++) {
             const indexM = Math.floor(longitudeIndex + m);
             const indexN = Math.floor(latitudeIndex + n);
             tryToCreateTerrain(indexM, indexN);
+            counter++;
           }
         }
       } else if (Math.abs(deltaX) > Math.abs(deltaY)) {
@@ -476,6 +477,7 @@ function createVehicle(pos, quat) {
             const indexM = Math.floor(longitudeIndex + m + offsetX);
             const indexN = Math.floor(latitudeIndex + n + offsetY);
             tryToCreateTerrain(indexM, indexN);
+            counter++;
           }
         }
       } else if (Math.abs(deltaX) < Math.abs(deltaY)) {
@@ -487,9 +489,11 @@ function createVehicle(pos, quat) {
             const indexM = Math.floor(longitudeIndex + m + offsetX);
             const indexN = Math.floor(latitudeIndex + n + offsetY);
             tryToCreateTerrain(indexM, indexN);
+            counter++;
           }
         }
       }
+      console.log(counter);
       
       cleanUpTerrain();
     }
