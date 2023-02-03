@@ -459,6 +459,7 @@ function createVehicle(pos, quat) {
       const deltaX = lookAheadLongitudeIndex - longitudeIndex;
       const deltaY = lookAheadLatitudeIndex - latitudeIndex;
       if (deltaX == 0 && deltaY == 0) {
+        console.log('ok');
         for (let m = -quadtreeGridWidth / 2; m <= quadtreeGridWidth / 2; m++) {
           for (let n = -quadtreeGridWidth / 2; n <= quadtreeGridWidth / 2; n++) {
             const indexM = Math.floor(longitudeIndex + m);
