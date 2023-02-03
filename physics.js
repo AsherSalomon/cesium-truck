@@ -458,6 +458,7 @@ function createVehicle(pos, quat) {
       const lookAheadLatitudeIndex = ( lookAheadCartographic.latitude - ( -Math.PI / 2 ) ) * quadtreePower;
       const deltaX = Math.round(lookAheadLongitudeIndex - longitudeIndex);
       const deltaY = Math.round(lookAheadLatitudeIndex - latitudeIndex);
+      console.log(deltaX, deltaY);
       if (deltaX == 0 && deltaY == 0) {
         for (let m = -quadtreeGridWidth / 2; m <= quadtreeGridWidth / 2; m++) {
           for (let n = -quadtreeGridWidth / 2; n <= quadtreeGridWidth / 2; n++) {
@@ -467,7 +468,6 @@ function createVehicle(pos, quat) {
           }
         }
       } else if (Math.abs(deltaX) > Math.abs(deltaY)) {
-//         console.log("Math.abs(deltaX) > Math.abs(deltaY)");
         const cap = Math.floor(deltaX / Math.sqrt(deltaX ** 2 + deltaY ** 2) * quadtreeGridWidth / 2);
         for (let m = -cap; m <= deltaX + cap; m++) {
           const offsetY = Math.round(m * deltaY / deltaX);
