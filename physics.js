@@ -456,9 +456,8 @@ function createVehicle(pos, quat) {
       const lookAheadCartographic = Cesium.Cartographic.fromCartesian(lookAheadPoint, ellipsoid);
       const lookAheadLongitudeIndex = ( lookAheadCartographic.longitude - ( -Math.PI ) ) * quadtreePower;
       const lookAheadLatitudeIndex = ( lookAheadCartographic.latitude - ( -Math.PI / 2 ) ) * quadtreePower;
-      const deltaX = lookAheadLongitudeIndex - longitudeIndex;
-      const deltaY = lookAheadLatitudeIndex - latitudeIndex;
-      console.log(deltaX, deltaY);
+      const deltaX = Math.round(lookAheadLongitudeIndex - longitudeIndex);
+      const deltaY = Math.round(lookAheadLatitudeIndex - latitudeIndex);
       if (deltaX == 0 && deltaY == 0) {
         for (let m = -quadtreeGridWidth / 2; m <= quadtreeGridWidth / 2; m++) {
           for (let n = -quadtreeGridWidth / 2; n <= quadtreeGridWidth / 2; n++) {
