@@ -480,7 +480,7 @@ function createVehicle(pos, quat) {
             counter++;
           }
         }
-      } else if (Math.abs(deltaX) < Math.abs(deltaY)) {
+      } else if (Math.abs(deltaX) <= Math.abs(deltaY)) {
         const cap = Math.floor(deltaY / Math.sqrt(deltaX ** 2 + deltaY ** 2) * quadtreeGridWidth / 2);
         for (let n = -cap; n <= deltaY + cap; n++) {
           const offsetX = Math.round(n * deltaX / deltaY);
@@ -493,9 +493,9 @@ function createVehicle(pos, quat) {
           }
         }
       }
-      if (counter == 0) {
-        console.log(deltaX, deltaY);
-      }
+//       if (counter == 0) {
+//         console.log(deltaX, deltaY);
+//       }
       
       cleanUpTerrain();
     }
