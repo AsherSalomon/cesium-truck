@@ -3,7 +3,7 @@
 
 import * as extrapolation from './extrapolation.js';
 const framesBetweenExtrapolationFit = 10;
-const extrapolationEnabled = false;
+const extrapolationEnabled = true;
 
 const quadtreeLevel = 22;
 const quadtreePower = Math.pow(2, quadtreeLevel);
@@ -653,5 +653,5 @@ function cleanUpTerrain() {
       terrainBodies.splice(i, 1);
     }
   }
-  console.log(terrainBodies.length);
+//   console.log(terrainBodies.length);
 }
