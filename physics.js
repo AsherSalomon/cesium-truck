@@ -468,9 +468,10 @@ function createVehicle(pos, quat) {
             counter++;
           }
         }
-      } else if (Math.abs(deltaX) > Math.abs(deltaY)) {
+      } else if (Math.abs(deltaX) >= Math.abs(deltaY)) {
         const cap = Math.floor(deltaX / Math.sqrt(deltaX ** 2 + deltaY ** 2) * quadtreeGridWidth / 2);
-        for (let m = -cap; m <= deltaX + cap; m++) {
+        for (let M = -cap; M <= Math.abs(deltaX) + cap; M++) {
+          let m = M * Math.sign(deltaX);
           const offsetY = Math.round(m * deltaY / deltaX);
           for (let n = -cap; n <= cap; n++) {
             const offsetX = Math.round(n * deltaY / deltaX);
@@ -480,9 +481,10 @@ function createVehicle(pos, quat) {
             counter++;
           }
         }
-      } else if (Math.abs(deltaX) <= Math.abs(deltaY)) {
+      } else if (Math.abs(deltaX) < Math.abs(deltaY)) {
         const cap = Math.floor(deltaY / Math.sqrt(deltaX ** 2 + deltaY ** 2) * quadtreeGridWidth / 2);
-        for (let n = -cap; n <= deltaY + cap; n++) {
+        for (let N = -cap; N <= Math.abs(deltaY) + cap; N++) {
+          let n = N * Math.sign(deltaY);
           const offsetX = Math.round(n * deltaX / deltaY);
           for (let m = -cap; m <= cap; m++) {
             const offsetY = Math.round(m * deltaX / deltaY);
