@@ -449,7 +449,6 @@ function createVehicle(pos, quat) {
 //       }
       
       const projectedLength = quadtreeLookAhead * Math.abs(vehicle.getCurrentSpeedKmHour() / 3.6);
-      console.log(projectedLength);
       const forwardVector = vehicle.getForwardVector();
       const lookAheadPoint = new Cesium.Cartesian3(forwardVector.x(), forwardVector.y(), forwardVector.z());
       Cesium.Cartesian3.multiplyByScalar(lookAheadPoint, projectedLength, lookAheadPoint);
@@ -459,8 +458,8 @@ function createVehicle(pos, quat) {
       const lookAheadLatitudeIndex = ( lookAheadCartographic.latitude - ( -Math.PI / 2 ) ) * quadtreePower;
       const deltaX = lookAheadLongitudeIndex - longitudeIndex;
       const deltaY = lookAheadLatitudeIndex - latitudeIndex;
+      console.log(deltaX, deltaY);
       if (deltaX == 0 && deltaY == 0) {
-//         console.log('ok');
         for (let m = -quadtreeGridWidth / 2; m <= quadtreeGridWidth / 2; m++) {
           for (let n = -quadtreeGridWidth / 2; n <= quadtreeGridWidth / 2; n++) {
             const indexM = Math.floor(longitudeIndex + m);
