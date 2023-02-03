@@ -10,6 +10,7 @@ const quadtreePower = Math.pow(2, quadtreeLevel);
 const quadtreeGridWidth = 8;
 const quadtreeLookAhead = 0.06;
 const showQuadtreeGrid = false;
+const showQuadtreeCentroids = true;
 
 let viewer;
 
@@ -438,14 +439,14 @@ function createVehicle(pos, quat) {
       const longitudeIndex = ( cartographic.longitude - ( -Math.PI ) ) * quadtreePower;
       const latitudeIndex = ( cartographic.latitude - ( -Math.PI / 2 ) ) * quadtreePower;
       
-      for (let m = -quadtreeGridWidth / 2; m <= quadtreeGridWidth / 2; m++) {
-        for (let n = -quadtreeGridWidth / 2; n <= quadtreeGridWidth / 2; n++) {
-          const indexM = Math.floor(longitudeIndex + m);
-          const indexN = Math.floor(latitudeIndex + n);
+//       for (let m = -quadtreeGridWidth / 2; m <= quadtreeGridWidth / 2; m++) {
+//         for (let n = -quadtreeGridWidth / 2; n <= quadtreeGridWidth / 2; n++) {
+//           const indexM = Math.floor(longitudeIndex + m);
+//           const indexN = Math.floor(latitudeIndex + n);
           
-          tryToCreateTerrain(indexM, indexN);
-        }
-      }
+//           tryToCreateTerrain(indexM, indexN);
+//         }
+//       }
       
       const projectedLength = quadtreeLookAhead * Math.abs(vehicle.getCurrentSpeedKmHour() / 3.6);
       const forwardVector = vehicle.getForwardVector();
@@ -462,19 +463,31 @@ function createVehicle(pos, quat) {
           for (let n = -quadtreeGridWidth / 2; n <= quadtreeGridWidth / 2; n++) {
             const indexM = Math.floor(longitudeIndex + m);
             const indexN = Math.floor(latitudeIndex + n);
-//             tryToCreateTerrain(indexM, indexN);
+            tryToCreateTerrain(indexM, indexN);
           }
         }
       } else if (Math.abs(deltaX) > Math.abs(deltaY)) {
-        const cap = Math.floor(Math.abs(deltaX) * Math.sqrt(deltaX ** 2 + deltaY ** 2) * quadtreeGridWidth / 2);
-//         for (let m = -quadtreeGridWidth / 2; m <= quadtreeGridWidth / 2; m++) {
-//           for (let n = -quadtreeGridWidth / 2; n <= quadtreeGridWidth / 2; n++) {
-//             const indexM = Math.floor(longitudeIndex + m);
-//             const indexN = Math.floor(latitudeIndex + n);
-// //             tryToCreateTerrain(indexM, indexN);
-//           }
-//         }
-      } else if (deltaX < deltaY) {
+        const cap = Math.floor(deltaX * Math.sqrt(deltaX ** 2 + deltaY ** 2) * quadtreeGridWidth / 2);
+        for (let m = -cap; m <= deltaX + cap; m++) {
+          const offsetY = Math.round(m * deltaY / deltaX);
+          for (let n = -cap; n <= cap; n++) {
+            const offsetX = Math.round(n * deltaY / deltaX);
+            const indexM = Math.floor(longitudeIndex + m + offsetX);
+            const indexN = Math.floor(latitudeIndex + n + offsetY);
+            tryToCreateTerrain(indexM, indexN);
+          }
+        }
+      } else if (Math.abs(deltaX) < Math.abs(deltaY)) {
+        const cap = Math.floor(deltaY * Math.sqrt(deltaX ** 2 + deltaY ** 2) * quadtreeGridWidth / 2);
+        for (let n = -cap; n <= + deltaY + cap; n++) {
+          const offsetX = Math.round(n * deltaX / deltaY);
+          for (let m = -cap; m <= cap; m++) {
+            const offsetY = Math.round(m * deltaX / deltaY);
+            const indexM = Math.floor(longitudeIndex + m + offsetX);
+            const indexN = Math.floor(latitudeIndex + n + offsetY);
+            tryToCreateTerrain(indexM, indexN);
+          }
+        }
       }
       
       cleanUpTerrain();
@@ -553,6 +566,11 @@ class DestroyableTerrain {
       this.vertices[i * 2] = cartesian3;
       this.vertices[i * 2 + 1] = skirtCartesian3;
     }
+    if (showQuadtreeCentroids) {
+      const centroid = positions[0].clone();
+      Cesium.Cartesian3.add(centroid, positions[2], centroid);
+      this.quadtreeGridPoints.push(addPoint(centroid));
+    }
     for (let i = 0; i < this.vertices.length; i++) {
       Cesium.Cartesian3.subtract(this.vertices[i], originOffset, this.vertices[i]);
       this.vertices[i] = new Ammo.btVector3(this.vertices[i].x, this.vertices[i].y, this.vertices[i].z);
@@ -590,7 +608,7 @@ class DestroyableTerrain {
     Ammo.destroy(this.terrainBody);
     delete this.terrainBody;
 
-    if (showQuadtreeGrid) {
+    if (showQuadtreeGrid || showQuadtreeCentroids) {
       for (let i = 0; i < this.quadtreeGridPoints.length; i++) {
         viewer.entities.remove(this.quadtreeGridPoints[i]);
       }
