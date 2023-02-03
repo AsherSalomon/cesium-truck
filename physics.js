@@ -470,11 +470,11 @@ function createVehicle(pos, quat) {
         }
       } else if (Math.abs(deltaX) > Math.abs(deltaY)) {
         const cap = Math.floor(deltaX / Math.sqrt(deltaX ** 2 + deltaY ** 2) * quadtreeGridWidth / 2);
-        for (let m = -cap; m <= Math.abs(deltaX) + cap; m++) {
-          const offsetY = Math.round(m * Math.sign(deltaX) * deltaY / deltaX);
+        for (let m = -cap; m <= deltaX + cap; m++) {
+          const offsetY = Math.round(m * deltaY / deltaX);
           for (let n = -cap; n <= cap; n++) {
             const offsetX = Math.round(n * deltaY / deltaX);
-            const indexM = Math.floor(longitudeIndex + m * Math.sign(deltaX) + offsetX);
+            const indexM = Math.floor(longitudeIndex + m + offsetX);
             const indexN = Math.floor(latitudeIndex + n + offsetY);
             tryToCreateTerrain(indexM, indexN);
             counter++;
@@ -482,12 +482,12 @@ function createVehicle(pos, quat) {
         }
       } else if (Math.abs(deltaX) <= Math.abs(deltaY)) {
         const cap = Math.floor(deltaY / Math.sqrt(deltaX ** 2 + deltaY ** 2) * quadtreeGridWidth / 2);
-        for (let n = -cap; n <= Math.abs(deltaY) + cap; n++) {
-          const offsetX = Math.round(n * Math.sign(deltaY) * deltaX / deltaY);
+        for (let n = -cap; n <= deltaY + cap; n++) {
+          const offsetX = Math.round(n * deltaX / deltaY);
           for (let m = -cap; m <= cap; m++) {
             const offsetY = Math.round(m * deltaX / deltaY);
             const indexM = Math.floor(longitudeIndex + m + offsetX);
-            const indexN = Math.floor(latitudeIndex + n * Math.sign(deltaY) + offsetY);
+            const indexN = Math.floor(latitudeIndex + n + offsetY);
             tryToCreateTerrain(indexM, indexN);
             counter++;
           }
