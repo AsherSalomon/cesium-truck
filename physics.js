@@ -653,4 +653,5 @@ function cleanUpTerrain() {
       terrainBodies.splice(i, 1);
     }
   }
+  console.log(terrainBodies.length);
 }
