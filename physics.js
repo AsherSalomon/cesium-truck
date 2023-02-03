@@ -570,7 +570,7 @@ class DestroyableTerrain {
       const centroid = positions[0].clone();
       Cesium.Cartesian3.add(centroid, positions[2], centroid);
       Cesium.Cartesian3.divideByScalar(centroid, 2, centroid)
-//       this.quadtreeGridPoints.push(addPoint(centroid));
+      this.quadtreeGridPoints.push(addPoint(centroid));
     }
     for (let i = 0; i < this.vertices.length; i++) {
       Cesium.Cartesian3.subtract(this.vertices[i], originOffset, this.vertices[i]);
