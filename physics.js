@@ -123,18 +123,20 @@ export function update(delta) {
   }
   previousTruckSelected = truckSelected;
   
-  const deadSeaElevation = -430.5;
-  const position = truckEntities[0].position.getValue(truckEntities.now());
-  const terrainProvider = viewer.scene.globe.terrainProvider;
-  const ellipsoid = terrainProvider.tilingScheme.projection.ellipsoid;
-  const cartographic = Cesium.Cartographic.fromCartesian(position, ellipsoid);
-  if (cartographic.height < deadSeaElevation && truckSelected == true) {
-    hardReset = true;
-    viewer.trackedEntity = null;
-  } else if(hardReset) {
-    hardReset = false;
-    viewer.camera.lookUp(Math.PI/4);
-    viewer.trackedEntity = truckEntities[0];
+  if (projection != undefined) {
+    const deadSeaElevation = -430.5;
+    const position = truckEntities[0].position.getValue(truckEntities.now());
+    const terrainProvider = viewer.scene.globe.terrainProvider;
+    const ellipsoid = terrainProvider.tilingScheme.projection.ellipsoid;
+    const cartographic = Cesium.Cartographic.fromCartesian(position, ellipsoid);
+    if (cartographic.height < deadSeaElevation && truckSelected == true) {
+      hardReset = true;
+      viewer.trackedEntity = null;
+    } else if(hardReset) {
+      hardReset = false;
+      viewer.camera.lookUp(Math.PI/4);
+      viewer.trackedEntity = truckEntities[0];
+    }
   }
   
   if (extrapolationEnabled) {
