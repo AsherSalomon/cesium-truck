@@ -3,12 +3,13 @@
 
 import * as extrapolation from './extrapolation.js';
 const framesBetweenExtrapolationFit = 10;
-const extrapolationEnabled = true;
+const extrapolationEnabled = false;
 
 const quadtreeLevel = 22;
 const quadtreePower = Math.pow(2, quadtreeLevel);
 const quadtreeGridWidth = 8;
 const quadtreeLookAhead = 0.12;
+const lookAheadEnabled = false;
 const showQuadtreeGrid = false;
 const showQuadtreeCentroids = false;
 
@@ -461,7 +462,7 @@ function createVehicle(pos, quat) {
       const deltaX = Math.round(lookAheadLongitudeIndex - longitudeIndex);
       const deltaY = Math.round(lookAheadLatitudeIndex - latitudeIndex);
       let counter = 0;
-      if (deltaX == 0 && deltaY == 0) {
+      if ((deltaX == 0 && deltaY == 0) || lookAheadEnabled == false) {
         for (let m = -quadtreeGridWidth / 2; m <= quadtreeGridWidth / 2; m++) {
           for (let n = -quadtreeGridWidth / 2; n <= quadtreeGridWidth / 2; n++) {
             const indexM = Math.floor(longitudeIndex + m);
