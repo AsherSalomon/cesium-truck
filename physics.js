@@ -496,6 +496,7 @@ function createVehicle(pos, quat) {
       }
       if (counter == 0) {
         console.log(deltaX, deltaY);
+        console.log(min, max);
       }
       
       cleanUpTerrain();
@@ -543,7 +544,7 @@ class DestroyableTerrain {
       const delay = performance.now() - thisTerrain.loadStarted;
       const index = Math.ceil(delay / 10);
       if (index < histogram.length) { histogram[index]++; }
-      console.log(histogram);
+//       console.log(histogram);
       thisTerrain.retainedData = updatedPositions;
       thisTerrain.isResolved = true;
       
