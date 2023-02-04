@@ -469,10 +469,10 @@ function createVehicle(pos, quat) {
           }
         }
       } else {
-        const max = Math.max(Math.abs(deltaX), Math.abs(deltaY));
+        let max = Math.max(Math.abs(deltaX), Math.abs(deltaY));
         if (max == Math.abs(deltaX)) { max *= Math.sign(deltaX); }
         if (max == Math.abs(deltaY)) { max *= Math.sign(deltaY); }
-        const min = Math.min(Math.abs(deltaX), Math.abs(deltaY));
+        let min = Math.min(Math.abs(deltaX), Math.abs(deltaY));
         if (min == Math.abs(deltaX)) { min *= Math.sign(deltaX); }
         if (min == Math.abs(deltaY)) { min *= Math.sign(deltaY); }
         for (let M = -quadtreeGridWidth / 2; M <= Math.abs(max) + quadtreeGridWidth / 2; M++) {
