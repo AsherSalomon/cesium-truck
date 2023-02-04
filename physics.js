@@ -439,65 +439,64 @@ function createVehicle(pos, quat) {
       const longitudeIndex = ( cartographic.longitude - ( -Math.PI ) ) * quadtreePower;
       const latitudeIndex = ( cartographic.latitude - ( -Math.PI / 2 ) ) * quadtreePower;
       
-      for (let m = -quadtreeGridWidth / 2; m <= quadtreeGridWidth / 2; m++) {
-        for (let n = -quadtreeGridWidth / 2; n <= quadtreeGridWidth / 2; n++) {
-          const indexM = Math.floor(longitudeIndex + m);
-          const indexN = Math.floor(latitudeIndex + n);
+//       for (let m = -quadtreeGridWidth / 2; m <= quadtreeGridWidth / 2; m++) {
+//         for (let n = -quadtreeGridWidth / 2; n <= quadtreeGridWidth / 2; n++) {
+//           const indexM = Math.floor(longitudeIndex + m);
+//           const indexN = Math.floor(latitudeIndex + n);
           
-          tryToCreateTerrain(indexM, indexN);
+//           tryToCreateTerrain(indexM, indexN);
+//         }
+//       }
+      
+      const projectedLength = quadtreeLookAhead * Math.abs(vehicle.getCurrentSpeedKmHour() / 3.6);
+      const forwardVector = vehicle.getForwardVector();
+      const lookAheadPoint = new Cesium.Cartesian3(forwardVector.x(), forwardVector.y(), forwardVector.z());
+      Cesium.Cartesian3.multiplyByScalar(lookAheadPoint, projectedLength, lookAheadPoint);
+      Cesium.Cartesian3.add(lookAheadPoint, position, lookAheadPoint);
+      const lookAheadCartographic = Cesium.Cartographic.fromCartesian(lookAheadPoint, ellipsoid);
+      const lookAheadLongitudeIndex = ( lookAheadCartographic.longitude - ( -Math.PI ) ) * quadtreePower;
+      const lookAheadLatitudeIndex = ( lookAheadCartographic.latitude - ( -Math.PI / 2 ) ) * quadtreePower;
+      const deltaX = Math.round(lookAheadLongitudeIndex - longitudeIndex);
+      const deltaY = Math.round(lookAheadLatitudeIndex - latitudeIndex);
+      let counter = 0;
+      if (deltaX == 0 && deltaY == 0) {
+        for (let m = -quadtreeGridWidth / 2; m <= quadtreeGridWidth / 2; m++) {
+          for (let n = -quadtreeGridWidth / 2; n <= quadtreeGridWidth / 2; n++) {
+            const indexM = Math.floor(longitudeIndex + m);
+            const indexN = Math.floor(latitudeIndex + n);
+            tryToCreateTerrain(indexM, indexN);
+            counter++;
+          }
+        }
+      } else {
+        const max = Math.max(Math.abs(deltaX), Math.abs(deltaY));
+        if (max == Math.abs(deltaX)) { max *= Math.sign(deltaX); }
+        if (max == Math.abs(deltaY)) { max *= Math.sign(deltaY); }
+        const min = Math.min(Math.abs(deltaX), Math.abs(deltaY));
+        if (min == Math.abs(deltaX)) { min *= Math.sign(deltaX); }
+        if (min == Math.abs(deltaY)) { min *= Math.sign(deltaY); }
+        for (let M = -quadtreeGridWidth / 2; M <= Math.abs(max) + quadtreeGridWidth / 2; M++) {
+          let m = M * Math.sign(max);
+          const offset = Math.round(m * min / max);
+          for (let n = -quadtreeGridWidth / 2; n <= quadtreeGridWidth / 2; n++) {
+//             const offsetX = Math.round(n * deltaY / deltaX);
+            let indexM = math.floor(longitudeIndex);
+            let indexN = math.floor(latitudeIndex);
+            if (Math.abs(deltaX) >= Math.abs(deltaY)) {
+              indexM += m;
+              indexN += n + offset;
+            } else {
+              indexM += n + offset;
+              indexN += m;
+            }
+            tryToCreateTerrain(indexM, indexN);
+//             counter++;
+          }
         }
       }
-      
-//       const projectedLength = quadtreeLookAhead * Math.abs(vehicle.getCurrentSpeedKmHour() / 3.6);
-//       const forwardVector = vehicle.getForwardVector();
-//       const lookAheadPoint = new Cesium.Cartesian3(forwardVector.x(), forwardVector.y(), forwardVector.z());
-//       Cesium.Cartesian3.multiplyByScalar(lookAheadPoint, projectedLength, lookAheadPoint);
-//       Cesium.Cartesian3.add(lookAheadPoint, position, lookAheadPoint);
-//       const lookAheadCartographic = Cesium.Cartographic.fromCartesian(lookAheadPoint, ellipsoid);
-//       const lookAheadLongitudeIndex = ( lookAheadCartographic.longitude - ( -Math.PI ) ) * quadtreePower;
-//       const lookAheadLatitudeIndex = ( lookAheadCartographic.latitude - ( -Math.PI / 2 ) ) * quadtreePower;
-//       const deltaX = Math.round(lookAheadLongitudeIndex - longitudeIndex);
-//       const deltaY = Math.round(lookAheadLatitudeIndex - latitudeIndex);
-//       let counter = 0;
-//       if (deltaX == 0 && deltaY == 0) {
-//         for (let m = -quadtreeGridWidth / 2; m <= quadtreeGridWidth / 2; m++) {
-//           for (let n = -quadtreeGridWidth / 2; n <= quadtreeGridWidth / 2; n++) {
-//             const indexM = Math.floor(longitudeIndex + m);
-//             const indexN = Math.floor(latitudeIndex + n);
-//             tryToCreateTerrain(indexM, indexN);
-//             counter++;
-//           }
-//         }
-//       } else if (Math.abs(deltaX) >= Math.abs(deltaY)) {
-//         const cap = Math.floor(deltaX / Math.sqrt(deltaX ** 2 + deltaY ** 2) * quadtreeGridWidth / 2);
-//         for (let M = -cap; M <= Math.abs(deltaX) + cap; M++) {
-//           let m = M * Math.sign(deltaX);
-//           const offsetY = Math.round(m * deltaY / deltaX);
-//           for (let n = -cap; n <= cap; n++) {
-//             const offsetX = Math.round(n * deltaY / deltaX);
-//             const indexM = Math.floor(longitudeIndex + m + offsetX);
-//             const indexN = Math.floor(latitudeIndex + n + offsetY);
-//             tryToCreateTerrain(indexM, indexN);
-//             counter++;
-//           }
-//         }
-//       } else if (Math.abs(deltaX) < Math.abs(deltaY)) {
-//         const cap = Math.floor(deltaY / Math.sqrt(deltaX ** 2 + deltaY ** 2) * quadtreeGridWidth / 2);
-//         for (let N = -cap; N <= Math.abs(deltaY) + cap; N++) {
-//           let n = N * Math.sign(deltaY);
-//           const offsetX = Math.round(n * deltaX / deltaY);
-//           for (let m = -cap; m <= cap; m++) {
-//             const offsetY = Math.round(m * deltaX / deltaY);
-//             const indexM = Math.floor(longitudeIndex + m + offsetX);
-//             const indexN = Math.floor(latitudeIndex + n + offsetY);
-//             tryToCreateTerrain(indexM, indexN);
-//             counter++;
-//           }
-//         }
-//       }
-//       if (counter == 0) {
-//         console.log(deltaX, deltaY);
-//       }
+      if (counter == 0) {
+        console.log(deltaX, deltaY);
+      }
       
       cleanUpTerrain();
     }
