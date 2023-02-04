@@ -490,8 +490,8 @@ function createVehicle(pos, quat) {
           }
         }
         if (counter == 0) {
-          console.log(deltaX, deltaY);
         }
+        console.log(deltaX, deltaY);
       }
       
       cleanUpTerrain();
