@@ -469,31 +469,22 @@ function createVehicle(pos, quat) {
 //           }
 //         }
 //       } else {
-//         let max = Math.max(Math.abs(deltaX), Math.abs(deltaY));
-//         if (max == Math.abs(deltaX)) {
-//           max *= Math.sign(deltaX);
-//         } else if (max == Math.abs(deltaY)) {
-//           max *= Math.sign(deltaY);
+//         let min = deltaY;
+//         let max = deltaX;
+//         if (Math.abs(deltaY) > Math.abs(deltaX)) {
+//           min = deltaX;
+//           max = deltaY;
 //         }
-//         let min = Math.min(Math.abs(deltaX), Math.abs(deltaY));
-//         if (min == Math.abs(deltaX)) {
-//           min *= Math.sign(deltaX);
-//         } else if (min == Math.abs(deltaY)) {
-//           min *= Math.sign(deltaY);
-//         }
-//         for (let M = -quadtreeGridWidth / 2; M <= Math.abs(max) + quadtreeGridWidth / 2; M++) {
+//         for (let M = Math.round(-quadtreeGridWidth / 2); M <= Math.abs(max) + quadtreeGridWidth / 2; M++) {
 //           let m = M * Math.sign(max);
 //           const offset = Math.round(m * min / max);
-//           for (let n = -quadtreeGridWidth / 2; n <= quadtreeGridWidth / 2; n++) {
+//           for (let n = Math.round(-quadtreeGridWidth / 2); n <= quadtreeGridWidth / 2; n++) {
 // //             const offsetX = Math.round(n * deltaY / deltaX);
-//             let indexM = Math.floor(longitudeIndex);
-//             let indexN = Math.floor(latitudeIndex);
-//             if (Math.abs(deltaX) >= Math.abs(deltaY)) {
-//               indexM += m;
-//               indexN += n + offset;
-//             } else {
-//               indexM += n + offset;
-//               indexN += m;
+//             let indexM = Math.floor(longitudeIndex + m);
+//             let indexN = Math.floor(latitudeIndex + n + offset);
+//             if (Math.abs(deltaY) > Math.abs(deltaX)) {
+//               indexM = Math.floor(longitudeIndex + n + offset);
+//               indexN = Math.floor(latitudeIndex + m);
 //             }
 //             tryToCreateTerrain(indexM, indexN);
 //             counter++;
