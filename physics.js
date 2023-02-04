@@ -3,14 +3,14 @@
 
 import * as extrapolation from './extrapolation.js';
 const framesBetweenExtrapolationFit = 10;
-const extrapolationEnabled = false;
+const extrapolationEnabled = true;
 
 const quadtreeLevel = 22;
 const quadtreePower = Math.pow(2, quadtreeLevel);
 const quadtreeGridWidth = 8;
-const quadtreeLookAhead = 1;//0.12;
-const showQuadtreeGrid = false;
-const showQuadtreeCentroids = true;
+const quadtreeLookAhead = 0.2;
+const showQuadtreeGrid = true;
+const showQuadtreeCentroids = false;
 
 let viewer;
 
@@ -489,9 +489,9 @@ function createVehicle(pos, quat) {
             counter++;
           }
         }
-        if (counter == 0) {
-        }
-        console.log(deltaX, deltaY);
+//         if (counter == 0) {
+//           console.log(deltaX, deltaY);
+//         }
       }
       
       cleanUpTerrain();
