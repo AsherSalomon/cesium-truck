@@ -480,8 +480,8 @@ function createVehicle(pos, quat) {
           const offset = Math.round(m * min / max);
           for (let n = -quadtreeGridWidth / 2; n <= quadtreeGridWidth / 2; n++) {
 //             const offsetX = Math.round(n * deltaY / deltaX);
-            let indexM = math.floor(longitudeIndex);
-            let indexN = math.floor(latitudeIndex);
+            let indexM = Math.floor(longitudeIndex);
+            let indexN = Math.floor(latitudeIndex);
             if (Math.abs(deltaX) >= Math.abs(deltaY)) {
               indexM += m;
               indexN += n + offset;
