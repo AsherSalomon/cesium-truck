@@ -8,8 +8,8 @@ const extrapolationEnabled = true;
 const quadtreeLevel = 22;
 const quadtreePower = Math.pow(2, quadtreeLevel);
 const quadtreeGridWidth = 8;
-const quadtreeLookAhead = 0.2;
-const showQuadtreeGrid = true;
+const quadtreeLookAhead = 0.0;
+const showQuadtreeGrid = false;
 const showQuadtreeCentroids = false;
 
 let viewer;
