@@ -2,13 +2,13 @@
 // https://pybullet.org/Bullet/BulletFull/classbtRaycastVehicle.html
 
 import * as extrapolation from './extrapolation.js';
-const framesBetweenExtrapolationFit = 10;
+const framesBetweenExtrapolationFit = 1;
 const extrapolationEnabled = true;
 
 const quadtreeLevel = 22;
 const quadtreePower = Math.pow(2, quadtreeLevel);
 const quadtreeGridWidth = 8;
-const quadtreeLookAhead = 0.06;
+const quadtreeLookAhead = 0.12;
 const showQuadtreeGrid = false;
 const showQuadtreeCentroids = false;
 
