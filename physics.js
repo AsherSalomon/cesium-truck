@@ -2,7 +2,7 @@
 // https://pybullet.org/Bullet/BulletFull/classbtRaycastVehicle.html
 
 import * as extrapolation from './extrapolation.js';
-const framesBetweenExtrapolationFit = 1;
+const framesBetweenExtrapolationFit = 10;
 const extrapolationEnabled = true;
 
 const quadtreeLevel = 22;
