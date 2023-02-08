@@ -21,7 +21,11 @@ const viewer = new Cesium.Viewer('cesiumContainer', {
   animation: false,
   timeline: false,
   fullscreenButton: false,
+  baseLayerPicker: false, // turns off the baseLayer?
 });
+
+// const layer = viewer.imageryLayers.addImageryProvider(Cesium.OpenStreetMapImageryProvider());
+
 
 viewer.clock.clockStep = Cesium.ClockStep.SYSTEM_CLOCK;
 viewer.scene.globe.enableLighting = true;
