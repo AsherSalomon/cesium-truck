@@ -32,8 +32,21 @@ viewer.shadows = true;
 viewer.scene.globe.depthTestAgainstTerrain = true;
 viewer.scene.moon = new Cesium.Moon();
 
-// Add Cesium OSM Buildings, a global 3D buildings layer.
-const buildingTileset = viewer.scene.primitives.add(Cesium.createOsmBuildings());   
+// // Add Cesium OSM Buildings, a global 3D buildings layer.
+// const buildingTileset = viewer.scene.primitives.add(Cesium.createOsmBuildings());   
+
+// The globe does not need to be displayed,
+// since the Photorealistic 3D Tiles include terrain
+viewer.scene.globe.show = false;
+
+// Add Photorealistic 3D Tiles
+try {
+  const tileset = await Cesium.createGooglePhotorealistic3DTileset();
+  viewer.scene.primitives.add(tileset);
+} catch (error) {
+  console.log(`Error loading Photorealistic 3D Tiles tileset.
+  ${error}`);
+}
 
 viewer.camera.flyTo({
   destination : Cesium.Cartesian3.fromDegrees(
