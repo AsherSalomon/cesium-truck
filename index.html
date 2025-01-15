@@ -7,6 +7,15 @@
     <script src="https://cesium.com/downloads/cesiumjs/releases/1.101/Build/Cesium/Cesium.js"></script>
     <link href="https://cesium.com/downloads/cesiumjs/releases/1.101/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
     <style>
+      #overlayText {
+        color: #ffffff;
+        background-color: #990000;
+        position: absolute;
+        top: 0px;
+        right: 0;
+        padding: 5px;
+        z-index: 10;
+      }
       #speedometer {
         color: #ffffff;
         background-color: #990000;
@@ -19,10 +28,10 @@
     </style>
   </head>
   <body text="#ffffff" style="margin: 0; background: black">
-    <div text="#ffffff" style="z-index: 10">
-    W forward, S reverse, D turn right, A turn left, R flip back over, ~ cesium navigation, wsda resume driving.
-    </div>
     <div id="cesiumContainer" style="width: 100%; position: absolute; top: 50%; transform: translateY(-50%)">
+      <div id="overlayText">
+      W forward, S reverse, D turn right, A turn left, R flip back over, ~ cesium navigation, wsda resume driving.
+      </div>
       <div id="speedometer">0 mph</div>
     </div>
     <script src="./ammo.wasm.js"></script>
